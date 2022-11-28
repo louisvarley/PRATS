@@ -182,12 +182,12 @@ RUN echo "<?php\n" \
          "\n" \
          "/* Admin Login */\n" \
          "define('_ADMIN_USER','${PRATS_USERNAME}');\n" \
-         "define('_ADMIN_PASSWORD','${PRATS_PASSWORD}');\n" > /var/www/html/app/Config.php
+         "define('_ADMIN_PASSWORD','${PRATS_PASSWORD}');\n" > /var/www/html/src/Config.php
 
 
 RUN mkdir /var/www/html/core/Proxies
-RUN chown -R web:www-data /var/www/html/core/Proxies
-RUN chmod -R 774 /var/www/html/core/Proxies
+RUN chown -R web:www-data /var/www/html/src/Proxies
+RUN chmod -R 774 /var/www/html/src/Proxies
 
 # Set and run a custom entrypoint
 COPY core/docker-entrypoint.sh /
