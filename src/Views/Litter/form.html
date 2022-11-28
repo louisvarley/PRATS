@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}sales{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( litter.id ) %}
+
+				{% include "Notes/list.html" with {
+					'notes': litter.notes,
+					'type': "litter",
+					'id': litter.id
+				}%}	
+				
+				<hr class="my-4">		
+				
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'Code',
+					'id': 'code', 
+					'readonly': 'readonly',
+					'name': "#{controller}[code]", 
+					'description': 'The Litter Code',
+					'value': litter.code
+				}%}					
+
+			{% endif %}	
+			
+		
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Breeder',		
+				'id': 'breeder', 
+				'name': "#{controller}[breeder]", 
+				'description': 'Litter Breeder?',
+				'required': 'required',
+				'value': litter.breeder.id,
+				'options': breeders			
+			}%}				
+
+			{% include "Forms/Elements/text-date.html" with {
+				'label' : 'Date',	
+				'id': 'date', 
+				'name': "#{controller}[birthDate]", 
+				'description': 'Date this litter was born',
+				'required': 'required',
+				'value' : litter.birthDate				
+			}%}					
+			
+			<hr class="my-4">
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Buck',		
+				'id': 'buck', 
+				'name': "#{controller}[buck]", 
+				'description': 'Litter Buck?',
+				'required': 'required',
+				'value': litter.buck.id,
+				'options': ratsMale			
+			}%}		
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Doe',		
+				'id': 'doe', 
+				'name': "#{controller}[doe]", 
+				'description': 'Litter Doe?',
+				'required': 'required',
+				'value': litter.doe.id,
+				'options': ratsFemale			
+			}%}	
+			
+			<hr class="my-4">
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( me.id == id ) %}
+			
+				{% include "Forms/Elements/text-password.html" with {
+					'label' : 'Password',
+					'id': 'password', 
+					'name': "#{controller}[password]", 
+					'description': 'Change your password',
+				}%}		
+
+				{% include "Forms/Elements/text-password.html" with {
+					'label' : 'Password Confirm',
+					'id': 'password-confirm', 
+					'name': "#{controller}[password_confirm]", 
+					'description': 'Confirm your password',
+				}%}		
+				
+				<hr class="my-4">	
+			
+			{% endif %} 
+
+			{% include "Forms/Elements/text-email.html" with {
+				'label' : 'Email Address',
+				'id': 'email', 
+				'name': "#{controller}[email]", 
+				'description': 'User Email',
+				'required': 'required',
+				'value': user.email
+			}%}		
+			
+			<hr class="my-4">		
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'First Name',
+				'id': 'firstName', 
+				'name': "#{controller}[firstName]", 
+				'description': 'First Name',
+				'required': 'required',
+				'value': user.firstName
+			}%}	
+		
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Last Name',
+				'id': 'firstName', 
+				'name': "#{controller}[lastName]", 
+				'description': 'Last Name',
+				'required': 'required',
+				'value': user.lastName
+			}%}					
+
+			<hr class="my-4">	
+			
+			{% include "Forms/Elements/text-address.html" with {
+				'label' : 'Address',			
+				'id': 'address', 
+				'name': "#{controller}[address]", 
+				'description': 'Home Address',
+				'addressLine1': user.addressLine1,
+				'addressLine2': user.addressLine2,
+				'town': user.town,
+				'county': user.county,
+				'postcode': user.postcode,
+				'country': user.country,
+				'countries' : countries,
+			}%}					
+
+			<hr class="my-4">	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Telephone',
+				'id': 'telephone', 
+				'name': "#{controller}[telephone]", 
+				'description': 'Contact Telephone Number',
+				'value': user.telephone
+			}%}	
+
+			<hr class="my-4">	
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Code',
+				'id': 'code', 
+				'name': "#{controller}[code]", 
+				'description': 'Breeding Code',
+				'value': user.code
+			}%}	
+
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

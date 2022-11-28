@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>	
+    <title>PRATS | {% block title %}{% endblock %}</title>
+
+	<script>
+	var controller = "{{ controller }}"
+	var action = "{{ action }}"
+	var id = "{{ id }}"	
+	</script>
+
+	<!-- Local Style Sheets -->
+
+	<link rel="stylesheet" href="/static/css/colorpicker/jquery.minicolors.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+	
+	<!-- Other Style Sheets and Fonts -->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+		
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet"> 
+		
+	<!-- Datatables -->
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">	
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+	
+	<!-- Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>	
+	<script src="/static/js/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="/static/js/bootstrap/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	
+	<!-- Chart JS -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<!-- Select2 -->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<!-- Moment JS -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	
+	<!-- Datatables -->
+	<script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>		
+	<script src="//cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	
+	<!-- jQuery Plugins -->
+	<script src="/static/js/jquery.ajax.fileupload.js"></script>
+	<script src="/static/js/jquery.toolbar.min.js"></script>	
+	<script src="/static/js/jquery.minicolors.min.js"></script>
+
+	<!-- Local Libs -->
+	<script src="/static/js/rs.base.js"></script>	
+	<script src="/static/js/rs.forms.js"></script>
+	<script src="/static/js/rs.passwords.js"></script>		
+	<script src="/static/js/rs.toasts.js"></script>	
+	<script src="/static/js/rs.datatables.js"></script>	
+	<script src="/static/js/rs.ajax.js"></script>	
+	<script src="/static/js/rs.selectmodal.js"></script>	
+		
+	
+	<!-- Toasts -->
+	<script>
+	$( document ).ready(function() {
+		{% for toast in session.toasts %}rs.throw{{toast.type|capitalize}}("{{toast.title}}","{{toast.text}}");
+		{% endfor %}
+	});
+	</script>
+
+</head>

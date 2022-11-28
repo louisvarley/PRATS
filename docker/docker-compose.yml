@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  rat-manager-web:
+    env_file:
+      - .env
+    container_name: rat-manager-web
+    image: rat-manager-web:latest
+    depends_on:
+      - rat-manager-db
+    ports:
+      - 9093:80
+    environment:
+      - PRATS_SQL_HOST=rat-manager-db
+      - PRATS_SQL_DATABASE=${MYSQL_DATABASE}
+      - PRATS_SQL_USER=${MYSQL_USER}
+      - PRATS_SQL_PASSWORD=${MYSQL_PASSWORD}  
+  rat-manager-db:
+    env_file:
+      - .env  
+    container_name: rat-manager-db
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:

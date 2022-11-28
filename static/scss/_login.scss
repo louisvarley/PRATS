@@ -1,0 +1,73 @@
+
+.login, .register, .forgot-password { 
+
+
+	form{
+	
+		label{
+			width:100%;
+		}
+		
+		div{
+			width:100%;
+		}
+	
+	
+	}
+
+
+	top: -20px;
+	position: relative;	
+
+	.bg-image-vertical {
+		position: relative;
+		overflow: hidden;
+		background-repeat: no-repeat;
+		background-position: right center;
+		background-size: auto 100%;
+	}
+
+	@media (min-width: 1025px) {
+		.h-custom-2 {
+			height: 100%;
+		}
+	}
+
+	.login-logo{
+		img{
+			max-width:200px;
+		}
+
+	}
+	
+	h2{
+		margin-top:20px; 
+		font-size: 42px;
+		font-family: 'Caveat', cursive;	
+	
+	}
+	
+
+	#rs-meter-wrapper {
+	  width: 70px;
+	  height: 40px;
+	  background-color: #fff;
+	}	
+	
+	.sub-logo{
+	
+		img{
+			max-width:200px;
+		}	
+	
+		margin-top:40px;
+		margin-bottom:30px;
+	}
+	
+	.card{
+		margin-bottom:20px;
+	}
+			
+}
+
+

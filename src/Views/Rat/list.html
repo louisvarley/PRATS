@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Code", "Name", "Litter Code", "Gender", "Status", "Options"]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+			<tr>
+			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>	
+			<td data-label="Name">{{ entity.name }}</td>
+			<td data-label="Litter Code">{% if( entity.litter.code ) %}{{entity.litter.code}}{% else %}None{% endif %}</td>			
+			<td data-label="Gender"><span class="badge badge-rat {{ entity.gender | lower | replace({' ': ''}) }}">{{ entity.gender }}</span></td>	
+			<td data-label="Status"><span class="badge badge-rat {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>	
+			<td data-label="Options">
+			<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-cogs"></i>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right">
+			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}
+			
+			</div>
+				{% include '/Modals/notes.html' with {'entity': entity, 'type': 'sale'} %}	
+			</td>				
+			</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

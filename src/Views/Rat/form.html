@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}sales{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% if( rat.id ) %}
+
+				{% include "Notes/list.html" with {
+					'notes': rat.notes,
+					'type': "rat",
+					'id': rat.id
+				}%}	
+				
+				{% include "Forms/Elements/hidden.html" with {
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'readonly': 'readonly',
+					'value': rat.id
+				}%}
+				
+				<hr class="my-4">		
+
+			{% endif %}	
+			
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'Registration Code',
+					'id': 'code', 
+					'name': "#{controller}[code]", 
+					'description': 'Official Registration Code',
+					'readonly': 'readonly',
+					'value': rat.code
+				}%}							
+			
+			{% if( rat.id ) %}
+			
+			{% endif %}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Name',
+				'id': 'name', 
+				'name': "#{controller}[name]", 
+				'description': 'The Rats Pet Name',
+				'value': rat.name
+			}%}
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Status',		
+				'id': 'status', 
+				'name': "#{controller}[status]", 
+				'description': 'Status of this Rat?',
+				'required': 'required',
+				'value': rat.status.Id,
+				'options': ratStatuses			
+			}%}					
+
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Gender',		
+				'id': 'gender', 
+				'name': "#{controller}[gender]", 
+				'description': 'Gender of this Rat?',
+				'required': 'required',
+				'value': rat.gender,
+				'options': ratGenders			
+			}%}		
+
+			<hr class="my-4">
+				
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Litter',		
+				'id': 'litter', 
+				'name': "#{controller}[litter]", 
+				'description': 'This Rats Litter?',
+				'value': rat.litter.id,
+				'options': litters			
+			}%}		
+	
+			
+			{% if( rat.id ) %}
+			
+				{% if( rat.litter.id ) %}
+			
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Father',
+						'id': 'father', 
+						'name': "#{controller}[registration]", 
+						'description': 'The Name of this rats Father',
+						'readonly': 'readonly',
+						'value': rat.litter.buck.Name
+					}%}	
+
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Mother',
+						'id': 'mother', 
+						'name': "#{controller}[registration]", 
+						'description': 'The Name of this rats Mother',
+						'readonly': 'readonly',
+						'value': rat.litter.doe.Name
+					}%}		
+					
+				{% endif %}	
+			{% endif %}	
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+
+
+

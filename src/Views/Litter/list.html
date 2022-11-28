@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Breeder", "Code", "Birth Date", "Doe", "Buck", "Size", "Options"]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+			<tr>
+			<td data-label="Breeder">{{ entity.breeder.firstName }} {{ entity.breeder.lastName }}</td>
+			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>		
+			<td data-label="BirthDate">{{ entity.birthDate | date('d/m/Y') }}</td>
+			<td data-label="Doe">{{ entity.doe.name }}</td>	
+			<td data-label="Buck">{{ entity.buck.name }}</td>
+			<td data-label="Size">{{ entity.rats | length }}</td>			
+			<td data-label="Options">
+			<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-cogs"></i>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right">
+			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+			{% include '/Buttons/notes-button.html' with {'modal': entity.id, 'id': entity.id} %}
+			
+			</div>
+				{% include '/Modals/notes.html' with {'entity': entity, 'type': 'litter'} %}	
+			</td>				
+			</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -1,0 +1,13 @@
+
+
+
+  <button data-tooltip="Change Sale Status" class="btn btn-sm btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="fas fa-truck"></i>
+  </button>
+  
+  
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	{% for saleStatus in saleStatuses %}
+		<a data-status-id="{{saleStatus.id}}" data-sale-id="{{entity.id}}" class="sale-status-dropdown dropdown-item" href="#">{{saleStatus.name}}</a>
+	{% endfor %}
+  </div>
