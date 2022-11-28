@@ -185,7 +185,7 @@ RUN echo "<?php\n" \
          "define('_ADMIN_PASSWORD','${PRATS_PASSWORD}');\n" > /var/www/html/src/Config.php
 
 
-RUN mkdir /var/www/html/core/Proxies
+RUN mkdir /var/www/html/src/Proxies
 RUN chown -R web:www-data /var/www/html/src/Proxies
 RUN chmod -R 774 /var/www/html/src/Proxies
 
