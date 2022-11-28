@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  rat-manager-web:
+  prats-web:
     env_file:
       - .env
     container_name: prats-web
@@ -14,7 +14,7 @@ services:
       - PRATS_SQL_DATABASE=${MYSQL_DATABASE}
       - PRATS_SQL_USER=${MYSQL_USER}
       - PRATS_SQL_PASSWORD=${MYSQL_PASSWORD}  
-  rat-manager-db:
+  prats-db:
     env_file:
       - .env  
     container_name: prats-db
