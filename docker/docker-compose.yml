@@ -9,11 +9,6 @@ services:
       - prats-db
     ports:
       - 9093:80
-    environment:
-      - PRATS_SQL_HOST=prats-db
-      - PRATS_SQL_DATABASE=${MYSQL_DATABASE}
-      - PRATS_SQL_USER=${MYSQL_USER}
-      - PRATS_SQL_PASSWORD=${MYSQL_PASSWORD}  
   prats-db:
     env_file:
       - .env  

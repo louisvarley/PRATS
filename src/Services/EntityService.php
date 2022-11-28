@@ -361,7 +361,7 @@ class EntityService{
 		$tmpSql = "dump.sql";
 		
 		try {
-			$dump = new IMysqldump\Mysqldump('mysql:host=localhost;dbname=' . self::$dbParams['dbname'], self::$dbParams['user'],self::$dbParams['password']);
+			$dump = new IMysqldump\Mysqldump('mysql:host=' . self::$dbParams['host'] . ';dbname=' . self::$dbParams['dbname'], self::$dbParams['user'],self::$dbParams['password']);
 			$dump->start($tmpSql);
 		} catch (\Exception $e) {
 			echo 'mysqldump-php error: ' . $e->getMessage();
