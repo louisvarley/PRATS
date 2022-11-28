@@ -6,7 +6,7 @@ services:
     container_name: prats-web
     image: prats-web:latest
     depends_on:
-      - rat-manager-db
+      - prats-db
     ports:
       - 9093:80
     environment:
