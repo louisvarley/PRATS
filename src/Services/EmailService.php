@@ -31,9 +31,9 @@ class EmailService
 		$mail->isHTML(true);
 		$mail->Body    = $sbody;
 		$mail->Subject = $subject;
+		
 		if(!$mail->Send()) {
-			Toast::throwError("Email not sent", $mail->ErrorInfo);
-			exit;
+			Toast::throwError("Email not sent", $mail->ErrorInfo);			
 		}
 	}
 	

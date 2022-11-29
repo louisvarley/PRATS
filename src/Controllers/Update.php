@@ -23,7 +23,7 @@ class Update extends \App\Controller
     public function indexAction()
     {
 		Entities::generateStaticData();	
-		//View::renderTemplate('Update/update.html', ['version' => ['updatable' => Updater::hasNewVersion(), 'current' => Updater::currentVersion(), 'remote' => Updater::remoteVersion()]]);
+		View::renderTemplate('Update/update.html', ['version' => ['updatable' => Updater::hasNewVersion(), 'current' => Updater::currentVersion(), 'remote' => Updater::remoteVersion()]]);
 		
     }
 	

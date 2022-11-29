@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Update{% endblock %}
+
+{% block body %}
+	{% embed "Forms/page-base.html" %}
+
+		{% block page_title %}
+			Update Retroseller
+		{% endblock %}
+
+		{% block page_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block page_body %}
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Current Version',		
+				'description': 'This version of RetroSeller',
+				'value': version.current,	
+				'readonly': true,
+			}%}
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Remote Version',		
+				'description': 'Remote version of RetroSeller',
+				'value': version.remote,	
+				'readonly': true,
+			}%}			
+			
+			{% if( version.current != version.remote ) %}
+			
+				{% include '/Buttons/update-button.html' %}
+			
+			{% else %}
+			
+				<h5>You are up-to-date</h5>
+			
+			{% endif %}		
+									
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

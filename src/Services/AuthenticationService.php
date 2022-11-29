@@ -5,6 +5,7 @@ namespace App\Services;
 use \App\Services\ToastService as Toast;
 use \App\Services\SessionService as Session;
 use \App\Services\EntityService as Entities;
+use \App\Services\EmailService as Emailer;
 
 class AuthenticationService{
 		
@@ -57,7 +58,6 @@ class AuthenticationService{
 	
 	public static function newRandomPassword($userId){
 		
-		
 		$newPassword = randomPassword();	
 		
 		$user = Entities::findEntity("user", $userId);	
@@ -68,6 +68,8 @@ class AuthenticationService{
 		Entities::flush();
 		
 		/* send email here */
+		
+		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => 'https://www.google.com'));
 		
 		return $newPassword;
 		
