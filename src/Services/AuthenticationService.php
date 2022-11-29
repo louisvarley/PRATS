@@ -74,14 +74,14 @@ class AuthenticationService{
 	public static function newRandomPasswordEmail($userId,$password){
 		
 		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => _URL_ROOT . '/login'));
+		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $password, 'link' => _URL_ROOT . '/login'));
 		
 	}
 	
 	public static function newUserEmail($userId,$password){
 		
 		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => _URL_ROOT . '/login'));
+		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $password, 'link' => _URL_ROOT . '/login'));
 		
 	}	
 	
