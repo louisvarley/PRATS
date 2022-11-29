@@ -67,12 +67,24 @@ class AuthenticationService{
 		Entities::persist($user);
 		Entities::flush();
 		
-		/* send email here */
-		
-		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => 'https://www.google.com'));
-		
 		return $newPassword;
 		
 	}
 	
+	public static function newRandomPasswordEmail($userId,$password){
+		
+		$user = Entities::findEntity("user", $userId);	
+		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => _URL_ROOT . '/login'));
+		
+	}
+	
+	public static function newUserEmail($userId,$password){
+		
+		$user = Entities::findEntity("user", $userId);	
+		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $newPassword, 'link' => _URL_ROOT . '/login'));
+		
+	}	
+	
+	
+		
 }

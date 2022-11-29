@@ -99,7 +99,8 @@ class User extends \App\Controllers\ManagerController
 		Entities::flush();
 		
 		/* Sets Initial Password and Sends Email */
-		Authentication::newRandomPassword($user->getId());
+		Authentication::newUserEmail($user->getId(), 
+		Authentication::newRandomPassword($user->getId()));
 
 		return $user->getId();
 		
