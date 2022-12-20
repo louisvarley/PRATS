@@ -4,12 +4,13 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Code", "Name", "Litter Code", "Gender", "Status", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Code", "Name", "Owner", "Litter Code", "Gender", "Status", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>	
 			<td data-label="Name">{{ entity.name }}</td>
+			<td data-label="Owner">{{ entity.owner.firstName }} {{ entity.owner.lastName }}</td>			
 			<td data-label="Litter Code">{% if( entity.litter.code ) %}{{entity.litter.code}}{% else %}None{% endif %}</td>			
 			<td data-label="Gender"><span class="badge badge-rat {{ entity.gender | lower | replace({' ': ''}) }}">{{ entity.gender }}</span></td>	
 			<td data-label="Status"><span class="badge badge-rat {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>	

@@ -26,6 +26,7 @@ class Rat extends \App\Controllers\ManagerController
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
 			"ratStatuses" => Entities::createOptionSet('RatStatus', 'id','name'),
+			"users" => Entities::createOptionSet('User', 'id',['firstName','lastName']),			
 			"ratGenders" => _RAT_GENDERS,
 			"litters" => Entities::createOptionSet('litter', 'id', ['code']),	
 		);	
@@ -34,16 +35,19 @@ class Rat extends \App\Controllers\ManagerController
 	public function updateEntity($id, $data){
 		
 		$rat = Entities::findEntity($this->route_params['controller'], $id);
+
+
 		
 		$ratStatus = Entities::findEntity("RatStatus", $data['rat']['status']);
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
-		
+		$owner = Entities::findEntity("user", $data['rat']['owner']);
 		
 		$rat->setName($data['rat']['name']);
 		$rat->setStatus($ratStatus);	
 		$rat->setGender($data['rat']['gender']);
 		$rat->setLitter($litter);
-
+		$rat->setOwner($owner);
+		
 		Entities::persist($rat);
 		
 		if(isset($data['note']) &&  $data['note'] != ""){
@@ -69,11 +73,13 @@ class Rat extends \App\Controllers\ManagerController
 		
 		$ratStatus = Entities::findEntity("RatStatus", $data['rat']['status']);
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
-		
+		$owner = Entities::findEntity("user", $data['rat']['owner']);
+				
 		$rat->setName($data['rat']['name']);
 		$rat->setStatus($ratStatus);
 		$rat->setGender($data['rat']['gender']);
 		$rat->setLitter($litter);
+		$rat->setOwner($owner);
 		
 		$rat->resetCode();
 		

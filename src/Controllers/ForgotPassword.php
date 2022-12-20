@@ -30,27 +30,28 @@ class ForgotPassword extends \App\Controller
 		
 		if($this->isPOST()){
 
-			$user = Entities::findBy("User", ['email' => $this->post['email']]);
+			$users = Entities::findBy("User", ['email' => $this->post['email']]);
 			 
-			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
+			if(count($users) > 0){
 				
-				Authentication::login($user[0]);
-				if(isset($this->get['redirect'])){
-					header('Location:' . urldecode($this->get['redirect']));
-					die();
-				}else{
-					header('Location: /');
-				}
-				
+				$user = $users[0];
+					
+				$token = Authentication::newResetToken($user->getId());
+						
+				Authentication::resetPasswordEmail($user->getId(), $token);
+			
+				Toast::throwSuccess("Success...", "If an account with your email was found, a password reset email will be sent to your email address.");
+
 				
 			}else{
 			
-				Toast::throwError("Error...", "Your login details were incorrect or not found");
+				Toast::throwSuccess("Success...", "If an account with your email was found, a password reset email will be sent to your email address.");
 			
 			}
+			
+			header('Location: /');
 		}
 		
-
 		$this->render('ForgotPassword/index.html');
 
     }

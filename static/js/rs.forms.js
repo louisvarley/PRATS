@@ -446,7 +446,7 @@ rs.init("select2", function(){
 					d = JSON.parse(data.text);
 					var c = jQuery('<div style="display:inline"></div>');
 					$.each(d, function(key,value){
-						jQuery(c).append('<span class="badge badge-primary">' + value + '</span> ');
+						jQuery(c).append('<span class="badge badge-secondary">' + value + '</span> ');
 					})
 					return c;
 				}else{

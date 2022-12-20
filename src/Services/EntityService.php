@@ -272,6 +272,32 @@ class EntityService{
 			
 		}
 		
+		
+		/* User Role Table */
+		
+		foreach(_USER_ROLES as $userRole){
+			
+
+			$pRole = self::findEntity("UserRole", $userRole['id']);
+			
+			if($pRole){
+				$pRole->setName($userRole['name']);
+				$pRole->setLevel($userRole['level']);				
+			}else{
+				$pRole = new \App\Models\UserRole();
+				$pRole->setName($userRole['name']);
+				$pRole->setLevel($userRole['level']);
+			}
+			
+			self::persist($pRole);
+			self::flush();
+			
+		}		
+		
+		
+		
+		
+		
 	}
 
 	/* Is DB Server Alive? */
@@ -352,6 +378,13 @@ class EntityService{
 		
 		}
 		
+	}
+	
+	/* Does flush and persist in one */
+	public static function save($entity){
+	
+		self::persist($entity);
+		self::flush();
 	}
 	
 	public static function MySqlDump(){

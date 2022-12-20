@@ -30,26 +30,39 @@ class Login extends \App\Controller
 		
 		if($this->isPOST()){
 
-			$user = Entities::findBy("User", ['email' => $this->post['email']]);
-			 
-			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
+			$users = Entities::findBy("User", ['email' => $this->post['email']]);
+
+			if(count($users) > 0){
 				
-				Authentication::login($user[0]);
-				if(isset($this->get['redirect'])){
-					header('Location:' . urldecode($this->get['redirect']));
-					die();
+				$user = $users[0];
+				
+				if($user->validatePassword($this->post['password'])){
+				
+					Authentication::login($user);
+					
+					if($user->getPasswordResetFlag()){
+						header('Location: /reset-password');
+						die();
+						
+					}elseif(isset($this->get['redirect'])){
+						header('Location:' . urldecode($this->get['redirect']));
+						die();
+					}else{
+						header('Location: /');
+					}
+				
 				}else{
-					header('Location: /');
-				}
+			
+					Toast::throwError("Error...", "Your login details were incorrect");
 				
+				}
 				
 			}else{
 			
-				Toast::throwError("Error...", "Your login details were incorrect or not found");
-			
+				Toast::throwError("Error...", "No User with your details was found");
 			}
-		}
 		
+		}
 
 		$this->render('Login/index.html');
 

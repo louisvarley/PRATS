@@ -24,7 +24,9 @@ class User extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
-			'countries' => _COUNTRIES
+			'countries' => _COUNTRIES,
+			"booleans" => _BOOLS,
+			"userRoles" => Entities::createOptionSet('UserRole', 'id','name'),			
 		);	
 	} 
 
@@ -32,6 +34,10 @@ class User extends \App\Controllers\ManagerController
 		
 		$user = Entities::findEntity($this->route_params['controller'], $id);
 		
+		
+		$userRole = Entities::findEntity("UserRole", $data['user']['userRole']);
+		
+		$user->setUserRole($userRole);
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -43,7 +49,7 @@ class User extends \App\Controllers\ManagerController
 		$user->setPostcode($data['user']['address']['postcode']);		
 		$user->setCountry($data['user']['address']['country']);
 		$user->setCode($data['user']['code']);
-		
+		$user->setPasswordResetFlag($data['user']['passwordResetFlag']);
 		$user->setTelephone($data['user']['telephone']);
 		
 		/* Password if yours */
@@ -79,6 +85,9 @@ class User extends \App\Controllers\ManagerController
 
 		$user = new \App\Models\User();
 
+		$userRole = Entities::findEntity("UserRole", $data['user']['userRole']);
+		
+		$user->setUserRole($userRole);
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -91,16 +100,19 @@ class User extends \App\Controllers\ManagerController
 		$user->setCountry($data['user']['address']['country']);
 		$user->setCode($data['user']['code']);		
 		$user->setTelephone($data['user']['telephone']);
-		
 		$user->setCountry($data['user']['address']['country']);				
-		
 		
 		Entities::persist($user);
 		Entities::flush();
 		
 		/* Sets Initial Password and Sends Email */
-		Authentication::newUserEmail($user->getId(), 
-		Authentication::newRandomPassword($user->getId()));
+		$token = Authentication::newResetToken($user->getId());
+	
+		Authentication::newUserEmail($user->getId(), $token); 
+		
+
+	
+
 
 		return $user->getId();
 		

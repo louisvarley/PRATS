@@ -21,12 +21,16 @@ class UserRole
     * @ORM\Column(type="string", nullable="false")
     */
     protected $name;
+	
+	/**
+    * @ORM\Column(type="integer", nullable="false")
+    */
+    protected $level;	
 
     /**
-     * Many User Roles have Many Users.
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="userRoles")
-     * @ORM\JoinTable(name="users_user_roles")	 
-     */	 
+     * One Role has many Users.
+     * @ORM\OneToMany(targetEntity="User", mappedBy="userRole")
+     */ 
     protected $users;	
 	
     public function getId()
@@ -43,6 +47,16 @@ class UserRole
     {
         $this->name = $name;
     }
+	
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }	
 	
     public function getUsers()
     {

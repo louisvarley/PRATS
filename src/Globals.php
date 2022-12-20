@@ -60,13 +60,29 @@ define("_RAT_STATUS", array(
 	)
 );
 
-
 /* Rat Genders */
 define("_RAT_GENDERS", array(
 	array('value' => 'male', 'text' => 'Male'),
 	array('value' => 'female', 'text' => 'Female'),
 	)
 );
+
+/* User Roles*/
+define("_USER_ROLES", array(
+	'ADMIN' => array('id' => 1, 'name' => 'Administrator', 'level' => 1),
+	'BREEDER' => array('id' => 2, 'name' => 'Breeder', 'level' => 2),
+	'OWNER' => array('id' => 3, 'name' => 'Owner', 'level' => 3),
+	'USER' => array('id' => 4, 'name' => 'User', 'level' => 4)	
+	)
+);
+
+/* Doctrine Booleans */
+define("_BOOLS", array(
+	array('value' => '0', 'text' => 'No'),
+	array('value' => '1', 'text' => 'Yes'),
+	)
+);
+
 
 /* Countries */
 define("_COUNTRIES",json_decode(file_get_contents(DIR_APP . '/Countries.json'), true));

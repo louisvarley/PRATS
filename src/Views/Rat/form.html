@@ -54,6 +54,7 @@
 				'description': 'The Rats Pet Name',
 				'value': rat.name
 			}%}
+						
 
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Status',		
@@ -86,6 +87,16 @@
 				'options': litters			
 			}%}		
 	
+			<hr class="my-4">
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Owner',		
+				'id': 'owner', 
+				'name': "#{controller}[owner]", 
+				'description': 'Owner of this Rat?',
+				'value': rat.owner.Id,
+				'options': users			
+			}%}			
 			
 			{% if( rat.id ) %}
 			

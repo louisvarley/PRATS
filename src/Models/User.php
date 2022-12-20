@@ -38,16 +38,17 @@ class User
     private $password_hash;		
 	
     /**
-     * Many Users have Many User Roles.
-     * @ORM\ManyToMany(targetEntity="UserRole", mappedBy="users")
-     */ 
-    protected $userRoles;		
+    * Many Users have One User Roles.
+    * @ORM\ManyToOne(targetEntity="UserRole")
+    * @ORM\JoinColumn(name="role_id", referencedColumnName="id")	
+     */ 	
+    protected $userRole;		
 	
-    /**
-     * One User has Many Ownerships.
-     * @ORM\OneToMany(targetEntity="Ownership", mappedBy="user")
+	 /**
+     * One User has Many Rats.
+     * @ORM\OneToMany(targetEntity="Rat", mappedBy="owner")
      */ 
-    protected $ownerships;	
+    protected $rats;	
 
 	/**
     * @ORM\Column(type="string", nullable="true")
@@ -100,10 +101,15 @@ class User
     protected $telephone;		
 	
 	
+	/**
+    * @ORM\Column(type="boolean", nullable="true")
+    */
+    protected $passwordResetFlag;		
+	
+		
 	public function __construct()
     {
-        $this->userRoles = new ArrayCollection();
-		$this->ownerships = new ArrayCollection();
+		$this->rats = new ArrayCollection();
 		$this->litters = new ArrayCollection();
     }	
 	
@@ -145,14 +151,19 @@ class User
 		return false;
 	}
 	
-    public function getUserRoles()
+    public function getUserRole()
     {
-        return $this->userRoles;
+        return $this->userRole;
     }	
 	
-    public function getOwnerships()
+	public function setUserRole($userRole)
+	{
+		$this->userRole = $userRole;
+	}
+	
+    public function getRats()
     {
-        return $this->ownerships;
+        return $this->rats;
     }		
 	
     public function getLitters()
@@ -259,5 +270,16 @@ class User
     {
         $this->telephone = $telephone;
     }		
+
+
+    public function getPasswordResetFlag()
+    {
+        return $this->passwordResetFlag;
+    }	
+	
+    public function setPasswordResetFlag($passwordResetFlag)
+    {
+        $this->passwordResetFlag = $passwordResetFlag;
+    }	
 
 }

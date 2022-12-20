@@ -4,6 +4,8 @@ namespace App\Models;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
+use \App\Services\EntityService as Entities;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="rats")
@@ -46,10 +48,11 @@ class Rat
     protected $status;
 	
     /**
-     * One Rat has Many Ownerships.
-     * @ORM\OneToMany(targetEntity="Ownership", mappedBy="rat")
-     */ 
-    protected $ownerships;	
+     * Many Rats have One Owner
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="rats")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $owner;	
 	
 	/**
     * @ORM\ManyToMany(targetEntity="Blob")
@@ -122,10 +125,16 @@ class Rat
         $this->status = $status;
     }		
 	
-    public function getOwnerships()
+    public function getOwner()
     {
-        return $this->ownerships;
+        return $this->owner;
     }		
+	
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }		
+		
 		
 	public function resetCode(){
 
@@ -135,7 +144,24 @@ class Rat
 			$doeCode = substr($this->getLitter()->getDoe()->getName(),0,1);
 			$buckCode = substr($this->getLitter()->getBuck()->getName(),0,1);
 			$genderCode = substr($this->getGender(),0,1);
-			$this->setCode(strtoupper($breedercode . $buckCode . $doeCode . $genderCode));
+			
+			$compCode = strtoupper($breedercode . $buckCode . $doeCode . $genderCode);			
+
+			$nextQuery = Entities::em()->getRepository(_MODELS . 'Rat')
+				->createQueryBuilder('r')
+				->select('r.code')
+				->where('r.code like :compCode')
+				->setParameter('compCode', '%'.$compCode.'%')
+				->orderBy("r.id", 'ASC');
+			
+			if($this->getId()){
+				$nextQuery->andWhere( 'r.id < ' . $this->getId() );
+			}
+
+			$next =	count($nextQuery->getQuery()
+					->getArrayResult()) + 1;			
+			
+			$this->setCode(strtoupper($breedercode . $buckCode . $doeCode . $genderCode) . str_pad($next, 2, '0', STR_PAD_LEFT));
 		
 		}
 		

@@ -44,6 +44,29 @@
 				'value': user.email
 			}%}		
 			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Role',		
+				'id': 'role', 
+				'name': "#{controller}[userRole]", 
+				'description': 'Role of this User?',
+				'required': 'required',
+				'value': user.userRole.Id,
+				'options': userRoles			
+			}%}				
+			
+			{% if( id ) %}
+			
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Password Reset',		
+					'id': 'passwordResetFlag', 
+					'name': "#{controller}[passwordResetFlag]", 
+					'description': 'Password reset required on new login?',
+					'required': 'required',
+					'value': user.passwordResetFlag,
+					'options': booleans			
+				}%}			
+
+			{% endif %} 			
 			<hr class="my-4">		
 			
 			{% include "Forms/Elements/text.html" with {
@@ -99,7 +122,8 @@
 				'description': 'Breeding Code',
 				'value': user.code
 			}%}	
-
+			
+			
 
 		{% endblock %}
 	{% endembed %}

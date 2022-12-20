@@ -55,13 +55,13 @@ class AuthenticationService{
 
 	}
 	
-	
+	/* Resets a users password to a random password */
 	public static function newRandomPassword($userId){
 		
 		$newPassword = randomPassword();	
-		
 		$user = Entities::findEntity("user", $userId);	
 		$user->setPassword($newPassword);
+		$user->setPasswordResetFlag(true);
 		$user->generateApiKey();
 		
 		Entities::persist($user);
@@ -71,20 +71,93 @@ class AuthenticationService{
 		
 	}
 	
-	public static function newRandomPasswordEmail($userId,$password){
+	/* Generates a reset token for a user */
+	public static function newResetToken($userId){
 		
 		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $password, 'link' => _URL_ROOT . '/login'));
 		
-	}
-	
-	public static function newUserEmail($userId,$password){
+		$token = new \App\Models\UserToken();
 		
-		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('temporary_password',$user->getEmail(),'Your New Temporary Password', array('password' => $password, 'link' => _URL_ROOT . '/login'));
+		$token->generateToken();
+		$token->setUser($user);
+			
+		Entities::save($token);
+		
+		$user->setPasswordResetFlag(true);
+
+		Entities::save($user);
+		
+		return $token->getToken();
 		
 	}	
 	
-	
+	public static function userTokenValid($token){
 		
+		$tokens = Entities::findBy("userToken", ["token" => $token]);
+		$token = $tokens[0];
+		
+		if($token->isValid()){
+			return true;
+		}
+		
+	}	
+	
+	/* Reset using a token */
+	public static function userTokenPasswordReset($token, $password){
+		
+		$tokens = Entities::findBy("userToken", ["token" => $token]);
+		$token = $tokens[0];
+		
+		if($token->isValid()){
+			
+			$user = Entities::findEntity("user", $token->getUser());	
+			$user->generateApiKey();
+			$user->setPasswordResetFlag(false);
+			$user->setPassword($password);
+			$token->expire();
+			
+		}		
+
+		Entities::save($user);
+		Entities::save($token);
+		
+		return true;
+		
+	}
+	
+	/* Reset using a token */
+	public static function userPasswordReset($userId, $password){
+		
+		$user = Entities::findEntity("user", $userId);
+		
+		if($user){
+			
+			$user->generateApiKey();
+			$user->setPasswordResetFlag(false);
+			$user->setPassword($password);
+			
+		}		
+
+		Entities::save($user);
+		
+	}	
+
+	/* Sends an email to the user to reset password as a new user*/
+	public static function newUserEmail($userId, $token){
+		
+		$user = Entities::findEntity("user", $userId);	
+		Emailer::sendTemplate('new_user',$user->getEmail(),'You\'ve been invited to join PRATS', array('name' => $user->getFirstName(), 'link' => _URL_ROOT . '/reset-password?token=' . $token));
+		
+	}	
+	
+	/* Sends an email to the user with a link to reset their password*/
+	public static function resetPasswordEmail($userId, $token){
+		
+		$user = Entities::findEntity("user", $userId);	
+		Emailer::sendTemplate('reset_password',$user->getEmail(),'Password Reset', array('name' => $user->getFirstName(), 'link' => _URL_ROOT . '/reset-password?token=' . $token));
+		
+	}	
+	
+
+	
 }

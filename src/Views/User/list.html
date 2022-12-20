@@ -4,12 +4,13 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Email Address",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Id","Email Address","Role",""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td>{{ entity.id }}</td>
-			<td>{{ entity.email }}</td>			
+			<td>{{ entity.email }}</td>		
+			<td>{{ entity.userRole.name }}</td>					
 			<td>
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
