@@ -49,6 +49,7 @@ class Login extends \App\Controller
 						die();
 					}else{
 						header('Location: /');
+						die();
 					}
 				
 				}else{

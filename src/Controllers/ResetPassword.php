@@ -25,27 +25,32 @@ class ResetPassword extends \App\Controller
     public function indexAction()
     {
 		
-
-		/* Doing password reset */
+		/* Execute Password Reset */
 		if($this->isPOST()){
 			
+			/* If Logged In - Reset Without Token */
 			if(Authentication::loggedIn()){
-			
-				$user = Authentication::me();			
-				Authentication::userPasswordReset($user->getId(), $this->post['reset-password']['password']);
+		
+				Authentication::userPasswordReset($this->post['reset-password']['password']);
 				Toast::throwSuccess("Success...", "Your password has been changed");
 			
-			}elseif(Authentication::userTokenPasswordReset($_GET['token'], $this->post['reset-password']['password'])){
-				
-				Toast::throwSuccess("Success...", "Your password has been reset");
-				
+			/* If Logged Out - Reset Using Token */
 			}else{
-				Toast::throwError("Failure...", "There was a problem reseting your password");
+				
+				if(Authentication::userTokenPasswordReset($_GET['token'], $this->post['reset-password']['password'])){
+					
+					Toast::throwSuccess("Success...", "Your password has been successfully reset.");
+					
+				}else{
+					
+					Toast::throwError("Failure...", "Your password reset link was either invalid or has expired.");
+				}
+				
 			}
-			
+
 			header('Location: /');
 			
-		}else{
+		} else {
 			
 			/* Logged In and Has Reset Flag Set */
 			if(Authentication::loggedIn()){
@@ -83,16 +88,4 @@ class ResetPassword extends \App\Controller
 		
     }
 	
-	/**
-     * Show the index page
-     *
-     * @return void
-     */
-    public function resetAction()
-    {
-		
-		var_dump($this->route_params['token']);
-		die();
-		
-	}
 }

@@ -6,6 +6,7 @@ use \App\View;
 use \App\Services\AuthenticationService as Authentication;
 use \App\Services\ToastService as Toast;
 use \App\Services\EntityService as Entities;
+use \App\Services\EmailService as Emailer;
 
 /**
  * Home controller
@@ -36,20 +37,20 @@ class ForgotPassword extends \App\Controller
 				
 				$user = $users[0];
 					
-				$token = Authentication::newResetToken($user->getId());
+				$token = Authentication::generateUserToken($user->getId());
 						
-				Authentication::resetPasswordEmail($user->getId(), $token);
+				Emailer::resetPasswordEmail($user->getId(), $token);
 			
 				Toast::throwSuccess("Success...", "If an account with your email was found, a password reset email will be sent to your email address.");
-
 				
 			}else{
 			
-				Toast::throwSuccess("Success...", "If an account with your email was found, a password reset email will be sent to your email address.");
-			
+				Toast::throwSuccess("Failure...", "No user with these details was found. Please check and try again.");
+		
 			}
 			
 			header('Location: /');
+			die();
 		}
 		
 		$this->render('ForgotPassword/index.html');

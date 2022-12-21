@@ -8,7 +8,7 @@ use \App\Services\EntityService as Entities;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="UserToken")
+ * @ORM\Table(name="user_tokens")
 */
 class UserToken
 {

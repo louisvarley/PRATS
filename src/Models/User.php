@@ -23,19 +23,19 @@ class User
     protected $id;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="email", type="string", nullable="true")
     */
     protected $email;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="api_key", type="string", nullable="true")
     */
     protected $apikey;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="password_hash", type="string", nullable="true")
     */
-    private $password_hash;		
+    private $passwordHash;		
 	
     /**
     * Many Users have One User Roles.
@@ -51,58 +51,58 @@ class User
     protected $rats;	
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="breeder_code", type="string", nullable="true")
     */
     protected $code;
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="first_name", type="string", nullable="true")
     */
     protected $firstName;		
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="last_name", type="string", nullable="true")
     */
     protected $lastName;		
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="address_line_1", type="string", nullable="true")
     */
     protected $addressLine1;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="address_line_2", type="string", nullable="true")
     */
     protected $addressLine2;	
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="town", type="string", nullable="true")
     */
     protected $town;	
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="county", type="string", nullable="true")
     */
     protected $county;	
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="country", type="string", nullable="true")
     */
     protected $country;	
 
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="postcode", type="string", nullable="true")
     */
     protected $postcode;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="true")
+    * @ORM\Column(name="telephone", type="string", nullable="true")
     */
     protected $telephone;		
 	
 	
 	/**
-    * @ORM\Column(type="boolean", nullable="true")
+    * @ORM\Column(name="password_reset_flag", type="boolean", nullable="true")
     */
     protected $passwordResetFlag;		
 	
@@ -130,7 +130,7 @@ class User
 	
     public function setPassword($password)
     {
-		$this->password_hash = \password_hash ($password,   PASSWORD_DEFAULT  );
+		$this->passwordHash = \password_hash ($password,   PASSWORD_DEFAULT  );
     }
 	
     public function getApiKey()
@@ -142,10 +142,24 @@ class User
     {
         $this->apikey = implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
     }	
-
+	
+	public function generateTemporaryPassword(){
+		
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$pass = array(); 
+		$alphaLength = strlen($alphabet) - 1;
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+ 
+		$this->setPasswordResetFlag(true);
+		$this->setPassword(implode($pass));
+	}
+	
 	public function validatePassword($password){
 		
-		if(password_verify($password, $this->password_hash)){
+		if(password_verify($password, $this->passwordHash)){
 			return true;
 		};
 		return false;

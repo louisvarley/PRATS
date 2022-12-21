@@ -65,7 +65,6 @@ class Rat
   
 	public function __construct() {
       
-	  $this->ownerships = new ArrayCollection();
 	  $this->images = new ArrayCollection();
 	  
     }	
@@ -134,7 +133,6 @@ class Rat
     {
         $this->owner = $owner;
     }		
-		
 		
 	public function resetCode(){
 

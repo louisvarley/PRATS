@@ -17,6 +17,7 @@ if(!defined('STDIN') ) {
 	define("_URL_ROOT", (((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $_SERVER['HTTP_HOST']); 
 }
 
+
 /* Directories */
 define("DIR_ROOT", dirname(dirname(__FILE__)));
 define("DIR_APP", DIR_ROOT . '/src');	
@@ -42,6 +43,9 @@ define("_CONTROLLERS", "\\App\\Controllers\\");
 define("_VIEWS", "\\App\\Views\\");	
 
 define("_CONFIG_FILE",DIR_APP . '/Config.php');
+
+/* Version / Build */
+define("_BUILD", file_get_contents(DIR_ROOT . '/build'));
 
 /* Global Image Sizes */
 define("_IMAGE_SIZES",[
@@ -179,16 +183,7 @@ function setMetadata($key, $value){
 }
 
 
-function randomPassword() {
-    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass); //turn the array into a string
-}
+
 
 Session::start();
 

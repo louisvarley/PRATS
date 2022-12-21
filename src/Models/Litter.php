@@ -48,7 +48,7 @@ class Litter
     protected $rats;	
 	
 	/**
-    * @ORM\Column(type="date")
+    * @ORM\Column(name="birth_date", type="date")
     */
     protected $birthDate;		
 		

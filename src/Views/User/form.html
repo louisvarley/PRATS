@@ -123,7 +123,21 @@
 				'value': user.code
 			}%}	
 			
+			{% if( id == null ) %}
 			
+			<hr class="my-4">	
+			
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Send User Welcome Email',		
+					'id': 'welcomeEmail', 
+					'name': "#{controller}[welcomeEmail]", 
+					'description': 'Send user a welcome email?',
+					'required': 'required',
+					'value': '0',
+					'options': booleans			
+				}%}			
+
+			{% endif %} 			
 
 		{% endblock %}
 	{% endembed %}

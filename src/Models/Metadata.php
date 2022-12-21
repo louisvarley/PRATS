@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="rs_metadata")
+ * @ORM\Table(name="meta_data")
  */
 class Metadata
 {

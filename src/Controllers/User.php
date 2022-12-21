@@ -7,6 +7,7 @@ use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use \App\Services\ToastService as Toast;
 use \App\Services\EntityService as Entities;
 use \App\Services\AuthenticationService as Authentication;
+use \App\Services\EmailService as Emailer;
 
 /**
  * Home controller
@@ -100,20 +101,22 @@ class User extends \App\Controllers\ManagerController
 		$user->setCountry($data['user']['address']['country']);
 		$user->setCode($data['user']['code']);		
 		$user->setTelephone($data['user']['telephone']);
-		$user->setCountry($data['user']['address']['country']);				
-		
+		$user->setCountry($data['user']['address']['country']);		
+
+		/* Sets a Random Password */
+		$user->generateTemporaryPassword();		
+				
 		Entities::persist($user);
 		Entities::flush();
+
+		/* Email user welcome email */
+		if($data['user']['welcomeEmail']){
+			$token = Authentication::generateUserToken($user->getId());
+			Emailer::newUserEmail($user->getId(), $token); 
+			
+		}				
 		
-		/* Sets Initial Password and Sends Email */
-		$token = Authentication::newResetToken($user->getId());
-	
-		Authentication::newUserEmail($user->getId(), $token); 
 		
-
-	
-
-
 		return $user->getId();
 		
 	}	

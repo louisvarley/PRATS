@@ -171,7 +171,7 @@ abstract class Controller
 
 		return $_SERVER['REQUEST_METHOD'];
 	}
-
+	
 	public function render($template, $array = null){
 		
 		
@@ -180,6 +180,7 @@ abstract class Controller
 				$this->page_data,
 				array('me' => Authentication::me()),
 				$this->notifications,
+				array('build' => _BUILD),				
 				empty($array) ? [] : $array)
 		);
 		

@@ -9,6 +9,7 @@ use \App\Services\EmailService as Emailer;
 
 class AuthenticationService{
 		
+	/* Validate an API Key */	
 	public static function validApiKey(){
 			
 		if(!isset($_GET['apikey'])) return false;
@@ -21,6 +22,7 @@ class AuthenticationService{
 		
 	}
 	
+	/* Check if logged in, forces log out if time expired */
 	public static function loggedIn(){
 		
 		
@@ -38,14 +40,17 @@ class AuthenticationService{
 		
 	}
 	
+	/* Saves given user to Session */
 	public static function login($user){
 		Session::save("user", $user);		
 	}
 	
+	/* Destroys Session */
 	public static function logout(){
 		Session::destroy();
 	}
 
+	/* Gets the current logged in user */
 	public static function me(){
 
 		if(self::loggedIn()){
@@ -71,21 +76,16 @@ class AuthenticationService{
 		
 	}
 	
-	/* Generates a reset token for a user */
-	public static function newResetToken($userId){
+	/* Generates a user token for a user */
+	public static function generateUserToken($userId){
 		
 		$user = Entities::findEntity("user", $userId);	
 		
 		$token = new \App\Models\UserToken();
-		
 		$token->generateToken();
 		$token->setUser($user);
 			
 		Entities::save($token);
-		
-		$user->setPasswordResetFlag(true);
-
-		Entities::save($user);
 		
 		return $token->getToken();
 		
@@ -102,33 +102,42 @@ class AuthenticationService{
 		
 	}	
 	
-	/* Reset using a token */
+	/* Change password of a user using a token */
 	public static function userTokenPasswordReset($token, $password){
 		
 		$tokens = Entities::findBy("userToken", ["token" => $token]);
 		$token = $tokens[0];
 		
-		if($token->isValid()){
+		if($token && $token->isValid()){
 			
 			$user = Entities::findEntity("user", $token->getUser());	
 			$user->generateApiKey();
 			$user->setPasswordResetFlag(false);
 			$user->setPassword($password);
+			
+			/* Password is reset, make this user the session user */
+			self::login($user);
+			
 			$token->expire();
 			
-		}		
-
-		Entities::save($user);
-		Entities::save($token);
+			Entities::save($user);
+			Entities::save($token);
 		
-		return true;
+			return true;
+			
+		}else{
+
+			return false;
+		}			
+
+		
 		
 	}
 	
-	/* Reset using a token */
-	public static function userPasswordReset($userId, $password){
+	/* Change password of the authenticated user */
+	public static function userPasswordReset($password){
 		
-		$user = Entities::findEntity("user", $userId);
+		$user = Authentication::me();
 		
 		if($user){
 			
@@ -142,21 +151,7 @@ class AuthenticationService{
 		
 	}	
 
-	/* Sends an email to the user to reset password as a new user*/
-	public static function newUserEmail($userId, $token){
-		
-		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('new_user',$user->getEmail(),'You\'ve been invited to join PRATS', array('name' => $user->getFirstName(), 'link' => _URL_ROOT . '/reset-password?token=' . $token));
-		
-	}	
-	
-	/* Sends an email to the user with a link to reset their password*/
-	public static function resetPasswordEmail($userId, $token){
-		
-		$user = Entities::findEntity("user", $userId);	
-		Emailer::sendTemplate('reset_password',$user->getEmail(),'Password Reset', array('name' => $user->getFirstName(), 'link' => _URL_ROOT . '/reset-password?token=' . $token));
-		
-	}	
+
 	
 
 	
