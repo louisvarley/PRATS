@@ -112,12 +112,15 @@
 	width: 200px;
 	height: 200px;
 	margin: 20px;
+	
+	
 
 	img{
 		width: 200px;
 		height: 200px;
 		cursor: pointer;
 		object-fit: cover;
+		border-radius:255px;
 	}
 
 	.badge{
@@ -188,4 +191,12 @@ margin-bottom:10px;
 	line-height: 0px;
 	border-radius: 0px .3rem .3rem 0px;
 	font-size: 12px;
+}
+
+.select-list{
+	height:auto !important;
+}
+
+.optionset-option{
+	margin-bottom:30px;
 }

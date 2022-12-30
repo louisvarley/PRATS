@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
-use App\Config;
+use \App\Config;
 use \App\Services\EntityService as Entities;
+use \App\Services\PropertyService as Properties;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -17,14 +19,14 @@ class EmailService
 		
 		$mail=new PHPMailer();
 		$mail->IsSMTP();    
-		$mail->Port = getMetadata("emailer_port");
+		$mail->Port = Properties::getProperty("SMTP_PORT")->getValue();
 		$mail->SMTPAuth = true;               
-		$mail->Username=getMetadata("emailer_username");
-		$mail->Password =getMetadata("emailer_password");  
-		$mail->Host=getMetadata("emailer_host");
+		$mail->Username= Properties::getProperty("SMTP_USERNAME")->getValue();
+		$mail->Password = Properties::getProperty("SMTP_PASSWORD")->getValue();
+		$mail->Host= Properties::getProperty("SMTP_HOST")->getValue();
 		$mail->SMTPSecure = 'tls';   
-		$mail->From = getMetadata("emailer_from");
-		$mail->FromName = 'PRATS';
+		$mail->From = Properties::getProperty("SMTP_FROM")->getValue();
+		$mail->FromName = Properties::getProperty("SMTP_FROM_NAME")->getValue();
 		$mail->AddAddress($to); 
 		$mail->MsgHTML($sbody);
 		$mail->isHTML(true);

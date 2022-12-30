@@ -6,9 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="meta_data")
+ * @ORM\Table(name="properties")
  */
-class Metadata
+class Property
 {
 	/**
     * @ORM\Id
@@ -18,14 +18,19 @@ class Metadata
     protected $id;	
 	
 	/**
-    * @ORM\Column(type="string", nullable="false", name="meta_key")
+    * @ORM\Column(type="string", nullable="false", name="prop_key")
     */
     protected $key;	
 	
 	/**
-    * @ORM\Column(type="text", nullable="false", name="meta_value", length=65535)
+    * @ORM\Column(type="text", nullable="false", name="prop_value", length=65535)
     */
-    protected $value;		
+    protected $value;	
+
+	/**
+    * @ORM\Column(type="text", nullable="false", name="prop_name", length=65535)
+    */
+    protected $name;		
 
     public function getId()
     {
@@ -41,6 +46,16 @@ class Metadata
     {
         $this->key = $key;
     }
+	
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }	
 	
     public function getValue()
     {

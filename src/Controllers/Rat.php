@@ -28,6 +28,7 @@ class Rat extends \App\Controllers\ManagerController
 			"ratStatuses" => Entities::createOptionSet('RatStatus', 'id','name'),
 			"users" => Entities::createOptionSet('User', 'id',['firstName','lastName']),			
 			"ratGenders" => _RAT_GENDERS,
+			"countries" => _COUNTRIES,
 			"litters" => Entities::createOptionSet('litter', 'id', ['code']),	
 		);	
 	} 
@@ -35,15 +36,17 @@ class Rat extends \App\Controllers\ManagerController
 	public function updateEntity($id, $data){
 		
 		$rat = Entities::findEntity($this->route_params['controller'], $id);
-
-
-		
-		$ratStatus = Entities::findEntity("RatStatus", $data['rat']['status']);
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
 		$owner = Entities::findEntity("user", $data['rat']['owner']);
 		
+		if(!empty($data['rat']['image']['id'])){
+			
+			$image = Entities::findEntity("blob", $data['rat']['image']['id']);
+			$rat->setImage($image);
+		}
+		
 		$rat->setName($data['rat']['name']);
-		$rat->setStatus($ratStatus);	
+		$rat->setStatus($data['rat']['status']);	
 		$rat->setGender($data['rat']['gender']);
 		$rat->setLitter($litter);
 		$rat->setOwner($owner);
@@ -71,12 +74,17 @@ class Rat extends \App\Controllers\ManagerController
 
 		$rat = new \App\Models\rat();
 		
-		$ratStatus = Entities::findEntity("RatStatus", $data['rat']['status']);
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
 		$owner = Entities::findEntity("user", $data['rat']['owner']);
+
+		if(!empty($data['rat']['image']['id'])){
+			
+			$image = Entities::findEntity("blob", $data['rat']['image']['id']);
+			$rat->setImage($image);
+		}
 				
 		$rat->setName($data['rat']['name']);
-		$rat->setStatus($ratStatus);
+		$rat->setStatus($data['rat']['status']);
 		$rat->setGender($data['rat']['gender']);
 		$rat->setLitter($litter);
 		$rat->setOwner($owner);

@@ -43,6 +43,12 @@ class User extends \App\Controllers\ManagerController
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
 
+		if(!empty($data['user']['image']['id'])){
+			
+			$image = Entities::findEntity("blob", $data['user']['image']['id']);
+			$user->setImage($image);
+		}
+
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
 		$user->setAddressLine2($data['user']['address']['addressLine2']);
 		$user->setTown($data['user']['address']['town']);
@@ -54,7 +60,7 @@ class User extends \App\Controllers\ManagerController
 		$user->setTelephone($data['user']['telephone']);
 		
 		/* Password if yours */
-		if(isset($data['user']['password']) && strlen($data['user']['password']) > 5){
+		if(!empty($data['user']['password-confirm']) && !empty($data['user']['password']) && strlen($data['user']['password']) > 5){
 			
 			if($data['user']['password'] != $data['user']['password_confirm']){
 				toast::throwError("Error...", "Password Mismatch");
@@ -80,6 +86,8 @@ class User extends \App\Controllers\ManagerController
 		Entities::persist($user);
 		Entities::flush();
 		
+		Authentication::refresh();
+		
 	}
 	
 	public function insertEntity($data){
@@ -92,6 +100,12 @@ class User extends \App\Controllers\ManagerController
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
+		
+		if(!empty($data['user']['image']['id'])){
+			
+			$image = Entities::findEntity("blob", $data['user']['image']['id']);
+			$user->setImage($image);
+		}		
 		
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
 		$user->setAddressLine2($data['user']['address']['addressLine2']);

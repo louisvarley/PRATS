@@ -23,42 +23,49 @@
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Host',
 				'id': 'host', 
-				'name': "#{controller}[emailer_host]", 
+				'name': "#{controller}[SMTP_HOST]", 
 				'description': 'Hostname of SMTP Server',
-				'value': settings.emailer_host
+				'value': settings.SMTP_HOST
 			}%}						
 
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Username',
 				'id': 'host', 
-				'name': "#{controller}[emailer_username]", 
+				'name': "#{controller}[SMTP_USERNAME]", 
 				'description': 'Username',
-				'value': settings.emailer_username
+				'value': settings.SMTP_USERNAME
 			}%}		
 
 			{% include "Forms/Elements/text-password.html" with {
 				'label' : 'Password',
 				'id': 'host', 
-				'name': "#{controller}[emailer_password]", 
+				'name': "#{controller}[SMTP_PASSWORD]", 
 				'description': 'Password',
-				'value': settings.emailer_password
+				'value': settings.SMTP_PASSWORD
 			}%}						
 
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'From',
 				'id': 'host', 
-				'name': "#{controller}[emailer_from]", 
+				'name': "#{controller}[SMTP_FROM]", 
 				'description': 'Email Address to send from',
-				'value': settings.emailer_from
+				'value': settings.SMTP_FROM
 			}%}						
-		
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'From',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_FROM_NAME]", 
+				'description': 'From Name to send from',
+				'value': settings.SMTP_FROM_NAME
+			}%}				
 		
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'Port',
 				'id': 'host', 
-				'name': "#{controller}[emailer_port]", 
+				'name': "#{controller}[SMTP_PORT]", 
 				'description': 'SMTP Port',
-				'value': settings.emailer_port
+				'value': settings.SMTP_PORT
 			}%}					
 		
 		{% endblock %}

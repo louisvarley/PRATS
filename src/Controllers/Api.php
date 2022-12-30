@@ -50,7 +50,7 @@ class Api extends \App\Controller
 		
 		/* Update Last Activity Time */
 		Session::activity();
-		
+
 		/* Method Not Found */
         if (!method_exists($this, $method)) {
 			$response = new \App\Classes\ApiResponse(404, 404, ['message' => "API Method $method not found in " . get_class($this)]);

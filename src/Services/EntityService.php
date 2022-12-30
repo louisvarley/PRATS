@@ -254,7 +254,7 @@ class EntityService{
 		
 		/* RAT Status Table */
 		
-		foreach(_RAT_STATUS as $ratStatus){
+		foreach(_CONFIG['RAT_STATUS'] as $ratStatus){
 			
 
 			$pStatus = self::findEntity("RatStatus", $ratStatus['id']);
@@ -275,7 +275,7 @@ class EntityService{
 		
 		/* User Role Table */
 		
-		foreach(_USER_ROLES as $userRole){
+		foreach(_CONFIG['USER_ROLES'] as $userRole){
 			
 
 			$pRole = self::findEntity("UserRole", $userRole['id']);
@@ -292,12 +292,7 @@ class EntityService{
 			self::persist($pRole);
 			self::flush();
 			
-		}		
-		
-		
-		
-		
-		
+		}				
 	}
 
 	/* Is DB Server Alive? */

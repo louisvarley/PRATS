@@ -32,7 +32,17 @@
 				
 				<hr class="my-4">		
 
-			{% endif %}	
+			{% endif %}
+
+				{% include "Forms/Elements/image-uploader.html" with {
+					'id': 'rat_images',
+					'name': "#{controller}[image]", 
+					'image': rat.image,
+					'default': properties.DEFAULT_RAT_AVATAR,
+					'label': 'Profile Photo',
+					'description': 'Optional Images for this Rat'
+				}%}		
+			
 			
 				{% include "Forms/Elements/text.html" with {
 					'label' : 'Registration Code',
@@ -62,8 +72,8 @@
 				'name': "#{controller}[status]", 
 				'description': 'Status of this Rat?',
 				'required': 'required',
-				'value': rat.status.Id,
-				'options': ratStatuses			
+				'value': rat.status,
+				'options': optionsets.rat_status				
 			}%}					
 
 			{% include "Forms/Elements/select.html" with {
@@ -73,7 +83,7 @@
 				'description': 'Gender of this Rat?',
 				'required': 'required',
 				'value': rat.gender,
-				'options': ratGenders			
+				'options': optionsets.genders			
 			}%}		
 
 			<hr class="my-4">
@@ -86,6 +96,27 @@
 				'value': rat.litter.id,
 				'options': litters			
 			}%}		
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Country of Origin',		
+				'id': 'country', 
+				'name': "#{controller}[country]", 
+				'description': 'Gender of this Rat?',
+				'value': rat.country,
+				'options': countries			
+			}%}		
+
+			
+
+			{% include "Forms/Elements/text-date.html" with {
+				'label' : 'Date',	
+				'id': 'date', 
+				'readonly': '{% if( rat.litter.id ) %}readonly{{% endif %}',
+				'name': "#{controller}[birthDate]", 
+				'description': 'Date this litter was born',
+				'required': 'required',
+				'value' : rat.birthDate				
+			}%}					
 	
 			<hr class="my-4">
 			

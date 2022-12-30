@@ -47,50 +47,6 @@ define("_CONFIG_FILE",DIR_APP . '/Config.php');
 /* Version / Build */
 define("_BUILD", file_get_contents(DIR_ROOT . '/build'));
 
-/* Global Image Sizes */
-define("_IMAGE_SIZES",[
-	"thumbnail" => ["width" => 300, "height" => 300],
-	"small" => ["width" => 600, "height" => 600],	
-	"medium" => ["width" => 1000, "height" => 1000],	
-	"large" => ["width" => 1500, "height" => 1500],
-	]
-);
-
-/* Rat Statuses */
-define("_RAT_STATUS", array(
-	'ACTIVE' => array('id' => 1, 'name' => 'Active'),
-	'DECEASED' => array('id' => 2, 'name' => 'Deceased'),
-	'UNKNOWN' => array('id' => 3, 'name' => 'Unknown')
-	)
-);
-
-/* Rat Genders */
-define("_RAT_GENDERS", array(
-	array('value' => 'male', 'text' => 'Male'),
-	array('value' => 'female', 'text' => 'Female'),
-	)
-);
-
-/* User Roles*/
-define("_USER_ROLES", array(
-	'ADMIN' => array('id' => 1, 'name' => 'Administrator', 'level' => 1),
-	'BREEDER' => array('id' => 2, 'name' => 'Breeder', 'level' => 2),
-	'OWNER' => array('id' => 3, 'name' => 'Owner', 'level' => 3),
-	'USER' => array('id' => 4, 'name' => 'User', 'level' => 4)	
-	)
-);
-
-/* Doctrine Booleans */
-define("_BOOLS", array(
-	array('value' => '0', 'text' => 'No'),
-	array('value' => '1', 'text' => 'Yes'),
-	)
-);
-
-
-/* Countries */
-define("_COUNTRIES",json_decode(file_get_contents(DIR_APP . '/Countries.json'), true));
-
 if(file_exists(_CONFIG_FILE)){
 	define("_IS_SETUP", true);
 }else{
@@ -152,43 +108,57 @@ Entities::generateSchema();
 Entities::generateProxies();
 Entities::initialUserCheck();
 
-function getMetadata($key){
-
-	$meta = Entities::findBy("metadata",["key" => $key]);
-
-	if($meta){
-		return $meta[0]->getValue();
-	}else{
-		return null;
-	}
-
-}
-
-function setMetadata($key, $value){
-
-	if(Entities::findBy("metadata",["key" => $key])){
-
-		$meta = Entities::findBy("metadata",["key" => $key])[0];
-		$meta->setValue($value);
-	}else{
-
-		$meta = new \App\Models\Metadata();
-		$meta->setValue($value);
-		$meta->setKey($key);
-	}
-
-	Entities::persist($meta);
-	Entities::flush();
-
-}
-
-
-
-
 Session::start();
 
 if(Update::hasNewVersion()){
 	Notifications::addNotification("New Update Available: " .  Update::remoteVersion(),"/update","globe-europe");
 }
 
+
+
+
+
+/* Global Image Sizes */
+define("_IMAGE_SIZES",[
+	"thumbnail" => ["width" => 300, "height" => 300],
+	"small" => ["width" => 600, "height" => 600],	
+	"medium" => ["width" => 1000, "height" => 1000],	
+	"large" => ["width" => 1500, "height" => 1500],
+	]
+);
+
+/* Rat Statuses */
+define("_RAT_STATUS", array(
+	'ACTIVE' => array('id' => 1, 'name' => 'Active'),
+	'DECEASED' => array('id' => 2, 'name' => 'Deceased'),
+	'UNKNOWN' => array('id' => 3, 'name' => 'Unknown')
+	)
+);
+
+/* Rat Genders */
+define("_RAT_GENDERS", array(
+	array('value' => 'male', 'text' => 'Male'),
+	array('value' => 'female', 'text' => 'Female'),
+	)
+);
+
+/* User Roles*/
+define("_USER_ROLES", array(
+	'ADMIN' => array('id' => 1, 'name' => 'Administrator', 'level' => 1),
+	'BREEDER' => array('id' => 2, 'name' => 'Breeder', 'level' => 2),
+	'OWNER' => array('id' => 3, 'name' => 'Owner', 'level' => 3),
+	'USER' => array('id' => 4, 'name' => 'User', 'level' => 4)	
+	)
+);
+
+/* Doctrine Booleans */
+define("_BOOLS", array(
+	array('value' => '0', 'text' => 'No'),
+	array('value' => '1', 'text' => 'Yes'),
+	)
+);
+
+
+/* Countries */
+define("_COUNTRIES",json_decode(file_get_contents(DIR_APP . '/Countries.json'), true));
 

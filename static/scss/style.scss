@@ -1,7 +1,7 @@
-
-
 @import "_variables";
 @import "_mixins";
+
+@import "../bootstrap/scss/bootstrap";
 
 @import "_style";
 @import "_toast";
@@ -15,5 +15,5 @@
 
 @import "_responsive";
 
-@import "../bootstrap/scss/bootstrap";
+
 

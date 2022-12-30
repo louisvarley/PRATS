@@ -30,27 +30,36 @@ class Register extends \App\Controller
 		
 		if($this->isPOST()){
 
-			$user = Entities::findBy("User", ['email' => $this->post['email']]);
-			 
-			if(count($user) > 0 && $user[0]->validatePassword($this->post['password'])){
+			$users = Entities::findBy("User", ['email' => $this->post['register']['email']]);
+
+			if(count($users) == 0){
+
+				$user = new \App\Models\User();
 				
-				Authentication::login($user[0]);
-				if(isset($this->get['redirect'])){
-					header('Location:' . urldecode($this->get['redirect']));
-					die();
-				}else{
-					header('Location: /');
-				}
+				$user->setEmail($this->post['register']['email']);
+				$user->setFirstName($this->post['register']['firstName']);
+				$user->setLastName($this->post['register']['lastName']);
+				$user->setPassword($this->post['register']['lastName']);
 				
+				/* Set Users Role to USER */
+				$user->setUserRole(Entities::findEntity("UserRole", _USER_ROLES['USER']['id']));
 				
+				Entities::persist($user);
+				Entities::flush();
+				
+				/* Log the User In */
+				Authentication::login($user);
+				
+				Toast::throwSuccess("Welcome", "Hi $user->getFirstName() welcome to PRATS");
+
 			}else{
-			
-				Toast::throwError("Error...", "Your login details were incorrect or not found");
-			
+				
+				Toast::throwError("Error", "Your email address is already in use! please <a href='/forgot-password'></a> if you are not sure of your password!");
+				
 			}
+			
 		}
 		
-
 		$this->render('Register/index.html');
 
     }

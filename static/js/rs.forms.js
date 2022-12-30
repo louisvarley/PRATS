@@ -34,10 +34,12 @@ rs.triggerChange = function(frm){
 
 rs.init("form_setup",function(){
 		
-	$('.datepicker').datepicker({
+	$('.datepicker:not([readonly])').datepicker({
 		format: 'dd/mm/yyyy',
 		autoclose: true,
 	});
+	
+	
 
 	
 	/* Max Length */
@@ -394,7 +396,7 @@ rs.formSubmitLoading = function(){
 
 rs.init("select2", function(){
 
-	$("select").each(function(){
+	$(".select2").each(function(){
 		
 		jQuery(this).select2({
 			allowClear: true,
@@ -403,7 +405,7 @@ rs.init("select2", function(){
 
 	firstEmptySelect = true;
 
-	$("select").each(function(){
+	$(".select2").each(function(){
 		jQuery(this).select2({
 			allowClear: true,
 			escapeMarkup: function(markup) {return markup;},
@@ -462,6 +464,23 @@ rs.init("select2", function(){
 		
 	});
 	
+});
+
+
+rs.init("modals", function(){
+	
+	jQuery('[data-toggle="modal"]').each(function(){
+		jQuery(this).click(function(){			
+			$(jQuery(this).data('target')).modal('toggle')
+		});	
+	});
+		
+	jQuery('.btn-close').click(function(){
+		jQuery('.modal').each(function(){
+			jQuery(this).modal('hide')
+		});
+	});
+		
 });
 
 

@@ -1,12 +1,17 @@
 {% include 'header.html' %}
 <body>
 	<div id="main" class="main-private {{ controller }}">
+
 		{% include 'nav.html' %}
-		<div class="content">
+				
+			
+		<div id="content" class="content">
 			{% block body %}
 			{% endblock %}
 		</div>
+
 		{% include 'footer.html' %}
+	
 	</div>
 </body>
 </html>

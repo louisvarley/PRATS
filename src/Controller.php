@@ -6,6 +6,9 @@ use \App\Services\NotificationService as Notifications;
 use \App\Services\SessionService as Session;
 use \App\Services\FilterService as Filter;
 
+use \App\Services\OptionService as OptionService;
+use \App\Services\PropertyService as PropertyService;
+
 /**
  * Base controller
  *
@@ -174,14 +177,17 @@ abstract class Controller
 	
 	public function render($template, $array = null){
 		
-		
 		View::renderTemplate($template, array_merge(
-				$this->route_params, 
-				$this->page_data,
-				array('me' => Authentication::me()),
-				$this->notifications,
-				array('build' => _BUILD),				
-				empty($array) ? [] : $array)
+				$this->route_params, //Comes from the Route
+				$this->page_data, //Title and Description
+				array('me' => Authentication::me()), //Logged In User
+				$this->notifications, //Notifications
+				array('build' => _BUILD), //Build	
+				array('optionsets' => OptionService::getAllOptions()), 
+				array('properties' => PropertyService::getAllProperties()), 				
+				
+				
+				empty($array) ? [] : $array) //Additional
 		);
 		
 	}

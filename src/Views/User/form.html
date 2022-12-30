@@ -34,6 +34,17 @@
 				<hr class="my-4">	
 			
 			{% endif %} 
+			
+			{% include "Forms/Elements/image-uploader.html" with {
+				'id': 'user_images',
+				'name': "#{controller}[image]", 
+				'default': user.getProfileImage,
+				'image': user.image,
+				'label': 'Profile Photo',
+				'description': 'Optional Profile Picture'
+			}%}		
+
+			<hr class="my-4">			
 
 			{% include "Forms/Elements/text-email.html" with {
 				'label' : 'Email Address',
@@ -43,31 +54,7 @@
 				'required': 'required',
 				'value': user.email
 			}%}		
-			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Role',		
-				'id': 'role', 
-				'name': "#{controller}[userRole]", 
-				'description': 'Role of this User?',
-				'required': 'required',
-				'value': user.userRole.Id,
-				'options': userRoles			
-			}%}				
-			
-			{% if( id ) %}
-			
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Password Reset',		
-					'id': 'passwordResetFlag', 
-					'name': "#{controller}[passwordResetFlag]", 
-					'description': 'Password reset required on new login?',
-					'required': 'required',
-					'value': user.passwordResetFlag,
-					'options': booleans			
-				}%}			
-
-			{% endif %} 			
-			<hr class="my-4">		
+				
 			
 			{% include "Forms/Elements/text.html" with {
 				'label' : 'First Name',
@@ -122,6 +109,33 @@
 				'description': 'Breeding Code',
 				'value': user.code
 			}%}	
+			
+			<hr class="my-4">			
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Role',		
+				'id': 'role', 
+				'name': "#{controller}[userRole]", 
+				'description': 'Role of this User?',
+				'required': 'required',
+				'value': user.userRole.Id,
+				'options': userRoles			
+			}%}				
+			
+			{% if( id ) %}
+			
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Password Reset',		
+					'id': 'passwordResetFlag', 
+					'name': "#{controller}[passwordResetFlag]", 
+					'description': 'Password reset required on new login?',
+					'required': 'required',
+					'value': user.passwordResetFlag,
+					'options': booleans			
+				}%}			
+
+			{% endif %} 			
+			<hr class="my-4">				
 			
 			{% if( id == null ) %}
 			

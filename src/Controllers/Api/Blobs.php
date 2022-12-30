@@ -3,7 +3,6 @@
 namespace App\Controllers\Api;
 
 use \App\View;
-use \App\Models\Purchase;
 use \App\Services\EntityService as Entities;
 
 /**
@@ -11,25 +10,20 @@ use \App\Services\EntityService as Entities;
  *
  * 
  */
-class Purchases extends \App\Controllers\Api
+class Blobs extends \App\Controllers\Api
 {
 	
-	protected function purchaseImagePostAction(){
+	protected function uploadPostAction(){
 
 		try{
 
-
-			$imageLocation = ($_FILES['images']['tmp_name'][0]);
+			$imageLocation = ($_FILES['image']['tmp_name']);
 			$imageData = file_get_contents($imageLocation);
 			$imageBase64 = base64_encode($imageData);
-
-			$purchase = Entities::findEntity("purchase",$this->get['purchaseId']);
 
 			$image = new \App\Models\Blob();
 			$image->setData($imageBase64);
 			Entities::persist($image);
-
-			$purchase->getImages()->add($image);
 
 			Entities::flush();
 

@@ -45,6 +45,12 @@ class AuthenticationService{
 		Session::save("user", $user);		
 	}
 	
+	public static function refresh(){
+		if(self::loggedIn()){
+			Session::save("user", self::me());	
+		}		
+	}
+	
 	/* Destroys Session */
 	public static function logout(){
 		Session::destroy();

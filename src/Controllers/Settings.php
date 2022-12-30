@@ -4,8 +4,9 @@ namespace App\Controllers;
 
 use \App\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use \App\Services\EntityService as Entities;
 
+use \App\Services\EntityService as Entities;
+use \App\Services\PropertyService as Properties;
 /**
  * Home controller
  *
@@ -27,13 +28,12 @@ class Settings extends \App\Controller
 		}
 
 
-		$setingsEntities = Entities::findAll("Metadata");
+		$properties = Properties::getAll();
 
 		$settings = [];
 
-		foreach($setingsEntities as $entity){
-
-			$settings[$entity->getKey()] = $entity->getValue();
+		foreach($properties as $property){
+			$settings[$property->getKey()] = $property->getValue();
 		}
 
 		View::renderTemplate('Settings/form.html', array_merge(
@@ -43,18 +43,15 @@ class Settings extends \App\Controller
 			));
 	} 
 
-
-
 	public function save($data){
 		
-
 		foreach($data['settings'] as $key => $value){
-			setMetadata($key, $value);
+			
+			/* TODO */
+			Properties::getAll();
+
 		}
 
-		
 	}
-	
-
-	
+		
 }

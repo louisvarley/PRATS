@@ -41,11 +41,20 @@ class Rat
      */
     protected $litter;	
   
-  	/**
-    * @ORM\ManyToOne(targetEntity="RatStatus")
-    * @ORM\JoinColumn(name="rat_status_id", referencedColumnName="id")
-    */	
+	/**
+    * @ORM\Column(type="integer")
+    */
     protected $status;
+	
+	/**
+    * @ORM\Column(name="birth_date", type="date", nullable="true")
+    */
+    protected $birthDate;		
+	
+	/**
+    * @ORM\Column(name="country", type="string", nullable="true")
+    */
+    protected $country;		
 	
     /**
      * Many Rats have One Owner
@@ -54,19 +63,16 @@ class Rat
      */
     protected $owner;	
 	
+
 	/**
-    * @ORM\ManyToMany(targetEntity="Blob")
-	* @ORM\JoinTable(name="rats_images",
-    *      joinColumns={@ORM\JoinColumn(name="purchase_id", referencedColumnName="id")},
-    *      inverseJoinColumns={@ORM\JoinColumn(name="blob_id", referencedColumnName="id", unique=true)}
-    *      )
-    */
-    protected $images;	
+	 * @ORM\OneToOne(targetEntity="Blob", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
+	 */	
+    protected $image;	
   
 	public function __construct() {
       
-	  $this->images = new ArrayCollection();
-	  
+
     }	
 
     public function getId()
@@ -124,6 +130,26 @@ class Rat
         $this->status = $status;
     }		
 	
+	public function setImage($image)
+	{
+		 $this->image = $image;
+	}
+	
+	public function getImage()
+	{
+		return $this->image;
+	}
+	
+	public function getProfileImage(){
+
+		if($this->getImage() == null){
+			return WWW_IMG . '/default.png';
+		}else{
+			return $this->getImage()->getThumbnailUrl();
+		}
+
+	}	
+	
     public function getOwner()
     {
         return $this->owner;
@@ -132,6 +158,38 @@ class Rat
     public function setOwner($owner)
     {
         $this->owner = $owner;
+    }		
+		
+    public function setCounty($county)
+    {
+		if(!$this->getLitter()){
+			$this->county = $county;
+		}		  
+    }	
+	
+    public function getCountry()
+    {
+		if($this->getLitter()){
+			$this->getLitter()->getBreeder()->getCountry();
+		}else{
+			return $this->country;
+		}
+    }	
+
+    public function getBirthDate()
+    {        
+		if($this->getLitter()){
+			$this->getLitter()->getBirthDate();
+		}else{
+			return $this->birthDate;
+		}
+    }	
+	
+    public function setBirthDate($date)
+    {
+		if(!$this->getLitter()){
+			$this->birthDate = $date;
+		}
     }		
 		
 	public function resetCode(){

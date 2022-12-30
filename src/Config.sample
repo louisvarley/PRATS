@@ -15,3 +15,48 @@ define('_DB_DUMPER','mysqldump');
 define('_ADMIN_USER','admin@admin.com');
 define('_ADMIN_PASSWORD','admin');
 
+
+
+/* Global Image Sizes */
+define("_IMAGE_SIZES",[
+	"thumbnail" => ["width" => 300, "height" => 300],
+	"small" => ["width" => 600, "height" => 600],	
+	"medium" => ["width" => 1000, "height" => 1000],	
+	"large" => ["width" => 1500, "height" => 1500],
+	]
+);
+
+/* Rat Statuses */
+define("_RAT_STATUS", array(
+	'ACTIVE' => array('id' => 1, 'name' => 'Active'),
+	'DECEASED' => array('id' => 2, 'name' => 'Deceased'),
+	'UNKNOWN' => array('id' => 3, 'name' => 'Unknown')
+	)
+);
+
+/* Rat Genders */
+define("_RAT_GENDERS", array(
+	array('value' => 'male', 'text' => 'Male'),
+	array('value' => 'female', 'text' => 'Female'),
+	)
+);
+
+/* User Roles*/
+define("_USER_ROLES", array(
+	'ADMIN' => array('id' => 1, 'name' => 'Administrator', 'level' => 1),
+	'BREEDER' => array('id' => 2, 'name' => 'Breeder', 'level' => 2),
+	'OWNER' => array('id' => 3, 'name' => 'Owner', 'level' => 3),
+	'USER' => array('id' => 4, 'name' => 'User', 'level' => 4)	
+	)
+);
+
+/* Doctrine Booleans */
+define("_BOOLS", array(
+	array('value' => '0', 'text' => 'No'),
+	array('value' => '1', 'text' => 'Yes'),
+	)
+);
+
+
+/* Countries */
+define("_COUNTRIES",json_decode(file_get_contents(DIR_APP . '/Countries.json'), true));

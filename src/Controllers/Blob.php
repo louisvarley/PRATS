@@ -26,7 +26,7 @@ class Blob extends \App\Controllers\ManagerController
 
 		if(array_key_exists("size", $this->route_params)){
 			
-			$imageSize = _IMAGE_SIZES[$this->route_params['size']];
+			$imageSize = _CONFIG['IMAGE_SIZES'][strtoupper($this->route_params['size'])];
 			echo base64_decode($this->base64_resize($blob->getBase64(), $imageSize['width'], $imageSize['height']));
 			
 		}else{ /* Full Size */
@@ -36,29 +36,7 @@ class Blob extends \App\Controllers\ManagerController
 		}
 
 	} 
-	
-	public function purchaseAction(){
-		
-		
-		header('Content-type:image/jpg');
-	
-		$purchase = Entities::findEntity("purchase", $this->route_params['id']);
-		
-		$blob = $purchase->getImages()->first();
-		
-		$imageSize = _IMAGE_SIZES[$this->route_params['size']];
 
-		if(empty($blob)){
-			echo base64_decode($this->base64_resize(base64_encode(file_get_contents(DIR_STATIC . '/img/place-holder.jpg')), $imageSize['width'], $imageSize['height']));
-			
-		}else{
-			echo base64_decode($this->base64_resize($blob->getBase64(), $imageSize['width'], $imageSize['height']));
-		}
-
-		
-	} 	
-	
-	
 	public function base64_resize($image, $width, $height){
 		
 		$im = imagecreatefromstring(base64_decode($image));
@@ -66,8 +44,8 @@ class Blob extends \App\Controllers\ManagerController
 		$source_height = imagesy($im);
 		$ratio =  $source_height / $source_width;
 
-		$new_width = $width; // assign new width to new resized image
-		$new_height = $ratio * $height;
+		$new_width = round($width, 0); // assign new width to new resized image
+		$new_height = round($ratio * $height, 0);
 
 		$thumb = imagecreatetruecolor($new_width, $new_height);
 

@@ -19,8 +19,8 @@ class Blob
     protected $id;	
 	
 	/** @ORM\Column(type="blob", name="data") **/
-    protected $data;
-	
+    protected $data;	
+
 
     public function getId()
     {
@@ -36,7 +36,6 @@ class Blob
     {
         return $this->data = $data;
     }  
-
 
 	public function getBase64(){
 

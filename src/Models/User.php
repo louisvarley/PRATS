@@ -106,6 +106,11 @@ class User
     */
     protected $passwordResetFlag;		
 	
+	/**
+	 * @ORM\OneToOne(targetEntity="Blob", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
+	 */	
+    protected $image;	
 		
 	public function __construct()
     {
@@ -142,6 +147,26 @@ class User
     {
         $this->apikey = implode('-', str_split(substr(strtolower(md5(microtime().rand(1000, 9999))), 0, 30), 6));
     }	
+	
+	public function setImage($image)
+	{
+		 $this->image = $image;
+	}
+	
+	public function getImage()
+	{
+		return $this->image;
+	}
+
+	public function getProfileImage(){
+
+		if($this->getImage() == null){
+			return WWW_IMG . '/default.png';
+		}else{
+			return $this->getImage()->getThumbnailUrl();
+		}
+
+	}
 	
 	public function generateTemporaryPassword(){
 		
