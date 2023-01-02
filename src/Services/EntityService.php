@@ -6,7 +6,7 @@ use App\Config;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use \App\Services\PluginService as Plugins;
-
+use \App\Services\PropertyService as Properties;
 
 
 use Ifsnop\Mysqldump as IMysqldump;
@@ -251,48 +251,8 @@ class EntityService{
 	/* Generate Static Data, such as status */
 	public static function generateStaticData(){
 		
-		
-		/* RAT Status Table */
-		
-		foreach(_CONFIG['RAT_STATUS'] as $ratStatus){
 			
-
-			$pStatus = self::findEntity("RatStatus", $ratStatus['id']);
-			
-			if($pStatus){
-				$pStatus->setName($ratStatus['name']);			
-			}else{
-				$pStatus = new \App\Models\RatStatus();
-				$pStatus->setName($ratStatus['name']);
-
-			}
-			
-			self::persist($pStatus);
-			self::flush();
-			
-		}
-		
-		
-		/* User Role Table */
-		
-		foreach(_CONFIG['USER_ROLES'] as $userRole){
-			
-
-			$pRole = self::findEntity("UserRole", $userRole['id']);
-			
-			if($pRole){
-				$pRole->setName($userRole['name']);
-				$pRole->setLevel($userRole['level']);				
-			}else{
-				$pRole = new \App\Models\UserRole();
-				$pRole->setName($userRole['name']);
-				$pRole->setLevel($userRole['level']);
-			}
-			
-			self::persist($pRole);
-			self::flush();
-			
-		}				
+				
 	}
 
 	/* Is DB Server Alive? */

@@ -40,14 +40,6 @@
 				'name': "#{controller}[value]", 
 				'description': 'Property Value',
 				'value': property.value
-			}%}	
-			
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Name',
-				'id': 'name', 
-				'name': "#{controller}[name]", 
-				'description': 'Property Name',
-				'value': property.name
 			}%}				
 
 		{% endblock %}

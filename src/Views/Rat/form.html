@@ -38,7 +38,7 @@
 					'id': 'rat_images',
 					'name': "#{controller}[image]", 
 					'image': rat.image,
-					'default': properties.DEFAULT_RAT_AVATAR,
+					'default': properties.default_rat_avatar,
 					'label': 'Profile Photo',
 					'description': 'Optional Images for this Rat'
 				}%}		
@@ -73,7 +73,7 @@
 				'description': 'Status of this Rat?',
 				'required': 'required',
 				'value': rat.status,
-				'options': optionsets.rat_status				
+				'options': ratStatus				
 			}%}					
 
 			{% include "Forms/Elements/select.html" with {
@@ -83,11 +83,16 @@
 				'description': 'Gender of this Rat?',
 				'required': 'required',
 				'value': rat.gender,
-				'options': optionsets.genders			
+				'options': genders		
 			}%}		
 
-			<hr class="my-4">
-				
+			{% include "Forms/Elements/seperator.html" %}
+
+			{% include "Forms/Elements/explainer.html" with {
+				'title' : 'Birth Information',		
+				'text': 'Selecting a litter here will Override any Country of Origin or Date of Birth using information from the litter. If No Litter is selected, this can be entered manually.', 			
+			}%}				
+			
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Litter',		
 				'id': 'litter', 
@@ -95,42 +100,47 @@
 				'description': 'This Rats Litter?',
 				'value': rat.litter.id,
 				'options': litters			
-			}%}		
+			}%}				
 			
 			{% include "Forms/Elements/select.html" with {
 				'label' : 'Country of Origin',		
 				'id': 'country', 
+				'readonly': rat.litter.id,
 				'name': "#{controller}[country]", 
 				'description': 'Gender of this Rat?',
-				'value': rat.country,
+				'value': rat.litter.breeder.country,
 				'options': countries			
 			}%}		
 
-			
+			{% if( rat.litter.id ) %}
 
-			{% include "Forms/Elements/text-date.html" with {
-				'label' : 'Date',	
-				'id': 'date', 
-				'readonly': '{% if( rat.litter.id ) %}readonly{{% endif %}',
-				'name': "#{controller}[birthDate]", 
-				'description': 'Date this litter was born',
-				'required': 'required',
-				'value' : rat.birthDate				
-			}%}					
-	
-			<hr class="my-4">
+				{% include "Forms/Elements/text-date.html" with {
+					'label' : 'Date of Birth',	
+					'id': 'date', 
+					'readonly': rat.litter.id,				
+					'name': "#{controller}[birthDate]", 
+					'description': 'Date this litter was born',
+					'required': 'required',
+					'value' : rat.litter.birthDate				
+				}%}		
+
+			{% else %}
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Owner',		
-				'id': 'owner', 
-				'name': "#{controller}[owner]", 
-				'description': 'Owner of this Rat?',
-				'value': rat.owner.Id,
-				'options': users			
-			}%}			
+				{% include "Forms/Elements/text-date.html" with {
+					'label' : 'Date of Birth',	
+					'id': 'date', 
+					'readonly': rat.litter.id,				
+					'name': "#{controller}[birthDate]", 
+					'description': 'Date this litter was born',
+					'required': 'required',
+					'value' : rat.birthDate				
+				}%}		
+
+			{% endif %}			
 			
+			{% include "Forms/Elements/seperator.html" %}
+
 			{% if( rat.id ) %}
-			
 				{% if( rat.litter.id ) %}
 			
 					{% include "Forms/Elements/text.html" with {
@@ -152,8 +162,19 @@
 					}%}		
 					
 				{% endif %}	
-			{% endif %}	
-		
+			{% endif %}							
+	
+			{% include "Forms/Elements/seperator.html" %}
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Owner',		
+				'id': 'owner', 
+				'name': "#{controller}[owner]", 
+				'description': 'Owner of this Rat?',
+				'value': rat.owner.Id,
+				'options': users			
+			}%}			
+
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

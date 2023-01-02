@@ -25,12 +25,7 @@ class Property
 	/**
     * @ORM\Column(type="text", nullable="false", name="prop_value", length=65535)
     */
-    protected $value;	
-
-	/**
-    * @ORM\Column(type="text", nullable="false", name="prop_name", length=65535)
-    */
-    protected $name;		
+    protected $value;			
 
     public function getId()
     {
@@ -46,16 +41,6 @@ class Property
     {
         $this->key = $key;
     }
-	
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }	
 	
     public function getValue()
     {

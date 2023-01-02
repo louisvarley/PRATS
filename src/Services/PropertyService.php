@@ -7,6 +7,55 @@ use \App\Services\EntityService as Entities;
 
 class PropertyService{
 		
+	/* Adds new only if not present */
+	public static function add($key, $value){
+
+		if(!self::propertyExists($key)){
+			
+			$property = new \App\Models\Property();
+			
+			$property->setKey($key);
+			$property->setValue($value);
+			
+			Entities::persist($property);
+			Entities::flush();			
+			
+		}
+		
+	}
+
+	/* Adds or Edits, new only if not present */
+	public static function edit($key, $value){
+
+		if(!self::propertyExists($key)){
+			
+			self::add($key, $value);
+
+		}else{
+
+			$property = self::getProperty($key);
+			$property->setKey($key);
+			$property->setValue($value);
+			
+			Entities::persist($property);
+			Entities::flush();	
+			
+		}
+		
+	}		
+		
+	public static function propertyExists($key){
+
+		$property = Entities::findBy("property",["key" => $key]);
+		
+		if(count($property) > 0){
+			
+			return true;
+			
+		}
+		
+	}		
+		
 	public static function getAllProperties(){
 		
 		$properties = Entities::findAll("Property","key");
@@ -15,7 +64,7 @@ class PropertyService{
 		
 		foreach($properties as $property){
 			
-			$arr[strtolower($property->getKey())] = $property->getValue();
+			$arr[($property->getKey())] = $property->getValue();
 		}
 		
 		return $arr;

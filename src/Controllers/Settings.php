@@ -28,18 +28,11 @@ class Settings extends \App\Controller
 		}
 
 
-		$properties = Properties::getAll();
-
-		$settings = [];
-
-		foreach($properties as $property){
-			$settings[$property->getKey()] = $property->getValue();
-		}
-
+		$properties = Properties::getAllProperties();
 		View::renderTemplate('Settings/form.html', array_merge(
 				$this->route_params, 
 				$this->page_data,
-				['settings' => $settings],					
+				['settings' => $properties],					
 			));
 	} 
 

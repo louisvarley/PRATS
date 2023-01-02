@@ -2,14 +2,10 @@
 
 namespace App\Classes;
 
-class RatStatus
+class Country
 {
 
 	public $text;
 	public $value;
-		
+	
 }
-
-
-
-

@@ -24,7 +24,6 @@ class Property extends \App\Controllers\ManagerController
 		$property = Entities::findEntity($this->route_params['controller'], $id);
 
 		$property->setKey($data['property']['key']);
-		$property->setName($data['property']['name']);
 		$property->setValue($data['property']['value']);
 		
 		Entities::persist($property);
@@ -38,7 +37,6 @@ class Property extends \App\Controllers\ManagerController
 		$property = new \App\Models\Property();
 		
 		$property->setKey($data['property']['key']);
-		$property->setName($data['property']['name']);
 		$property->setValue($data['property']['value']);
 		
 		Entities::persist($property);

@@ -4,13 +4,12 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Key", "Value", "Name", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Key", "Value", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td data-label="Key">{{ entity.key }}</td>
-			<td data-label="Value">{{ entity.value }}</td>		
-			<td data-label="Name">{{ entity.name }}</td>					
+			<td data-label="Value">{{ entity.value }}</td>							
 			<td data-label="Options">
 				<div class="dropdown">
 				  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

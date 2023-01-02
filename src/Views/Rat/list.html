@@ -5,10 +5,11 @@
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
 	{% include '/Buttons/add-button.html' with {'model': controller} %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Code", "Name", "Owner", "Litter Code", "Gender", "Status", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Code", "Name", "Owner", "Litter Code", "Gender", "Status", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
+			<td><img class="rounded-circle me-2" src="{{ entity.getProfileImage }}" width="32px" height="32px"></td>
 			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>	
 			<td data-label="Name">{{ entity.name }}</td>
 			<td data-label="Owner">{{ entity.owner.firstName }} {{ entity.owner.lastName }}</td>			

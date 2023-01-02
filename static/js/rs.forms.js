@@ -77,9 +77,17 @@ rs.init("form_setup",function(){
 
 	/* Enable Readonly Padlock */
 	jQuery(document).ready(function(){
-		jQuery('input[type=text][readonly], select[readonly], textarea[readonly]').each(function(){
-			jQuery('<i class="fas fa-lock readonly-padlock"></i>').hide().insertAfter(this).fadeIn(500);
+		jQuery('input[type=text][readonly], select[readonly], textarea[readonly]').not('.select2').each(function(){
+				jQuery('<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>').hide().insertAfter(this).fadeIn(500);
 		});
+		
+		jQuery('.select2').each(function(){
+			if(jQuery(this).is('[readonly]')){
+					jQuery('<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>').hide().appendTo(jQuery(this).parent()).fadeIn(500);
+			}
+				
+			
+		});		
 	})
 
 	/* Enable Tool Tips */
@@ -401,13 +409,16 @@ rs.init("select2", function(){
 		jQuery(this).select2({
 			allowClear: true,
 		});
+		
 	});
 
 	firstEmptySelect = true;
 
 	$(".select2").each(function(){
+		
 		jQuery(this).select2({
 			allowClear: true,
+			disabled: function(){if(jQuery(this).is('[readonly]')){ return 'readonly' } },
 			escapeMarkup: function(markup) {return markup;},
 			templateResult: function(data) {
 				

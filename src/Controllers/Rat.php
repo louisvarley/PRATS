@@ -21,13 +21,11 @@ class Rat extends \App\Controllers\ManagerController
 
 	public function getEntity($id = 0){
 		
-			
-		
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
-			"ratStatuses" => Entities::createOptionSet('RatStatus', 'id','name'),
+			"ratStatus" => _RAT_STATUS,
 			"users" => Entities::createOptionSet('User', 'id',['firstName','lastName']),			
-			"ratGenders" => _RAT_GENDERS,
+			"genders" => _GENDERS,
 			"countries" => _COUNTRIES,
 			"litters" => Entities::createOptionSet('litter', 'id', ['code']),	
 		);	

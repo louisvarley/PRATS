@@ -26,7 +26,7 @@ class Blob extends \App\Controllers\ManagerController
 
 		if(array_key_exists("size", $this->route_params)){
 			
-			$imageSize = _CONFIG['IMAGE_SIZES'][strtoupper($this->route_params['size'])];
+			$imageSize = _IMAGE_SIZES[strtoupper($this->route_params['size'])];
 			echo base64_decode($this->base64_resize($blob->getBase64(), $imageSize['width'], $imageSize['height']));
 			
 		}else{ /* Full Size */

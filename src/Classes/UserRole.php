@@ -2,7 +2,7 @@
 
 namespace App\Classes;
 
-class RatStatus
+class UserRole
 {
 
 	public $text;

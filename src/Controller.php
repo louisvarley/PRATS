@@ -176,14 +176,13 @@ abstract class Controller
 	}
 	
 	public function render($template, $array = null){
-		
+
 		View::renderTemplate($template, array_merge(
 				$this->route_params, //Comes from the Route
 				$this->page_data, //Title and Description
 				array('me' => Authentication::me()), //Logged In User
 				$this->notifications, //Notifications
 				array('build' => _BUILD), //Build	
-				array('optionsets' => OptionService::getAllOptions()), 
 				array('properties' => PropertyService::getAllProperties()), 				
 				
 				
