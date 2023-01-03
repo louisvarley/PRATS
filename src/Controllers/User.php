@@ -25,9 +25,10 @@ class User extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
-			'countries' => _COUNTRIES,
+			"countries" => _COUNTRIES,
 			"booleans" => _BOOLS,
-			"userRoles" => Entities::createOptionSet('UserRole', 'id','name'),			
+			"userRoles" => _USER_ROLES,		
+			"affiliations" => Entities::createOptionSet('Affiliation', 'id',['name']),			
 		);	
 	} 
 
@@ -36,9 +37,7 @@ class User extends \App\Controllers\ManagerController
 		$user = Entities::findEntity($this->route_params['controller'], $id);
 		
 		
-		$userRole = Entities::findEntity("UserRole", $data['user']['userRole']);
-		
-		$user->setUserRole($userRole);
+		$user->setUserRole($data['user']['userRole']);
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -47,6 +46,13 @@ class User extends \App\Controllers\ManagerController
 			
 			$image = Entities::findEntity("blob", $data['user']['image']['id']);
 			$user->setImage($image);
+		}
+
+		if(!empty($data['user']['affiliation'])){
+			$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
+			$user->setAffiliation($affiliation);
+		}else{
+			$user->setAffiliation(null);
 		}
 
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
@@ -93,10 +99,8 @@ class User extends \App\Controllers\ManagerController
 	public function insertEntity($data){
 
 		$user = new \App\Models\User();
-
-		$userRole = Entities::findEntity("UserRole", $data['user']['userRole']);
 		
-		$user->setUserRole($userRole);
+		$user->setUserRole($data['user']['userRole']);
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -106,6 +110,13 @@ class User extends \App\Controllers\ManagerController
 			$image = Entities::findEntity("blob", $data['user']['image']['id']);
 			$user->setImage($image);
 		}		
+		
+		if(!empty($data['user']['affiliation'])){
+			$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
+			$user->setAffiliation($affiliation);
+		}else{
+			$user->setAffiliation(null);
+		}
 		
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
 		$user->setAddressLine2($data['user']['address']['addressLine2']);

@@ -27,7 +27,6 @@ class Settings extends \App\Controller
 			$this->save($this->post);
 		}
 
-
 		$properties = Properties::getAllProperties();
 		View::renderTemplate('Settings/form.html', array_merge(
 				$this->route_params, 

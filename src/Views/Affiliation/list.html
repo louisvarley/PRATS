@@ -5,13 +5,14 @@
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
 	{% include '/Buttons/add-button.html' with {'model': controller} %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Email Address","Role",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Name","Color","Breeders #", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
-			<td><img class="rounded-circle me-2" src="{{ entity.getProfileImage }}" width="32px" height="32px"></td>
-			<td>{{ entity.email }}</td>		
-			<td>{{ entity.userRole }}</td>					
+			<td><img class="rounded-circle me-2" src="{{ entity.getLogo }}" width="32px" height="32px"></td>
+			<td>{{ entity.name }}</td>		
+			<td><div style="height:20px;width:20px;background-color:{{ entity.color }}"></div></td>	
+			<td>{{ entity.breeders | length }}</td>				
 			<td>
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}

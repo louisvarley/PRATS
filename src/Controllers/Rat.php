@@ -24,6 +24,8 @@ class Rat extends \App\Controllers\ManagerController
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
 			"ratStatus" => _RAT_STATUS,
+			"males" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'male']]),		
+			"females" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'female']]),			
 			"users" => Entities::createOptionSet('User', 'id',['firstName','lastName']),			
 			"genders" => _GENDERS,
 			"countries" => _COUNTRIES,
@@ -46,8 +48,22 @@ class Rat extends \App\Controllers\ManagerController
 		$rat->setName($data['rat']['name']);
 		$rat->setStatus($data['rat']['status']);	
 		$rat->setGender($data['rat']['gender']);
+		
 		$rat->setLitter($litter);
 		$rat->setOwner($owner);
+
+		if(empty($data['rat']['litter'])){
+			
+			$rat->setDoe(empty($data['rat']['doe']) ? null : Entities::findEntity("rat", $data['rat']['doe']));
+			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));
+			$rat->setCountry(empty($data['rat']['country']) ? null : $data['rat']['country']);
+			$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));		
+		}else{
+			$rat->setDoe(null);
+			$rat->setBuck(null);
+			$rat->setCountry(null);
+			$rat->setBirthDate(null);
+		}
 		
 		Entities::persist($rat);
 		
@@ -74,7 +90,7 @@ class Rat extends \App\Controllers\ManagerController
 		
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
 		$owner = Entities::findEntity("user", $data['rat']['owner']);
-
+		
 		if(!empty($data['rat']['image']['id'])){
 			
 			$image = Entities::findEntity("blob", $data['rat']['image']['id']);
@@ -85,8 +101,20 @@ class Rat extends \App\Controllers\ManagerController
 		$rat->setStatus($data['rat']['status']);
 		$rat->setGender($data['rat']['gender']);
 		$rat->setLitter($litter);
-		$rat->setOwner($owner);
-		
+		$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));
+
+		if(empty($data['rat']['litter'])){
+			$rat->setDoe(empty($data['rat']['doe']) ? null : Entities::findEntity("rat", $data['rat']['doe']));
+			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));
+			$rat->setCountry(empty($data['rat']['country']) ? null : $data['rat']['country']);
+			$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));		
+		}else{
+			$rat->setDoe(null);
+			$rat->setBuck(null);
+			$rat->setCountry(null);
+			$rat->setBirthDate(null);
+		}
+				
 		$rat->resetCode();
 		
 		Entities::persist($rat);
@@ -107,7 +135,7 @@ class Rat extends \App\Controllers\ManagerController
 		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
 		
 		$this->render($this->route_params['controller'] . '/list.html', 
-			array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order), 'ratStatuses' => Entities::findAll("ratStatus"))
+			array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order), 'ratStatuses' => _RAT_STATUS)
 			
 		);
 

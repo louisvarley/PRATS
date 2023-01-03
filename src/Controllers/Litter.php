@@ -24,8 +24,8 @@ class Litter extends \App\Controllers\ManagerController
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
 			
-			"ratsMale" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'male']]),		
-			"ratsFemale" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'female']]),				
+			"males" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'male']]),		
+			"females" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'female']]),				
 			"breeders" => Entities::createOptionSet('user', 'id',['firstName','lastName']),			
 		);	
 	} 

@@ -38,7 +38,7 @@
 			{% include "Forms/Elements/image-uploader.html" with {
 				'id': 'user_images',
 				'name': "#{controller}[image]", 
-				'default': user.getProfileImage,
+				'default': properties.DEFAULT_USER_AVATAR,
 				'image': user.image,
 				'label': 'Profile Photo',
 				'description': 'Optional Profile Picture'
@@ -118,9 +118,18 @@
 				'name': "#{controller}[userRole]", 
 				'description': 'Role of this User?',
 				'required': 'required',
-				'value': user.userRole.Id,
+				'value': user.userRole,
 				'options': userRoles			
 			}%}				
+			
+			{% include "Forms/Elements/select.html" with {
+				'label' : 'Affiliation',		
+				'id': 'affiliation', 
+				'name': "#{controller}[affiliation]", 
+				'description': 'Breeder Affiliation?',
+				'value': user.affiliation.id,
+				'options': affiliations			
+			}%}					
 			
 			{% if( id ) %}
 			
@@ -134,12 +143,11 @@
 					'options': booleans			
 				}%}			
 
-			{% endif %} 			
-			<hr class="my-4">				
+			{% endif %} 						
 			
 			{% if( id == null ) %}
 			
-			<hr class="my-4">	
+				<hr class="my-4">	
 			
 				{% include "Forms/Elements/select.html" with {
 					'label' : 'Send User Welcome Email',		

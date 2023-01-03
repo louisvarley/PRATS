@@ -32,7 +32,7 @@ $this->page_data['nav'] = [
 			['type' => 'item', 'title' => 'Update', 'link' => '/update'],
 			['type' => 'item', 'title' => 'Settings', 'link' => '/settings/edit'],	
 			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],	
-			['type' => 'item', 'title' => 'Optionsets', 'link' => '/optionset/list'],				
+			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],				
 		]],					
 		'help' => ['title' => 'Help', 'link' => '#', 'subitems' => [
 			['type' => 'item', 'title' => 'Wiki', 'link' => 'https://github.com/louisvarley/prats/wiki'],			

@@ -37,18 +37,23 @@ class User
     */
     private $passwordHash;		
 	
-    /**
-    * Many Users have One User Roles.
-    * @ORM\ManyToOne(targetEntity="UserRole")
-    * @ORM\JoinColumn(name="role_id", referencedColumnName="id")	
-     */ 	
+	/**
+    * @ORM\Column(name="userRole", type="string", nullable="false")
+    */	
     protected $userRole;		
-	
+		
 	 /**
      * One User has Many Rats.
      * @ORM\OneToMany(targetEntity="Rat", mappedBy="owner")
      */ 
     protected $rats;	
+
+    /**
+     * Many Users have One Affiliation
+     * @ORM\ManyToOne(targetEntity="affiliation", inversedBy="users")
+     * @ORM\JoinColumn(name="affiliation_id", referencedColumnName="id")
+     */
+    protected $affiliation;	
 
 	/**
     * @ORM\Column(name="breeder_code", type="string", nullable="true")
@@ -99,7 +104,6 @@ class User
     * @ORM\Column(name="telephone", type="string", nullable="true")
     */
     protected $telephone;		
-	
 	
 	/**
     * @ORM\Column(name="password_reset_flag", type="boolean", nullable="true")
@@ -199,6 +203,17 @@ class User
 	{
 		$this->userRole = $userRole;
 	}
+	
+    public function getAffiliation()
+    {
+        return $this->affiliation;
+    }	
+	
+	public function setAffiliation($affiliation)
+	{
+	
+		$this->affiliation = $affiliation;
+	}	
 	
     public function getRats()
     {

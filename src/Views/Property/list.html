@@ -4,6 +4,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
+	{% include '/Buttons/add-button.html' with {'model': controller} %}
 	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Key", "Value", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}

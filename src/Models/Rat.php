@@ -42,7 +42,7 @@ class Rat
     protected $litter;	
   
 	/**
-    * @ORM\Column(type="integer")
+    * @ORM\Column(type="string")
     */
     protected $status;
 	
@@ -69,6 +69,18 @@ class Rat
 	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
 	 */	
     protected $image;	
+	
+	/**
+    * @ORM\ManyToOne(targetEntity="rat")
+    * @ORM\JoinColumn(name="buck_id", referencedColumnName="id")
+    */	
+    protected $buck;	
+	
+	/**
+    * @ORM\ManyToOne(targetEntity="rat")
+    * @ORM\JoinColumn(name="doe_id", referencedColumnName="id")
+    */	
+    protected $doe;		
   
 	public function __construct() {
       
@@ -160,17 +172,19 @@ class Rat
         $this->owner = $owner;
     }		
 		
-    public function setCounty($county)
+    public function setCountry($country)
     {
+		
+
 		if(!$this->getLitter()){
-			$this->county = $county;
+			$this->country = $country;
 		}		  
     }	
 	
     public function getCountry()
     {
 		if($this->getLitter()){
-			$this->getLitter()->getBreeder()->getCountry();
+			return $this->getLitter()->getBreeder()->getCountry();
 		}else{
 			return $this->country;
 		}
@@ -189,6 +203,39 @@ class Rat
     {
 		if(!$this->getLitter()){
 			$this->birthDate = $date;
+		}
+    }	
+
+    public function setDoe($doe)
+    {
+		if(!$this->getLitter()){		
+			$this->doe = $doe;
+		}
+    }		
+
+    public function getDoe()
+	{
+		if($this->getLitter()){
+			return $this->getLitter()->getDoe();
+		}else{
+			return $this->doe;
+		}
+		
+    }	
+	
+    public function setBuck($buck)
+    {
+		if(!$this->getLitter()){
+			$this->buck = $buck;
+		}
+    }		
+
+    public function getBuck()
+	{
+		if($this->getLitter()){
+			return $this->getLitter()->getBuck();
+		}else{
+			return $this->buck;
 		}
     }		
 		

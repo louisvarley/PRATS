@@ -142,8 +142,8 @@ define("_GENDERS", [
 ]);
 
 define("_BOOLS", [
-	new \App\Classes\Option("Yes", "Y"),
-	new \App\Classes\Option("No", "N"),
+	new \App\Classes\Option("Yes", "1"),
+	new \App\Classes\Option("No", "0"),
 ]);
 
 

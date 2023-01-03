@@ -38,7 +38,7 @@
 					'id': 'rat_images',
 					'name': "#{controller}[image]", 
 					'image': rat.image,
-					'default': properties.default_rat_avatar,
+					'default': properties.DEFAULT_RAT_AVATAR,
 					'label': 'Profile Photo',
 					'description': 'Optional Images for this Rat'
 				}%}		
@@ -90,7 +90,8 @@
 
 			{% include "Forms/Elements/explainer.html" with {
 				'title' : 'Birth Information',		
-				'text': 'Selecting a litter here will Override any Country of Origin or Date of Birth using information from the litter. If No Litter is selected, this can be entered manually.', 			
+				'text': 'When a litter is selected, fields below will be auto-filled using information from the litter and breeder. 
+				    When No Litter is selected, once saved, this information can be entered manually.' 			
 			}%}				
 			
 			{% include "Forms/Elements/select.html" with {
@@ -101,16 +102,31 @@
 				'value': rat.litter.id,
 				'options': litters			
 			}%}				
+
+			{% if( rat.litter.id ) %}
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Country of Origin',		
-				'id': 'country', 
-				'readonly': rat.litter.id,
-				'name': "#{controller}[country]", 
-				'description': 'Gender of this Rat?',
-				'value': rat.litter.breeder.country,
-				'options': countries			
-			}%}		
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Country of Origin',		
+					'id': 'country', 
+					'readonly' : 'readonly',
+					'name': "#{controller}[country]", 
+					'description': 'Country this rat Originated',
+					'value': rat.litter.breeder.country,
+					'options': countries			
+				}%}		
+
+			{% else %}
+
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Country of Origin',		
+					'id': 'country', 
+					'name': "#{controller}[country]", 
+					'description': 'Country this rat Originated',
+					'value': rat.country,
+					'options': countries			
+				}%}		
+			
+			{% endif %}
 
 			{% if( rat.litter.id ) %}
 
@@ -140,29 +156,50 @@
 			
 			{% include "Forms/Elements/seperator.html" %}
 
-			{% if( rat.id ) %}
-				{% if( rat.litter.id ) %}
-			
-					{% include "Forms/Elements/text.html" with {
-						'label' : 'Father',
-						'id': 'father', 
-						'name': "#{controller}[registration]", 
-						'description': 'The Name of this rats Father',
-						'readonly': 'readonly',
-						'value': rat.litter.buck.Name
-					}%}	
+			{% if( rat.litter.id ) %}
+		
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'Father',
+					'id': 'father', 
+					'name': "#{controller}[none]", 
+					'description': 'The Name of this rats Father',
+					'readonly': 'readonly',
+					'value': rat.litter.buck.Name
+				}%}	
 
-					{% include "Forms/Elements/text.html" with {
-						'label' : 'Mother',
-						'id': 'mother', 
-						'name': "#{controller}[registration]", 
-						'description': 'The Name of this rats Mother',
-						'readonly': 'readonly',
-						'value': rat.litter.doe.Name
-					}%}		
-					
-				{% endif %}	
-			{% endif %}							
+				{% include "Forms/Elements/text.html" with {
+					'label' : 'Mother',
+					'id': 'mother', 
+					'name': "#{controller}[none]", 
+					'description': 'The Name of this rats Mother',
+					'readonly': 'readonly',
+					'value': rat.litter.doe.Name
+				}%}		
+				
+			{% else %}
+
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Father',		
+					'id': 'buck', 
+					'name': "#{controller}[buck]", 
+					'description': 'Rats Father',
+					'required': 'required',
+					'value': rat.buck.id,
+					'options': males			
+				}%}		
+
+				{% include "Forms/Elements/select.html" with {
+					'label' : 'Mother',		
+					'id': 'doe', 
+					'name': "#{controller}[doe]", 
+					'description': 'Rats Mother',
+					'required': 'required',
+					'value': rat.doe.id,
+					'options': females			
+				}%}				
+				
+			{% endif %}	
+				
 	
 			{% include "Forms/Elements/seperator.html" %}
 			
