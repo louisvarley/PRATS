@@ -72,7 +72,7 @@
 				'name': "#{controller}[status]", 
 				'description': 'Status of this Rat?',
 				'required': 'required',
-				'value': rat.status,
+				'value': rat.status.value,
 				'options': ratStatus				
 			}%}					
 
@@ -82,15 +82,15 @@
 				'name': "#{controller}[gender]", 
 				'description': 'Gender of this Rat?',
 				'required': 'required',
-				'value': rat.gender,
+				'value': rat.gender.value,
 				'options': genders		
 			}%}		
 
 			{% include "Forms/Elements/seperator.html" %}
 
 			{% include "Forms/Elements/explainer.html" with {
-				'title' : 'Birth Information',		
-				'text': 'When a litter is selected, fields below will be auto-filled using information from the litter and breeder. 
+				'title' : 'Litter Information',		
+				'text': 'When a litter is selected, fields below, such as Country and Date of Birth, Buck and Doe, will be auto-filled using information from the litter and breeder. 
 				    When No Litter is selected, once saved, this information can be entered manually.' 			
 			}%}				
 			
@@ -122,7 +122,7 @@
 					'id': 'country', 
 					'name': "#{controller}[country]", 
 					'description': 'Country this rat Originated',
-					'value': rat.country,
+					'value': rat.country.value,
 					'options': countries			
 				}%}		
 			
@@ -136,7 +136,6 @@
 					'readonly': rat.litter.id,				
 					'name': "#{controller}[birthDate]", 
 					'description': 'Date this litter was born',
-					'required': 'required',
 					'value' : rat.litter.birthDate				
 				}%}		
 
@@ -148,7 +147,6 @@
 					'readonly': rat.litter.id,				
 					'name': "#{controller}[birthDate]", 
 					'description': 'Date this litter was born',
-					'required': 'required',
 					'value' : rat.birthDate				
 				}%}		
 
@@ -179,22 +177,20 @@
 			{% else %}
 
 				{% include "Forms/Elements/select.html" with {
-					'label' : 'Father',		
+					'label' : 'Buck',		
 					'id': 'buck', 
 					'name': "#{controller}[buck]", 
 					'description': 'Rats Father',
-					'required': 'required',
 					'value': rat.buck.id,
 					'options': males			
 				}%}		
 
 				{% include "Forms/Elements/select.html" with {
-					'label' : 'Mother',		
-					'id': 'doe', 
-					'name': "#{controller}[doe]", 
+					'label' : 'Dam',		
+					'id': 'dam', 
+					'name': "#{controller}[dam]", 
 					'description': 'Rats Mother',
-					'required': 'required',
-					'value': rat.doe.id,
+					'value': rat.dam.id,
 					'options': females			
 				}%}				
 				

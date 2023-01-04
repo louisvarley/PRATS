@@ -40,7 +40,7 @@ class Affiliation
 	
 	/**
 	 * @ORM\OneToOne(targetEntity="Blob", cascade={"persist", "remove"})
-	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
+	 * @ORM\JoinColumn(name="logo_id", referencedColumnName="id", nullable=true)
 	 */	
     protected $logo;	
 	
@@ -91,22 +91,17 @@ class Affiliation
         return $this->breeders;
     }			
 
-	public function setImage($image)
+	public function setLogo($logo)
 	{
-		 $this->image = $image;
+		 $this->logo = $logo;
 	}
-	
-	public function getLogo()
-	{
-		return $this->logo;
-	}
-	
-	public function setLogo(){
 
-		if($this->getLogo() == null){
+	public function getLogo(){
+
+		if($this->logo == null){
 			return WWW_IMG . '/default.png';
 		}else{
-			return $this->getLogo()->getThumbnailUrl();
+			return $this->logo->getThumbnailUrl();
 		}
 
 	}	

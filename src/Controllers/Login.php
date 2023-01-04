@@ -39,12 +39,8 @@ class Login extends \App\Controller
 				if($user->validatePassword($this->post['password'])){
 				
 					Authentication::login($user);
-					
-					if($user->getPasswordResetFlag()){
-						header('Location: /reset-password');
-						die();
 						
-					}elseif(isset($this->get['redirect'])){
+					if(isset($this->get['redirect'])){
 						header('Location:' . urldecode($this->get['redirect']));
 						die();
 					}else{

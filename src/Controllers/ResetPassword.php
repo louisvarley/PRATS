@@ -52,19 +52,10 @@ class ResetPassword extends \App\Controller
 			
 		} else {
 			
-			/* Logged In and Has Reset Flag Set */
+			/* If Logged In*/
 			if(Authentication::loggedIn()){
 				
-				$user = Authentication::me();
-				
-				if($user->getPasswordResetFlag()){
-					
-					Toast::throwWarning("Warning...", "You are required to change your password");
-					$this->render('ResetPassword/index.html');
-					
-				}else{
-					header('Location: /');
-				}
+				header('Location: /');
 
 			}
 		

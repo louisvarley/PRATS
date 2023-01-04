@@ -37,9 +37,9 @@ class Litter
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
-    * @ORM\JoinColumn(name="doe_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="dam_id", referencedColumnName="id")
     */	
-    protected $doe;		
+    protected $dam;		
 	
 	 /**
      * One Litter has Many Rats.
@@ -87,11 +87,11 @@ class Litter
 	public function resetCode(){
 
 		$datecode = $this->getBirthDate()->format('dmy');
-		$doeCode = substr($this->getDoe()->getName(),0,1);
+		$damCode = substr($this->getDam()->getName(),0,1);
 		$buckCode = substr($this->getBuck()->getName(),0,1);		
 		$breedercode = $this->getBreeder()->getCode();
 		
-		$this->setCode($breedercode . $buckCode . $doeCode . $datecode);
+		$this->setCode($breedercode . $buckCode . $damCode . $datecode);
 		
 	}
 
@@ -100,14 +100,14 @@ class Litter
         return $this->code;
     }		
 	
-    public function setDoe($doe)
+    public function setDam($dam)
     {
-        $this->doe = $doe;
+        $this->dam = $dam;
     }		
 
-    public function getDoe()
+    public function getDam()
 	{
-        return $this->doe;
+        return $this->dam;
     }	
 	
     public function setBuck($buck)

@@ -50,7 +50,6 @@ class EntityService{
 		
 		$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, $devMode, $cacheDir, null, false);
 		
-		
 		self::$entityManager = \Doctrine\ORM\EntityManager::create(self::$dbParams, $config, $evm);
 		
 	}
@@ -137,6 +136,22 @@ class EntityService{
 		return self::Manager()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
 	}
 
+	/* Gets Enum as a Key, Value Array */
+	public static function getEnumArray($enum){
+	
+		$enum = _ENUMS . $enum;
+		
+		return array_combine(array_column($enum::cases(), 'value'),array_column($enum::cases(), 'name')); 
+
+	}
+
+	public static function getEnum($enum, $value){
+		
+		$enum = _ENUMS . $enum;
+		return $enum::tryFrom($value);
+		
+	}
+
 	/* Create an Optionset */
 	public static function createOptionSet($model, $valueField, $textField, $criteria = null){
 		
@@ -177,7 +192,13 @@ class EntityService{
 		
 		$res = $query->getResult();
 		
-		return $res;
+		
+		$arr = [];
+		foreach($res as $v){
+			$arr[$v['value']] = $v['text'];
+		}
+
+		return $arr;
 	}	
 			
 	public static function persist($entity){

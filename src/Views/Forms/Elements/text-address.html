@@ -44,8 +44,8 @@
 		Country
 	  </small>
 		<select name="{{ name }}[country]" {{ required }} autocomplete="off" class="form-control select2" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}disabled="disabled"{% endif %} {% if readonly %}readonly="readonly"{% endif %} id="country" class="form-control {% if readonly %}readonly{% endif %}">
-		{% for countryR in countries %}  
-			<option {% if countryR.value == country %}selected{% endif %} value="{{countryR.value}}">{{countryR.text}}</option>
+		{% for code, key in countries %}  
+			<option {% if code == country %}selected{% endif %} value="{{code}}">{{key|enum_name}}</option>
 		{% endfor %}  		
 					   
 		</select>	  

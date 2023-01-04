@@ -24,8 +24,8 @@ class Litter extends \App\Controllers\ManagerController
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
 			
-			"males" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'male']]),		
-			"females" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'female']]),				
+			"males" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'm']]),		
+			"females" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'f']]),				
 			"breeders" => Entities::createOptionSet('user', 'id',['firstName','lastName']),			
 		);	
 	} 
@@ -34,12 +34,12 @@ class Litter extends \App\Controllers\ManagerController
 		
 		$litter = Entities::findEntity($this->route_params['controller'], $id);
 		
-		$doe = Entities::findEntity("rat", $data['litter']['doe']);
+		$dam = Entities::findEntity("rat", $data['litter']['dam']);
 		$buck = Entities::findEntity("rat", $data['litter']['buck']);
 		$breeder = Entities::findEntity("user", $data['litter']['breeder']);
 		
 		$litter->setBirthDate(date_create_from_format('d/m/Y', $data['litter']['birthDate']));
-		$litter->setDoe($doe);
+		$litter->setDam($dam);
 		$litter->setBuck($buck);
 		$litter->setBreeder($breeder);
 
@@ -67,12 +67,12 @@ class Litter extends \App\Controllers\ManagerController
 
 		$litter = new \App\Models\litter();
 		
-		$doe = Entities::findEntity("rat", $data['litter']['doe']);
+		$dam = Entities::findEntity("rat", $data['litter']['dam']);
 		$buck = Entities::findEntity("rat", $data['litter']['buck']);
 		$breeder = Entities::findEntity("user", $data['litter']['breeder']);
 		
 		$litter->setBirthDate(date_create_from_format('d/m/Y', $data['litter']['birthDate']));
-		$litter->setDoe($doe);
+		$litter->setDam($dam);
 		$litter->setBuck($buck);
 		$litter->setBreeder($breeder);
 		

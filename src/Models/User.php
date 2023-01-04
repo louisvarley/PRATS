@@ -4,6 +4,8 @@ namespace App\Models;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
+use \App\Classes as Classes;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
@@ -38,7 +40,7 @@ class User
     private $passwordHash;		
 	
 	/**
-    * @ORM\Column(name="userRole", type="string", nullable="false")
+    * @ORM\Column(name="user_role", type="string", nullable="false", enumType="\App\Enums\UserRoles")
     */	
     protected $userRole;		
 		
@@ -91,7 +93,7 @@ class User
     protected $county;	
 
 	/**
-    * @ORM\Column(name="country", type="string", nullable="true")
+    * @ORM\Column(name="country", type="string", nullable="true", enumType="\App\Enums\Countries")
     */
     protected $country;	
 
@@ -104,12 +106,7 @@ class User
     * @ORM\Column(name="telephone", type="string", nullable="true")
     */
     protected $telephone;		
-	
-	/**
-    * @ORM\Column(name="password_reset_flag", type="boolean", nullable="true")
-    */
-    protected $passwordResetFlag;		
-	
+		
 	/**
 	 * @ORM\OneToOne(targetEntity="Blob", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
@@ -170,20 +167,6 @@ class User
 			return $this->getImage()->getThumbnailUrl();
 		}
 
-	}
-	
-	public function generateTemporaryPassword(){
-		
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-		$pass = array(); 
-		$alphaLength = strlen($alphabet) - 1;
-		for ($i = 0; $i < 8; $i++) {
-			$n = rand(0, $alphaLength);
-			$pass[] = $alphabet[$n];
-		}
- 
-		$this->setPasswordResetFlag(true);
-		$this->setPassword(implode($pass));
 	}
 	
 	public function validatePassword($password){
@@ -325,15 +308,5 @@ class User
         $this->telephone = $telephone;
     }		
 
-
-    public function getPasswordResetFlag()
-    {
-        return $this->passwordResetFlag;
-    }	
-	
-    public function setPasswordResetFlag($passwordResetFlag)
-    {
-        $this->passwordResetFlag = $passwordResetFlag;
-    }	
 
 }

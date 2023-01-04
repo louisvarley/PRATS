@@ -25,9 +25,8 @@ class User extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
-			"countries" => _COUNTRIES,
-			"booleans" => _BOOLS,
-			"userRoles" => _USER_ROLES,		
+			"countries" => Entities::getEnumArray("Countries"),
+			"userRoles" => Entities::getEnumArray("UserRoles"),	
 			"affiliations" => Entities::createOptionSet('Affiliation', 'id',['name']),			
 		);	
 	} 
@@ -37,7 +36,7 @@ class User extends \App\Controllers\ManagerController
 		$user = Entities::findEntity($this->route_params['controller'], $id);
 		
 		
-		$user->setUserRole($data['user']['userRole']);
+		$user->setUserRole(Entities::getEnum('UserRoles', $data['user']['userRole']));
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -48,21 +47,16 @@ class User extends \App\Controllers\ManagerController
 			$user->setImage($image);
 		}
 
-		if(!empty($data['user']['affiliation'])){
-			$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
-			$user->setAffiliation($affiliation);
-		}else{
-			$user->setAffiliation(null);
-		}
+		$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
+		$user->setAffiliation($affiliation);
 
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
 		$user->setAddressLine2($data['user']['address']['addressLine2']);
 		$user->setTown($data['user']['address']['town']);
 		$user->setCounty($data['user']['address']['county']);
 		$user->setPostcode($data['user']['address']['postcode']);		
-		$user->setCountry($data['user']['address']['country']);
+		$user->setCountry(Entities::getEnum('Countries', $data['user']['address']['country']));
 		$user->setCode($data['user']['code']);
-		$user->setPasswordResetFlag($data['user']['passwordResetFlag']);
 		$user->setTelephone($data['user']['telephone']);
 		
 		/* Password if yours */
@@ -100,7 +94,8 @@ class User extends \App\Controllers\ManagerController
 
 		$user = new \App\Models\User();
 		
-		$user->setUserRole($data['user']['userRole']);
+		$user->setUserRole(Entities::getEnum('UserRoles', $data['user']['userRole']));
+		
 		$user->setEmail($data['user']['email']);
 		$user->setFirstName($data['user']['firstName']);
 		$user->setLastName($data['user']['lastName']);
@@ -111,12 +106,8 @@ class User extends \App\Controllers\ManagerController
 			$user->setImage($image);
 		}		
 		
-		if(!empty($data['user']['affiliation'])){
-			$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
-			$user->setAffiliation($affiliation);
-		}else{
-			$user->setAffiliation(null);
-		}
+		$affiliation = Entities::findEntity("Affiliation", $data['user']['affiliation']);
+		$user->setAffiliation($affiliation);
 		
 		$user->setAddressLine1($data['user']['address']['addressLine1']);
 		$user->setAddressLine2($data['user']['address']['addressLine2']);
@@ -128,9 +119,6 @@ class User extends \App\Controllers\ManagerController
 		$user->setTelephone($data['user']['telephone']);
 		$user->setCountry($data['user']['address']['country']);		
 
-		/* Sets a Random Password */
-		$user->generateTemporaryPassword();		
-				
 		Entities::persist($user);
 		Entities::flush();
 
@@ -138,7 +126,6 @@ class User extends \App\Controllers\ManagerController
 		if($data['user']['welcomeEmail']){
 			$token = Authentication::generateUserToken($user->getId());
 			Emailer::newUserEmail($user->getId(), $token); 
-			
 		}				
 		
 		

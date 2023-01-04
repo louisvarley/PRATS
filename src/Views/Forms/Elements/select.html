@@ -4,9 +4,9 @@
 {% if not required %}
 <option value="">None</option>
 {% endif %}
-
-{% for option in options %}  
-	<option {% if option.value == value %}selected{% endif %} value="{{option.value}}">{{option.text}}</option>
+  
+{% for key, option in options %}
+	<option {% if key == value %}selected{% endif %} value="{{key}}">{{option|enum_name}}</option>
 {% endfor %}  
 
 </select>

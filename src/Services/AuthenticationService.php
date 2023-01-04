@@ -66,22 +66,6 @@ class AuthenticationService{
 
 	}
 	
-	/* Resets a users password to a random password */
-	public static function newRandomPassword($userId){
-		
-		$newPassword = randomPassword();	
-		$user = Entities::findEntity("user", $userId);	
-		$user->setPassword($newPassword);
-		$user->setPasswordResetFlag(true);
-		$user->generateApiKey();
-		
-		Entities::persist($user);
-		Entities::flush();
-		
-		return $newPassword;
-		
-	}
-	
 	/* Generates a user token for a user */
 	public static function generateUserToken($userId){
 		

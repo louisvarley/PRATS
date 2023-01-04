@@ -5,6 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 use \App\Services\EntityService as Entities;
+use \App\Classes as Classes;
+
+
 
 /**
  * @ORM\Entity
@@ -12,6 +15,7 @@ use \App\Services\EntityService as Entities;
 */
 class Rat
 {
+
 	/**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
@@ -25,7 +29,7 @@ class Rat
     protected $name;
 	
 	/**
-    * @ORM\Column(type="string")
+    * @ORM\Column(name="gender", type="string", enumType="\App\Enums\Genders")
     */
     protected $gender;	
 	
@@ -40,9 +44,9 @@ class Rat
      * @ORM\JoinColumn(name="litter_id", referencedColumnName="id")
      */
     protected $litter;	
-  
+
 	/**
-    * @ORM\Column(type="string")
+    * @ORM\Column(name="status", type="string", enumType="\App\Enums\RatStatus")
     */
     protected $status;
 	
@@ -52,7 +56,7 @@ class Rat
     protected $birthDate;		
 	
 	/**
-    * @ORM\Column(name="country", type="string", nullable="true")
+    * @ORM\Column(type="string", enumType="\App\Enums\Countries", nullable="true")
     */
     protected $country;		
 	
@@ -63,7 +67,6 @@ class Rat
      */
     protected $owner;	
 	
-
 	/**
 	 * @ORM\OneToOne(targetEntity="Blob", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
@@ -78,15 +81,11 @@ class Rat
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
-    * @ORM\JoinColumn(name="doe_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="dam_id", referencedColumnName="id")
     */	
-    protected $doe;		
+    protected $dam;		
   
-	public function __construct() {
-      
-
-    }	
-
+  
     public function getId()
     {
         return $this->id;
@@ -183,6 +182,9 @@ class Rat
 	
     public function getCountry()
     {
+		
+		
+
 		if($this->getLitter()){
 			return $this->getLitter()->getBreeder()->getCountry();
 		}else{
@@ -206,19 +208,19 @@ class Rat
 		}
     }	
 
-    public function setDoe($doe)
+    public function setDam($dam)
     {
 		if(!$this->getLitter()){		
-			$this->doe = $doe;
+			$this->dam = $dam;
 		}
     }		
 
-    public function getDoe()
+    public function getDam()
 	{
 		if($this->getLitter()){
-			return $this->getLitter()->getDoe();
+			return $this->getLitter()->getDam();
 		}else{
-			return $this->doe;
+			return $this->dam;
 		}
 		
     }	
@@ -244,11 +246,12 @@ class Rat
 		if($this->getLitter()){
 
 			$breedercode = $this->getLitter()->getBreeder()->getCode();
-			$doeCode = substr($this->getLitter()->getDoe()->getName(),0,1);
+			$damCode = substr($this->getLitter()->getDam()->getName(),0,1);
 			$buckCode = substr($this->getLitter()->getBuck()->getName(),0,1);
-			$genderCode = substr($this->getGender(),0,1);
+
+			$genderCode = $this->getGender()->value;
 			
-			$compCode = strtoupper($breedercode . $buckCode . $doeCode . $genderCode);			
+			$compCode = strtoupper($breedercode . $buckCode . $damCode . $genderCode);			
 
 			$nextQuery = Entities::em()->getRepository(_MODELS . 'Rat')
 				->createQueryBuilder('r')
@@ -264,7 +267,7 @@ class Rat
 			$next =	count($nextQuery->getQuery()
 					->getArrayResult()) + 1;			
 			
-			$this->setCode(strtoupper($breedercode . $buckCode . $doeCode . $genderCode) . str_pad($next, 2, '0', STR_PAD_LEFT));
+			$this->setCode(strtoupper($breedercode . $buckCode . $damCode . $genderCode) . str_pad($next, 2, '0', STR_PAD_LEFT));
 		
 		}
 		

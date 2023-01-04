@@ -27,12 +27,12 @@ $this->page_data['nav'] = [
 			['type' => 'item', 'title' => 'Application Forms', 'link' => '/forms/new'],			
 		]],				
 		'configuration' => ['title' => 'Configuration', 'link' => '#', 'subitems' => [
-			['type' => 'item', 'title' => 'User Management', 'link' => '/user/list'],	
+			['type' => 'item', 'title' => 'Users', 'link' => '/user/list'],	
+			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],			
 			['type' => 'divider'],				
 			['type' => 'item', 'title' => 'Update', 'link' => '/update'],
 			['type' => 'item', 'title' => 'Settings', 'link' => '/settings/edit'],	
-			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],	
-			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],				
+			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],					
 		]],					
 		'help' => ['title' => 'Help', 'link' => '#', 'subitems' => [
 			['type' => 'item', 'title' => 'Wiki', 'link' => 'https://github.com/louisvarley/prats/wiki'],			

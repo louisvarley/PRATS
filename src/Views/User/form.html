@@ -86,7 +86,7 @@
 				'town': user.town,
 				'county': user.county,
 				'postcode': user.postcode,
-				'country': user.country,
+				'country': user.country.value,
 				'countries' : countries,
 			}%}					
 
@@ -131,20 +131,7 @@
 				'options': affiliations			
 			}%}					
 			
-			{% if( id ) %}
-			
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Password Reset',		
-					'id': 'passwordResetFlag', 
-					'name': "#{controller}[passwordResetFlag]", 
-					'description': 'Password reset required on new login?',
-					'required': 'required',
-					'value': user.passwordResetFlag,
-					'options': booleans			
-				}%}			
-
-			{% endif %} 						
-			
+								
 			{% if( id == null ) %}
 			
 				<hr class="my-4">	

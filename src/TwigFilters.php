@@ -51,6 +51,12 @@ class TwigFilters {
 			return  $interval->format('%d Day %H Hour %I Minutes');
 		}));
 		
+		$twig->addFilter( new \Twig\TwigFilter('enum_name', function ($name) {
+			
+			return str_replace("_"," ",$name);
+			
+		}));		
+		
 		return $twig;
 			
 	}
