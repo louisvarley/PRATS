@@ -9,10 +9,12 @@ RUN apt-get update; \
         php8.2-gd \ 
         php8.2-gmagick \ 
         php8.2-imagick \ 
-		php8.2-intl \
+        php8.2-intl \
         php8.2-mcrypt \ 
         php8.2-memcache \ 
         php8.2-mysql; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 	
+	
+RUN chown -R www-data:www-data /app
