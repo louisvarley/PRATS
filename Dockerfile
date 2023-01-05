@@ -13,8 +13,11 @@ RUN apt-get update; \
         php8.2-mcrypt \ 
         php8.2-memcache \ 
         php8.2-mysql; \
+	apt-get -y install php8.2-intl;
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 	
 	
 RUN chown -R www-data:www-data /app
+
+RUN docker-php-ext-install intl \
