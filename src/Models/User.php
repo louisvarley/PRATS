@@ -50,6 +50,12 @@ class User
      */ 
     protected $rats;	
 
+	 /**
+     * One User has Many Litters.
+     * @ORM\OneToMany(targetEntity="Litter", mappedBy="breeder")
+     */ 
+    protected $litters;
+
     /**
      * Many Users have One Affiliation
      * @ORM\ManyToOne(targetEntity="affiliation", inversedBy="users")
