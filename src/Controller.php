@@ -145,7 +145,7 @@ abstract class Controller
 			$this->post = $_POST;
 		}		
 		
-		$this->files = $_FILES;
+		//$this->files = $_FILES;
 		$this->get = $_GET;		
 		
 	}

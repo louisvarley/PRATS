@@ -24,16 +24,14 @@ services:
             - '14000:80'
 
     php-fpm:
-        build: phpdocker/php-fpm
+        build: .      
         volumes:
             - '.:/app'
             - './docker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
 
-    composer.test:
+
+    composer:
         image: composer/composer
-        ports:
-          - "9001:9000"
-        volumes:
-            - '.:/app'
-        working_dir: /app
         command: install
+        volumes: 
+            - '.:/app'
