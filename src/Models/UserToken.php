@@ -38,7 +38,6 @@ class UserToken
 	
 	public function __construct() {
       
-	  $this->ownerships = new ArrayCollection();
 	  $this->images = new ArrayCollection();
 	  
     }	
