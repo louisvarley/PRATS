@@ -55,11 +55,6 @@ class Setup extends \App\Controller
 		/* Build New Config */
 		$config = "<?php			
 
-
-/* Admin Login */
-define('_ADMIN_USER','" . $this->post['user_email'] . "');
-define('_ADMIN_PASSWORD','" . $this->post['user_password'] . "');
-
 /* Database Config */
 define('_DB_HOST','" . $this->post['db_host'] . "');
 define('_DB_NAME','" . $this->post['db_name'] . "');

@@ -105,6 +105,7 @@ class Router
      */
     public function dispatch($url)
     {
+		$url = ltrim($url,"/");
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {

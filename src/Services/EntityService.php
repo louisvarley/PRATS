@@ -344,8 +344,8 @@ class EntityService{
 		if(!self::findAll("user")){
 		
 			$user = new \App\Models\User();
-			$user->setEmail(_ADMIN_USER);	
-			$user->setPassword(_ADMIN_PASSWORD);
+			$user->setEmail("admin@admin.com");	
+			$user->setPassword("admin");
 			$user->setFirstName('Administrator');
 			$user->setLastName('Account');
 					
