@@ -25,7 +25,8 @@ class Setup extends \App\Controller
     public function indexAction(){
 		
 		
-		
+		var_dump("running");
+		die();
 		/* Config File Exists, Update */
 		if(_IS_SETUP){
 			
