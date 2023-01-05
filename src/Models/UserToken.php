@@ -36,11 +36,6 @@ class UserToken
      */
     protected $user;	
 	
-	public function __construct() {
-      
-	  $this->images = new ArrayCollection();
-	  
-    }	
 
     public function getId()
     {
