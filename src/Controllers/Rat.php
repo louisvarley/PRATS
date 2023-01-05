@@ -23,12 +23,12 @@ class Rat extends \App\Controllers\ManagerController
 		
 		return array(
 			$this->route_params['controller'] => Entities::findEntity($this->route_params['controller'], $id),
-			"ratStatus" => Entities::getEnumArray("ratstatus"),
+			"ratStatus" => Entities::getEnumArray("RatStatus"),
 			"males" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'm']]),		
 			"females" => Entities::createOptionSet('rat', 'id', ['name','gender'], ['gender' => ['comparison' => '=', 'match' => 'f']]),			
 			"users" => Entities::createOptionSet('User', 'id',['firstName','lastName']),			
-			"genders" => Entities::getEnumArray("genders"),
-			"countries" => Entities::getEnumArray("countries"),
+			"genders" => Entities::getEnumArray("Genders"),
+			"countries" => Entities::getEnumArray("Countries"),
 			"litters" => Entities::createOptionSet('litter', 'id', ['code']),	
 		);	
 	} 
@@ -46,7 +46,7 @@ class Rat extends \App\Controllers\ManagerController
 		}
 		
 		$rat->setName($data['rat']['name']);
-		$rat->setStatus(Entities::getEnum('ratStatus', $data['rat']['status']));	
+		$rat->setStatus(Entities::getEnum('RatStatus', $data['rat']['status']));	
 		$rat->setGender(Entities::getEnum('Genders', $data['rat']['gender']));
 		
 		$rat->setLitter($litter);
@@ -135,7 +135,7 @@ class Rat extends \App\Controllers\ManagerController
 		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
 		
 		$this->render($this->route_params['controller'] . '/list.html', 
-			array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order), 'ratStatuses' => Entities::getEnumArray("ratstatus"))
+			array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order), 'ratStatuses' => Entities::getEnumArray("RatStatus"))
 			
 		);
 
