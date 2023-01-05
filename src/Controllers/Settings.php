@@ -40,7 +40,7 @@ class Settings extends \App\Controller
 		foreach($data['settings'] as $key => $value){
 			
 			/* TODO */
-			Properties::getAll();
+			Properties::getAllProperties();
 
 		}
 

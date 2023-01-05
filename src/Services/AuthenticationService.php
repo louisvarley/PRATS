@@ -102,7 +102,6 @@ class AuthenticationService{
 			
 			$user = Entities::findEntity("user", $token->getUser());	
 			$user->generateApiKey();
-			$user->setPasswordResetFlag(false);
 			$user->setPassword($password);
 			
 			/* Password is reset, make this user the session user */

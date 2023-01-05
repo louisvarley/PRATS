@@ -133,4 +133,53 @@ class User extends \App\Controllers\ManagerController
 		
 	}	
 	
+    /**
+     * Show the index page
+     *
+     * @return void
+     */
+    public function inviteAction()
+    {
+
+		if(!Authentication::loggedIn())
+			header('Location: /');
+		
+		if($this->isPOST()){
+
+			$data = $this->post;
+		
+			$users = Entities::findBy("User", ['email' => $data['user']['email']]);
+			 
+			if(count($users) > 0){
+				
+				Toast::throwWarning("Warning...", "User is already a member of PRATS.");
+				
+			}else{
+			
+				$user = new \App\Models\User();
+		
+				$user->setUserRole(Entities::getEnum('UserRoles', "U"));
+				
+				$user->setEmail($data['user']['email']);
+				$user->setFirstName($data['user']['firstName']);
+				$user->setLastName($data['user']['lastName']);
+				
+				Entities::persist($user);
+				Entities::flush();
+		
+
+				$token = Authentication::generateUserToken($user->getId());
+				Emailer::newUserEmail($user->getId(), $token); 
+		
+				Toast::throwSuccess("Success...", "User has been invited to Join PRATS.");
+		
+		
+			}
+			
+		}
+		
+		$this->render('User/invite.html');
+
+    }	
+	
 }

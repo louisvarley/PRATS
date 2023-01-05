@@ -28,6 +28,7 @@ $this->page_data['nav'] = [
 		]],				
 		'configuration' => ['title' => 'Configuration', 'link' => '#', 'subitems' => [
 			['type' => 'item', 'title' => 'Users', 'link' => '/user/list'],	
+			['type' => 'item', 'title' => 'Invite', 'link' => '/user/invite'],				
 			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],			
 			['type' => 'divider'],				
 			['type' => 'item', 'title' => 'Update', 'link' => '/update'],
