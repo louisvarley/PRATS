@@ -1,6 +1,8 @@
 FROM phpdockerio/php:8.2-fpm
 WORKDIR "/app"
 
+RUN mkdir -p /app/src/Proxies     
+
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils \
     && apt-get update \
