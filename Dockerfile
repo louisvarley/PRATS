@@ -3,7 +3,6 @@ WORKDIR "/app"
 
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils \
-    && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && apt-get update \
     && apt-get install -y php8.2-cli php8.2-dev \
        php8.2-pgsql php8.2-sqlite3 php8.2-gd \
@@ -16,17 +15,17 @@ RUN apt-get update \
        php8.2-memcached php8.2-pcov php8.2-xdebug \
 	   php8.2-bcmath \ 
        php8.2-bz2 \ 
-       php8.2-gd \ 
-       php8.2-gmagick \ 
+       php8.2-gd \  
        php8.2-imagick \ 
        php8.2-intl \
-       php8.2-mcrypt \ 
        php8.2-memcache \ 
-       php8.2-mysql; \
-    && apt-get update \
+       php8.2-mysql
+
+RUN apt-get update \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 RUN chown -R www-data:www-data /app
 
