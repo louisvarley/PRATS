@@ -98,15 +98,19 @@ class Rat extends \App\Controllers\ManagerController
 		}
 				
 		$rat->setName($data['rat']['name']);
-		$rat->setStatus($data['rat']['status']);
-		$rat->setGender($data['rat']['gender']);
+
+		$rat->setStatus(Entities::getEnum('RatStatus', $data['rat']['status']));	
+		$rat->setGender(Entities::getEnum('Genders', $data['rat']['gender']));
+		
+
 		$rat->setLitter($litter);
 		$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));
 
 		if(empty($data['rat']['litter'])){
+			
 			$rat->setDam(empty($data['rat']['dam']) ? null : Entities::findEntity("rat", $data['rat']['dam']));
-			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));
-			$rat->setCountry(empty($data['rat']['country']) ? null : $data['rat']['country']);
+			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));			
+			$rat->setCountry(empty($data['rat']['country']) ? null : Entities::getEnum('Countries', $data['rat']['country']));		
 			$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));		
 		}else{
 			$rat->setDam(null);
