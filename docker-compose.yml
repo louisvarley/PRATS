@@ -4,6 +4,7 @@
 version: '3.1'
 services:
     mysql:
+        container_name: prats-db
         image: 'mysql:8.0'
         volumes:
             - '.:/app'
@@ -16,6 +17,7 @@ services:
             - '14002:3306'
 
     webserver:
+        container_name: prats-web    
         image: 'nginx:alpine'
         volumes:
             - '.:/app'
@@ -24,13 +26,16 @@ services:
             - '14000:80'
 
     php-fpm:
-        build: .      
+        container_name: prats-php-fpm    
+        build: .   
+        user: "${UID}"
         volumes:
             - '.:/app'
             - './docker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
 
 
     composer:
+        container_name: prats-composer    
         image: composer/composer
         command: install
         volumes: 
