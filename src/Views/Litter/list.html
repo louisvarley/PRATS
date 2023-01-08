@@ -12,7 +12,7 @@
 			<td data-label="Breeder">{{ entity.breeder.firstName }} {{ entity.breeder.lastName }}</td>
 			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>		
 			<td data-label="BirthDate">{{ entity.birthDate | date('d/m/Y') }}</td>
-			<td data-label="Doe">{{ entity.doe.name }}</td>	
+			<td data-label="Doe">{{ entity.dam.name }}</td>	
 			<td data-label="Buck">{{ entity.buck.name }}</td>
 			<td data-label="Size">{{ entity.rats | length }}</td>			
 			<td data-label="Options">

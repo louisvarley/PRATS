@@ -114,21 +114,13 @@ class User extends \App\Controllers\ManagerController
 		$user->setTown($data['user']['address']['town']);
 		$user->setCounty($data['user']['address']['county']);
 		$user->setPostcode($data['user']['address']['postcode']);		
-		$user->setCountry($data['user']['address']['country']);
 		$user->setCode($data['user']['code']);		
 		$user->setTelephone($data['user']['telephone']);
-		$user->setCountry($data['user']['address']['country']);		
+		$user->setCountry(Entities::getEnum('Countries', $data['user']['address']['country']));	
 
 		Entities::persist($user);
 		Entities::flush();
 
-		/* Email user welcome email */
-		if($data['user']['welcomeEmail']){
-			$token = Authentication::generateUserToken($user->getId());
-			Emailer::newUserEmail($user->getId(), $token); 
-		}				
-		
-		
 		return $user->getId();
 		
 	}	
