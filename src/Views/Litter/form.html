@@ -60,12 +60,12 @@
 			<hr class="my-4">
 
 			{% include "Forms/Elements/select.html" with {
-				'label' : 'Buck',		
-				'id': 'buck', 
-				'name': "#{controller}[buck]", 
-				'description': 'Litter Buck?',
+				'label' : 'Sire',		
+				'id': 'sire', 
+				'name': "#{controller}[sire]", 
+				'description': 'Litter Sire?',
 				'required': 'required',
-				'value': litter.buck.id,
+				'value': litter.sire.id,
 				'options': males			
 			}%}		
 

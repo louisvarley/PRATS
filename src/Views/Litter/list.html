@@ -5,7 +5,7 @@
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
 	{% include '/Buttons/add-button.html' with {'model': controller} %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Breeder", "Code", "Birth Date", "Doe", "Buck", "Size", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Breeder", "Code", "Birth Date", "Doe", "Sire", "Size", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
@@ -13,7 +13,7 @@
 			<td data-label="Code">{% if( entity.code ) %}{{entity.code}}{% else %}None{% endif %}</td>		
 			<td data-label="BirthDate">{{ entity.birthDate | date('d/m/Y') }}</td>
 			<td data-label="Doe">{{ entity.dam.name }}</td>	
-			<td data-label="Buck">{{ entity.buck.name }}</td>
+			<td data-label="Sire">{{ entity.sire.name }}</td>
 			<td data-label="Size">{{ entity.rats | length }}</td>			
 			<td data-label="Options">
 				<div class="dropdown">

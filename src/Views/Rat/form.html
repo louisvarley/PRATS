@@ -90,7 +90,7 @@
 
 			{% include "Forms/Elements/explainer.html" with {
 				'title' : 'Litter Information',		
-				'text': 'When a litter is selected, fields below, such as Country and Date of Birth, Buck and Doe, will be auto-filled using information from the litter and breeder. 
+				'text': 'When a litter is selected, fields below, such as Country and Date of Birth, Sire and Doe, will be auto-filled using information from the litter and breeder. 
 				    When No Litter is selected, once saved, this information can be entered manually.' 			
 			}%}				
 			
@@ -162,7 +162,7 @@
 					'name': "#{controller}[none]", 
 					'description': 'The Name of this rats Father',
 					'readonly': 'readonly',
-					'value': rat.litter.buck.Name
+					'value': rat.litter.sire.Name
 				}%}	
 
 				{% include "Forms/Elements/text.html" with {
@@ -177,11 +177,11 @@
 			{% else %}
 
 				{% include "Forms/Elements/select.html" with {
-					'label' : 'Buck',		
-					'id': 'buck', 
-					'name': "#{controller}[buck]", 
+					'label' : 'Sire',		
+					'id': 'sire', 
+					'name': "#{controller}[sire]", 
 					'description': 'Rats Father',
-					'value': rat.buck.id,
+					'value': rat.sire.id,
 					'options': males			
 				}%}		
 
