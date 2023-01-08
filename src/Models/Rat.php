@@ -77,7 +77,13 @@ class Rat
     * @ORM\ManyToOne(targetEntity="rat")
     * @ORM\JoinColumn(name="sire_id", referencedColumnName="id")
     */	
-    protected $buck;		
+    protected $buck;	
+
+	/**
+    * @ORM\ManyToOne(targetEntity="rat")
+    * @ORM\JoinColumn(name="buck_id", referencedColumnName="id")
+    */	
+    protected $sire;		
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
