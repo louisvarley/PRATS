@@ -15,121 +15,146 @@
 		
 		{% block form_body %}
 
-			{% if( me.id == id ) %}
-			
-				{% include "Forms/Elements/text-password.html" with {
-					'label' : 'Password',
-					'id': 'password', 
-					'name': "#{controller}[password]", 
-					'description': 'Change your password',
-				}%}		
-
-				{% include "Forms/Elements/text-password.html" with {
-					'label' : 'Password Confirm',
-					'id': 'password-confirm', 
-					'name': "#{controller}[password_confirm]", 
-					'description': 'Confirm your password',
-				}%}		
-				
-				<hr class="my-4">	
-			
-			{% endif %} 
-			
 			{% include "Forms/Elements/image-uploader.html" with {
 				'id': 'user_images',
 				'name': "#{controller}[image]", 
 				'default': properties.DEFAULT_USER_AVATAR,
 				'image': user.image,
-				'label': 'Profile Photo',
-				'description': 'Optional Profile Picture'
+				'label': 'Optional Profile Picture',
+				'description': ''
 			}%}		
 
-			<hr class="my-4">			
+			{% if( me.id == id ) %}
+			
+				{% embed "Forms/form-group.html" with {'id': 'user-password', 'title': "Change My Password", 'subtitle': 'Change your password'} %}			
+					{% block group_body %}
+						{% include "Forms/Elements/text-password.html" with {
+							'label' : 'Password',
+							'id': 'password', 
+							'name': "#{controller}[password]", 
+							'description': 'Change your password',
+						}%}		
 
-			{% include "Forms/Elements/text-email.html" with {
-				'label' : 'Email Address',
-				'id': 'email', 
-				'name': "#{controller}[email]", 
-				'description': 'User Email',
-				'required': 'required',
-				'value': user.email
-			}%}		
+						{% include "Forms/Elements/text-password.html" with {
+							'label' : 'Password Confirm',
+							'id': 'password-confirm', 
+							'name': "#{controller}[password_confirm]", 
+							'description': 'Confirm your password',
+						}%}		
+					{% endblock %}		
+				{% endembed %}		
+			{% endif %} 
+			
+			{% embed "Forms/form-group.html" with {'id': 'user-details', 'title': "Personal Details", 'subtitle': 'Your basic personal details'} %}			
+				{% block group_body %}
+					{% include "Forms/Elements/text-email.html" with {
+						'label' : 'Email Address',
+						'id': 'email', 
+						'name': "#{controller}[email]", 
+						'description': 'User Email',
+						'required': 'required',
+						'value': user.email
+					}%}		
+						
+					
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'First Name',
+						'id': 'firstName', 
+						'name': "#{controller}[firstName]", 
+						'description': 'First Name',
+						'required': 'required',
+						'value': user.firstName
+					}%}	
 				
-			
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'First Name',
-				'id': 'firstName', 
-				'name': "#{controller}[firstName]", 
-				'description': 'First Name',
-				'required': 'required',
-				'value': user.firstName
-			}%}	
-		
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Last Name',
-				'id': 'firstName', 
-				'name': "#{controller}[lastName]", 
-				'description': 'Last Name',
-				'required': 'required',
-				'value': user.lastName
-			}%}					
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Last Name',
+						'id': 'firstName', 
+						'name': "#{controller}[lastName]", 
+						'description': 'Last Name',
+						'required': 'required',
+						'value': user.lastName
+					}%}											
+				{% endblock %}		
+			{% endembed %}							
 
-			<hr class="my-4">	
-			
-			{% include "Forms/Elements/text-address.html" with {
-				'label' : 'Address',			
-				'id': 'address', 
-				'name': "#{controller}[address]", 
-				'description': 'Home Address',
-				'addressLine1': user.addressLine1,
-				'addressLine2': user.addressLine2,
-				'town': user.town,
-				'county': user.county,
-				'postcode': user.postcode,
-				'country': user.country.value,
-				'countries' : countries,
-			}%}					
 
-			<hr class="my-4">	
+			{% embed "Forms/form-group.html" with {'id': 'user-address', 'title': "Address", 'subtitle': 'Your Address and contact details'} %}			
+				{% block group_body %}			
+					{% include "Forms/Elements/text-address.html" with {
+						'label' : 'Home Address',			
+						'id': 'address', 
+						'name': "#{controller}[address]", 
+						'description': '',
+						'addressLine1': user.addressLine1,
+						'addressLine2': user.addressLine2,
+						'town': user.town,
+						'county': user.county,
+						'postcode': user.postcode,
+						'country': user.country.value,
+						'countries' : countries,
+					}%}					
 
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Telephone',
-				'id': 'telephone', 
-				'name': "#{controller}[telephone]", 
-				'description': 'Contact Telephone Number',
-				'value': user.telephone
-			}%}	
 
-			<hr class="my-4">	
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Telephone',
+						'id': 'telephone', 
+						'name': "#{controller}[telephone]", 
+						'description': 'Contact Telephone Number',
+						'value': user.telephone
+					}%}	
+				{% endblock %}		
+			{% endembed %}					
+
+			{% embed "Forms/form-group.html" with {'id': 'breeder', 'title': "Breeder Information", 'subtitle': 'Your Breeder Information'} %}			
+				{% block group_body %}			
+				
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Breeding Code',
+						'id': 'code', 
+						'name': "#{controller}[code]", 
+						'description': 'Breeding Codes are used to generate unique registration codes for your bred animals and litters',
+						'value': user.code
+					}%}	
+					
+					
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Affiliated Organisation',		
+						'id': 'affiliation', 
+						'name': "#{controller}[affiliation]", 
+						'description': 'What organisation are you affiliated with as a breeder?',
+						'value': user.affiliation.id,
+						'options': affiliations			
+					}%}			
+
+				{% endblock %}		
+			{% endembed %}					
 			
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Code',
-				'id': 'code', 
-				'name': "#{controller}[code]", 
-				'description': 'Breeding Code',
-				'value': user.code
-			}%}	
+			{% embed "Forms/form-group.html" with {'id': 'admin-options', 'title': "Admin Options", 'subtitle': 'Options for Admins'} %}			
+				{% block group_body %}			
+				
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Role',		
+						'id': 'role', 
+						'name': "#{controller}[userRole]", 
+						'description': 'Role of this User?',
+						'required': 'required',
+						'value': user.userRole,
+						'options': userRoles			
+					}%}		
+
+					{% include "Forms/Elements/text-password.html" with {
+						'label' : 'Password Change',
+						'id': 'password-change', 
+						'name': "#{controller}[password_change]", 
+						'description': 'Force Set Password of this user',
+					}%}						
+
+				{% endblock %}		
+			{% endembed %}				
+					
 			
-			<hr class="my-4">			
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Role',		
-				'id': 'role', 
-				'name': "#{controller}[userRole]", 
-				'description': 'Role of this User?',
-				'required': 'required',
-				'value': user.userRole,
-				'options': userRoles			
-			}%}				
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Affiliation',		
-				'id': 'affiliation', 
-				'name': "#{controller}[affiliation]", 
-				'description': 'Breeder Affiliation?',
-				'value': user.affiliation.id,
-				'options': affiliations			
-			}%}												
 
 		{% endblock %}
 	{% endembed %}

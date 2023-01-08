@@ -15,17 +15,7 @@ $this->page_data['nav'] = [
 			['type' => 'divider'],				
 			['type' => 'item', 'title' => 'My Litters', 'link' => '/litter/list?orderby=id&order=desc&search=%22for%20sale%22'],
 			
-		]],
-		'applications' => ['title' => 'Applications', 'link' => '#', 'subitems' => [
-			['type' => 'item', 'title' => 'New Applications', 'link' => '/applications/new'],
-			['type' => 'item', 'title' => 'All Applications', 'link' => '/applications/list?orderby=id&order=desc'],	
-			['type' => 'divider'],				
-			['type' => 'item', 'title' => 'My Applications', 'link' => '/applications/list?orderby=id&order=desc&search=%22for%20sale%22'],
-			['type' => 'divider'],						
-		]],		
-		'forms' => ['title' => 'Forms', 'link' => '#', 'subitems' => [	
-			['type' => 'item', 'title' => 'Application Forms', 'link' => '/forms/new'],			
-		]],				
+		]],			
 		'configuration' => ['title' => 'Configuration', 'link' => '#', 'subitems' => [
 			['type' => 'item', 'title' => 'Users', 'link' => '/user/list'],	
 			['type' => 'item', 'title' => 'Invite', 'link' => '/user/invite'],				
