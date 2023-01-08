@@ -6,6 +6,10 @@
 
 	.login{
 		margin-top:10px;
+		
+		.row{
+			padding:0px !important;
+		}
 
 	}
 	
@@ -24,6 +28,16 @@
 		}
 	
 	}
+	
+	
+	footer{
+	display:none;
+	}
+	
+	
+	
+	
+	
 
 }
 
@@ -35,6 +49,10 @@
 	.navbar {
 		padding-left: 10px;
 	}
+	
+	footer{
+	display:none;
+	}	
 
 }
 

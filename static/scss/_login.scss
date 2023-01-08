@@ -72,13 +72,25 @@
 		margin-right: 0px;
 		margin-left: 0px;
 	}	
-			
-}
+	
+	@media (max-width: 767px) {
 
+		h2{
+		display:none;
+		}
 
-@media (max-width: 767px) {
+		.col-12{
+		padding:0px !important;
+		}
 
+		.card{
+		border-radius:0px !important;
+		}
+
+		.card-body{
 		
+		padding:5px !important;
+		}
 		.content{
 		margin: 0px;
 		}
@@ -87,4 +99,9 @@
 			padding: 0px !important;
 		}
 		
+	}
+	
+			
 }
+
+
