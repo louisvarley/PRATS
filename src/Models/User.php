@@ -232,7 +232,12 @@ class User
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    }	
+    }
+
+	public function getFullName(){
+		
+		return $this->getFirstName() . ' ' . $this->getLastName();
+	}
 	
     public function getAddressLine1()
     {

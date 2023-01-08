@@ -17,196 +17,210 @@
 
 			{% if( rat.id ) %}
 
-				{% include "Notes/list.html" with {
-					'notes': rat.notes,
-					'type': "rat",
-					'id': rat.id
-				}%}	
-				
 				{% include "Forms/Elements/hidden.html" with {
 					'id': 'id', 
 					'name': "#{controller}[id]", 
 					'readonly': 'readonly',
 					'value': rat.id
 				}%}
-				
-				<hr class="my-4">		
 
 			{% endif %}
 
-				{% include "Forms/Elements/image-uploader.html" with {
-					'id': 'rat_images',
-					'name': "#{controller}[image]", 
-					'image': rat.image,
-					'default': properties.DEFAULT_RAT_AVATAR,
-					'label': 'Profile Photo',
-					'description': 'Optional Images for this Rat'
-				}%}		
-			
-			
-				{% include "Forms/Elements/text.html" with {
-					'label' : 'Registration Code',
-					'id': 'code', 
-					'name': "#{controller}[code]", 
-					'description': 'Official Registration Code',
-					'readonly': 'readonly',
-					'value': rat.code
-				}%}							
-			
-			{% if( rat.id ) %}
-			
-			{% endif %}	
-
-			{% include "Forms/Elements/text.html" with {
-				'label' : 'Name',
-				'id': 'name', 
-				'name': "#{controller}[name]", 
-				'description': 'The Rats Pet Name',
-				'value': rat.name
-			}%}
-						
-
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Status',		
-				'id': 'status', 
-				'name': "#{controller}[status]", 
-				'description': 'Status of this Rat?',
-				'required': 'required',
-				'value': rat.status.value,
-				'options': ratStatus				
-			}%}					
-
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Gender',		
-				'id': 'gender', 
-				'name': "#{controller}[gender]", 
-				'description': 'Gender of this Rat?',
-				'required': 'required',
-				'value': rat.gender.value,
-				'options': genders		
+			{% include "Forms/Elements/image-uploader.html" with {
+				'id': 'rat_images',
+				'name': "#{controller}[image]", 
+				'image': rat.image,
+				'default': properties.DEFAULT_RAT_AVATAR,
+				'label': 'Optional Photo of this Rat',
+				'description': ''
 			}%}		
-
-			{% include "Forms/Elements/seperator.html" %}
-
-			{% include "Forms/Elements/explainer.html" with {
-				'title' : 'Litter Information',		
-				'text': 'When a litter is selected, fields below, such as Country and Date of Birth, Sire and Doe, will be auto-filled using information from the litter and breeder. 
-				    When No Litter is selected, once saved, this information can be entered manually.' 			
-			}%}				
-			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Litter',		
-				'id': 'litter', 
-				'name': "#{controller}[litter]", 
-				'description': 'This Rats Litter?',
-				'value': rat.litter.id,
-				'options': litters			
-			}%}				
-
-			{% if( rat.litter.id ) %}
-			
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Country of Origin',		
-					'id': 'country', 
-					'readonly' : 'readonly',
-					'name': "#{controller}[country]", 
-					'description': 'Country this rat Originated',
-					'value': rat.litter.breeder.country,
-					'options': countries			
-				}%}		
-
-			{% else %}
-
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Country of Origin',		
-					'id': 'country', 
-					'name': "#{controller}[country]", 
-					'description': 'Country this rat Originated',
-					'value': rat.country.value,
-					'options': countries			
-				}%}		
-			
-			{% endif %}
-
-			{% if( rat.litter.id ) %}
-
-				{% include "Forms/Elements/text-date.html" with {
-					'label' : 'Date of Birth',	
-					'id': 'date', 
-					'readonly': rat.litter.id,				
-					'name': "#{controller}[birthDate]", 
-					'description': 'Date this litter was born',
-					'value' : rat.litter.birthDate				
-				}%}		
-
-			{% else %}
-			
-				{% include "Forms/Elements/text-date.html" with {
-					'label' : 'Date of Birth',	
-					'id': 'date', 
-					'readonly': rat.litter.id,				
-					'name': "#{controller}[birthDate]", 
-					'description': 'Date this litter was born',
-					'value' : rat.birthDate				
-				}%}		
-
-			{% endif %}			
-			
-			{% include "Forms/Elements/seperator.html" %}
-
-			{% if( rat.litter.id ) %}
 		
-				{% include "Forms/Elements/text.html" with {
-					'label' : 'Father',
-					'id': 'father', 
-					'name': "#{controller}[none]", 
-					'description': 'The Name of this rats Father',
-					'readonly': 'readonly',
-					'value': rat.litter.sire.Name
-				}%}	
-
-				{% include "Forms/Elements/text.html" with {
-					'label' : 'Mother',
-					'id': 'mother', 
-					'name': "#{controller}[none]", 
-					'description': 'The Name of this rats Mother',
-					'readonly': 'readonly',
-					'value': rat.litter.dam.Name
-				}%}		
-				
-			{% else %}
-
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Sire',		
-					'id': 'sire', 
-					'name': "#{controller}[sire]", 
-					'description': 'Rats Father',
-					'value': rat.sire.id,
-					'options': males			
-				}%}		
-
-				{% include "Forms/Elements/select.html" with {
-					'label' : 'Dam',		
-					'id': 'dam', 
-					'name': "#{controller}[dam]", 
-					'description': 'Rats Mother',
-					'value': rat.dam.id,
-					'options': females			
-				}%}				
-				
-			{% endif %}	
-				
-	
-			{% include "Forms/Elements/seperator.html" %}
+		
+			{% if( rat.id ) %}
+				{% if( rat.code ) %}	
+					{% embed "Forms/form-group.html" with {'id': 'registration', 'title': "Registration Information", 'subtitle': 'Rats connected to an Affiliated Organisations within PRATS are assigned a unique registration code'} %}			
+						{% block group_body %}
+							{% include "Forms/Elements/text.html" with {
+								'label' : 'Registration Code',
+								'id': 'code', 
+								'name': "#{controller}[code]", 
+								'description': 'Official Registration Code',
+								'readonly': 'readonly',
+								'value': rat.code
+							}%}		
+						{% endblock %}		
+					{% endembed %}	
+				{% endif %}	
+			{% endif %}					
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Owner',		
-				'id': 'owner', 
-				'name': "#{controller}[owner]", 
-				'description': 'Owner of this Rat?',
-				'value': rat.owner.Id,
-				'options': users			
-			}%}			
+
+			{% embed "Forms/form-group.html" with {'id': 'basic', 'title': "Basic Information", 'subtitle': 'General information about the animal'} %}			
+				{% block group_body %}
+				
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Name',
+						'id': 'name', 
+						'name': "#{controller}[name]", 
+						'description': 'The Rats Pet Name',
+						'required': 'required',						
+						'value': rat.name
+					}%}
+								
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Status',		
+						'id': 'status', 
+						'name': "#{controller}[status]", 
+						'description': 'Status of this Rat?',
+						'required': 'required',
+						'value': rat.status.value,
+						'options': ratStatus				
+					}%}					
+
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Gender',		
+						'id': 'gender', 
+						'name': "#{controller}[gender]", 
+						'description': 'Gender of this Rat?',
+						'required': 'required',
+						'value': rat.gender.value,
+						'options': genders		
+					}%}		
+				
+				{% endblock %}		
+			{% endembed %}		
+
+
+			{% embed "Forms/form-group.html" with {'id': 'owner', 'title': "Owner Information", 'subtitle': 'Select the owner of this rat, if they are registered on PRATS'} %}			
+				{% block group_body %}
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Owner',		
+						'id': 'owner', 
+						'name': "#{controller}[owner]", 
+						'description': 'Owner of this Rat?',
+						'value': rat.owner.Id,
+						'options': users			
+					}%}	
+				{% endblock %}		
+			{% endembed %}				
+			
+			
+			
+			{% embed "Forms/form-group.html" with {'id': 'litter-s1', 'title': "Litter Information", 'subtitle': 'Select the litter this rat comes from, if registered on PRATS'} %}			
+				{% block group_body %}
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Litter',		
+						'id': 'litter', 
+						'name': "#{controller}[litter]", 
+						'description': 'Select this rats litter using it\'s unique litter code',
+						'value': rat.litter.id,
+						'options': litters			
+					}%}		
+				{% endblock %}		
+			{% endembed %}				
+	
+			
+			
+			{% embed "Forms/form-group.html" with {'id': 'litter-s2', 'title': "Further Information", 'subtitle': 'If the litter this rat came from is not registered on PRATS, (for example, from a non-affiliated organisation, you can add this information manually here'} %}			
+				{% block group_body %}
+				
+				
+					{% if( rat.litter.id ) %}
+				
+						{% include "Forms/Elements/select.html" with {
+							'label' : 'Country of Origin',		
+							'id': 'country', 
+							'readonly' : 'readonly',
+							'name': "#{controller}[country]", 
+							'description': 'Country this rat Originated',
+							'value': rat.litter.breeder.country,
+							'options': countries			
+						}%}		
+
+					{% else %}
+
+						{% include "Forms/Elements/select.html" with {
+							'label' : 'Country of Origin',		
+							'id': 'country', 
+							'name': "#{controller}[country]", 
+							'description': 'Country this rat Originated',
+							'value': rat.country.value,
+							'options': countries			
+						}%}		
+					
+					{% endif %}
+
+					{% if( rat.litter.id ) %}
+
+						{% include "Forms/Elements/text-date.html" with {
+							'label' : 'Date of Birth',	
+							'id': 'date', 
+							'readonly': rat.litter.id,				
+							'name': "#{controller}[birthDate]", 
+							'description': 'Date this litter was born',
+							'value' : rat.litter.birthDate				
+						}%}		
+
+					{% else %}
+					
+						{% include "Forms/Elements/text-date.html" with {
+							'label' : 'Date of Birth',	
+							'id': 'date', 
+							'readonly': rat.litter.id,				
+							'name': "#{controller}[birthDate]", 
+							'description': 'Date this litter was born',
+							'value' : rat.birthDate				
+						}%}		
+
+					{% endif %}			
+					
+
+					{% if( rat.litter.id ) %}
+				
+						{% include "Forms/Elements/text.html" with {
+							'label' : 'Father',
+							'id': 'father', 
+							'name': "#{controller}[none]", 
+							'description': 'The Name of the Father as linked by the linked litter',
+							'readonly': 'readonly',
+							'value': rat.litter.sire.Name
+						}%}	
+
+						{% include "Forms/Elements/text.html" with {
+							'label' : 'Mother',
+							'id': 'mother', 
+							'name': "#{controller}[none]", 
+							'description': 'The Name of the Mother as linked by the linked litter',
+							'readonly': 'readonly',
+							'value': rat.litter.dam.Name
+						}%}		
+						
+					{% else %}
+
+						{% include "Forms/Elements/select.html" with {
+							'label' : 'Sire',		
+							'id': 'sire', 
+							'name': "#{controller}[sire]", 
+							'description': 'The Father, leave as NONE, if the Father is not known',
+							'value': rat.sire.id,
+							'options': males			
+						}%}		
+
+						{% include "Forms/Elements/select.html" with {
+							'label' : 'Dam',		
+							'id': 'dam', 
+							'name': "#{controller}[dam]", 
+							'description': 'The Mother, leave as NONE if the Mother is not known',
+							'value': rat.dam.id,
+							'options': females			
+						}%}				
+						
+					{% endif %}					
+
+				{% endblock %}		
+			{% endembed %}		
+
+
+
 
 		{% endblock %}
 	{% endembed %}

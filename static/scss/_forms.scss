@@ -223,7 +223,32 @@ margin-bottom:10px;
 	border-bottom-right-radius: 0 !important;
 }
 
+.form-element{
+	margin-bottom: 20px;
+}
+
 .form-group{
 
-margin-bottom: 20px;
+   
+	background-color: lighten($color__brand-primary, 35%);
+	border-radius: 10px;
+	
+	.validation-tick{
+		color: darken(#afca0b, 25%);
+	}
+
 }
+
+
+.form-helper{
+
+	width:auto;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom: 20px;
+	font-size:12px;
+	width:max-content;
+
+}
+
+

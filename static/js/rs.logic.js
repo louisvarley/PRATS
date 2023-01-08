@@ -1,40 +1,23 @@
 
 function LitterSwitcher(){
 
-	if(jQuery('#litter').val() == ''){
-				
-	
-				
+
+	if(jQuery('#litter').val() == ''){	
+		jQuery('#form-group-litter-s2').fadeIn();					
 	}else{
-		
-		
-						
-		jQuery('#form-row-country').hide();
-		jQuery('#form-row-date').hide();
-		jQuery('#form-row-dam').hide();	
-		jQuery('#form-row-buck').hide();			
-		
+		jQuery('#form-group-litter-s2').fadeOut();			
 	}
-	
 	
 }
 
 
 rs.init("rats_logic",function(){
 	
-	LitterSwitcher();
 	
-	/* Max Length */
+	
+	/* Litter Changes */
 	jQuery(document).ready(function(){
-				
-		jQuery('#litter').change(function(){
-			
-			
-			LitterSwitcher();
-		
-			
-		})
-			
-			
+		LitterSwitcher();
+		jQuery('#litter').change(function(){LitterSwitcher();})		
 	});
 })

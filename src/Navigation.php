@@ -36,7 +36,7 @@ $this->page_data['nav'] = [
 			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],					
 		]],					
 		'help' => ['title' => 'Help', 'link' => '#', 'subitems' => [
-			['type' => 'item', 'title' => 'Wiki', 'link' => 'https://github.com/louisvarley/prats/wiki'],			
+			['type' => 'item', 'title' => 'Wiki', 'link' => 'https://github.com/louisvarley/PRATS/wiki'],			
 		]],	
 
 	];

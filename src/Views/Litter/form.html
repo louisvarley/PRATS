@@ -16,71 +16,67 @@
 		{% block form_body %}
 
 			{% if( litter.id ) %}
-
-				{% include "Notes/list.html" with {
-					'notes': litter.notes,
-					'type': "litter",
-					'id': litter.id
-				}%}	
-				
-				<hr class="my-4">		
-				
-				{% include "Forms/Elements/text.html" with {
-					'label' : 'Code',
-					'id': 'code', 
-					'readonly': 'readonly',
-					'name': "#{controller}[code]", 
-					'description': 'The Litter Code',
-					'value': litter.code
-				}%}					
-
+				{% embed "Forms/form-group.html" with {'id': 'code', 'title': "Litter Code", 'subtitle': 'Unique Litter Code for this Litter'} %}			
+					{% block group_body %}
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'Code',
+						'id': 'code', 
+						'readonly': 'readonly',
+						'name': "#{controller}[code]", 
+						'description': 'The Litter Code',
+						'value': litter.code
+					}%}	
+					{% endblock %}		
+				{% endembed %}			
 			{% endif %}	
 			
-		
+			{% embed "Forms/form-group.html" with {'id': 'basic', 'title': "Basic Information", 'subtitle': 'Basic information about this Litter and it\'s Breeder'} %}			
+				{% block group_body %}				
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Breeder',		
+						'id': 'breeder', 
+						'name': "#{controller}[breeder]", 
+						'description': 'Litter Breeder?',
+						'required': 'required',
+						'value': litter.breeder.id,
+						'options': breeders			
+					}%}				
+
+					{% include "Forms/Elements/text-date.html" with {
+						'label' : 'Date',	
+						'id': 'date', 
+						'name': "#{controller}[birthDate]", 
+						'description': 'Date this litter was born',
+						'required': 'required',
+						'value' : litter.birthDate				
+					}%}		
+				{% endblock %}		
+			{% endembed %}				
 			
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Breeder',		
-				'id': 'breeder', 
-				'name': "#{controller}[breeder]", 
-				'description': 'Litter Breeder?',
-				'required': 'required',
-				'value': litter.breeder.id,
-				'options': breeders			
-			}%}				
+			{% embed "Forms/form-group.html" with {'id': 'parents', 'title': "Parent Information", 'subtitle': 'This Litters Parentage Information'} %}			
+				{% block group_body %}				
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Sire',		
+						'id': 'sire', 
+						'name': "#{controller}[sire]", 
+						'description': 'Litter Sire?',
+						'required': 'required',
+						'value': litter.sire.id,
+						'options': males			
+					}%}		
 
-			{% include "Forms/Elements/text-date.html" with {
-				'label' : 'Date',	
-				'id': 'date', 
-				'name': "#{controller}[birthDate]", 
-				'description': 'Date this litter was born',
-				'required': 'required',
-				'value' : litter.birthDate				
-			}%}					
+					{% include "Forms/Elements/select.html" with {
+						'label' : 'Dam',		
+						'id': 'dam', 
+						'name': "#{controller}[dam]", 
+						'description': 'Litter Doe?',
+						'required': 'required',
+						'value': litter.dam.id,
+						'options': females			
+					}%}	
+				{% endblock %}		
+			{% endembed %}				
 			
-			<hr class="my-4">
-
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Sire',		
-				'id': 'sire', 
-				'name': "#{controller}[sire]", 
-				'description': 'Litter Sire?',
-				'required': 'required',
-				'value': litter.sire.id,
-				'options': males			
-			}%}		
-
-			{% include "Forms/Elements/select.html" with {
-				'label' : 'Dam',		
-				'id': 'dam', 
-				'name': "#{controller}[dam]", 
-				'description': 'Litter Doe?',
-				'required': 'required',
-				'value': litter.dam.id,
-				'options': females			
-			}%}	
-			
-			<hr class="my-4">
-
 		{% endblock %}
 	{% endembed %}
 {% endblock %}
