@@ -31,9 +31,9 @@ class Litter
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
-    * @ORM\JoinColumn(name="buck_id", referencedColumnName="id")
+    * @ORM\JoinColumn(name="sire_id", referencedColumnName="id")
     */	
-    protected $buck;	
+    protected $sire;	
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
@@ -87,10 +87,10 @@ class Litter
 
 		$datecode = $this->getBirthDate()->format('dmy');
 		$damCode = substr($this->getDam()->getName(),0,1);
-		$buckCode = substr($this->getBuck()->getName(),0,1);		
+		$sireCode = substr($this->getSire()->getName(),0,1);		
 		$breedercode = $this->getBreeder()->getCode();
 		
-		$this->setCode($breedercode . $buckCode . $damCode . $datecode);
+		$this->setCode($breedercode . $sireCode . $damCode . $datecode);
 		
 	}
 
@@ -109,14 +109,14 @@ class Litter
         return $this->dam;
     }	
 	
-    public function setBuck($buck)
+    public function setSire($sire)
     {
-        $this->buck = $buck;
+        $this->sire = $sire;
     }		
 
-    public function getBuck()
+    public function getSire()
 	{
-        return $this->buck;
+        return $this->sire;
     }		
 	
     public function getBirthDate()

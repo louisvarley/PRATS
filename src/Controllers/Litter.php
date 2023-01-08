@@ -35,12 +35,12 @@ class Litter extends \App\Controllers\ManagerController
 		$litter = Entities::findEntity($this->route_params['controller'], $id);
 		
 		$dam = Entities::findEntity("rat", $data['litter']['dam']);
-		$buck = Entities::findEntity("rat", $data['litter']['buck']);
+		$sire = Entities::findEntity("rat", $data['litter']['sire']);
 		$breeder = Entities::findEntity("user", $data['litter']['breeder']);
 		
 		$litter->setBirthDate(date_create_from_format('d/m/Y', $data['litter']['birthDate']));
 		$litter->setDam($dam);
-		$litter->setBuck($buck);
+		$litter->setSire($sire);
 		$litter->setBreeder($breeder);
 
 		Entities::persist($litter);
@@ -68,12 +68,12 @@ class Litter extends \App\Controllers\ManagerController
 		$litter = new \App\Models\litter();
 		
 		$dam = Entities::findEntity("rat", $data['litter']['dam']);
-		$buck = Entities::findEntity("rat", $data['litter']['buck']);
+		$sire = Entities::findEntity("rat", $data['litter']['sire']);
 		$breeder = Entities::findEntity("user", $data['litter']['breeder']);
 		
 		$litter->setBirthDate(date_create_from_format('d/m/Y', $data['litter']['birthDate']));
 		$litter->setDam($dam);
-		$litter->setBuck($buck);
+		$litter->setSire($sire);
 		$litter->setBreeder($breeder);
 		
 		

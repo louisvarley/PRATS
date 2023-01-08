@@ -77,7 +77,7 @@ class Rat
     * @ORM\ManyToOne(targetEntity="rat")
     * @ORM\JoinColumn(name="sire_id", referencedColumnName="id")
     */	
-    protected $buck;		
+    protected $sire;		
 	
 	/**
     * @ORM\ManyToOne(targetEntity="rat")
@@ -225,19 +225,19 @@ class Rat
 		
     }	
 	
-    public function setBuck($buck)
+    public function setSire($sire)
     {
 		if(!$this->getLitter()){
-			$this->buck = $buck;
+			$this->sire = $sire;
 		}
     }		
 
-    public function getBuck()
+    public function getSire()
 	{
 		if($this->getLitter()){
-			return $this->getLitter()->getBuck();
+			return $this->getLitter()->getSire();
 		}else{
-			return $this->buck;
+			return $this->sire;
 		}
     }		
 		
@@ -247,11 +247,11 @@ class Rat
 
 			$breedercode = $this->getLitter()->getBreeder()->getCode();
 			$damCode = substr($this->getLitter()->getDam()->getName(),0,1);
-			$buckCode = substr($this->getLitter()->getBuck()->getName(),0,1);
+			$sireCode = substr($this->getLitter()->getSire()->getName(),0,1);
 
 			$genderCode = $this->getGender()->value;
 			
-			$compCode = strtoupper($breedercode . $buckCode . $damCode . $genderCode);			
+			$compCode = strtoupper($breedercode . $sireCode . $damCode . $genderCode);			
 
 			$nextQuery = Entities::em()->getRepository(_MODELS . 'Rat')
 				->createQueryBuilder('r')
@@ -267,7 +267,7 @@ class Rat
 			$next =	count($nextQuery->getQuery()
 					->getArrayResult()) + 1;			
 			
-			$this->setCode(strtoupper($breedercode . $buckCode . $damCode . $genderCode) . str_pad($next, 2, '0', STR_PAD_LEFT));
+			$this->setCode(strtoupper($breedercode . $sireCode . $damCode . $genderCode) . str_pad($next, 2, '0', STR_PAD_LEFT));
 		
 		}
 		

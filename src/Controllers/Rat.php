@@ -55,12 +55,12 @@ class Rat extends \App\Controllers\ManagerController
 		if(empty($data['rat']['litter'])){
 			
 			$rat->setDam(empty($data['rat']['dam']) ? null : Entities::findEntity("rat", $data['rat']['dam']));
-			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));			
+			$rat->setSire(empty($data['rat']['sire']) ? null : Entities::findEntity("rat", $data['rat']['sire']));			
 			$rat->setCountry(empty($data['rat']['country']) ? null : Entities::getEnum('Countries', $data['rat']['country']));		
 			$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));		
 		}else{
 			$rat->setDam(null);
-			$rat->setBuck(null);
+			$rat->setSire(null);
 			$rat->setCountry(null);
 			$rat->setBirthDate(null);
 		}
@@ -109,12 +109,12 @@ class Rat extends \App\Controllers\ManagerController
 		if(empty($data['rat']['litter'])){
 			
 			$rat->setDam(empty($data['rat']['dam']) ? null : Entities::findEntity("rat", $data['rat']['dam']));
-			$rat->setBuck(empty($data['rat']['buck']) ? null : Entities::findEntity("rat", $data['rat']['buck']));			
+			$rat->setSire(empty($data['rat']['sire']) ? null : Entities::findEntity("rat", $data['rat']['sire']));			
 			$rat->setCountry(empty($data['rat']['country']) ? null : Entities::getEnum('Countries', $data['rat']['country']));		
 			$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));		
 		}else{
 			$rat->setDam(null);
-			$rat->setBuck(null);
+			$rat->setSire(null);
 			$rat->setCountry(null);
 			$rat->setBirthDate(null);
 		}
