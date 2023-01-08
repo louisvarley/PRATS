@@ -55,7 +55,6 @@ class Litter
 
 	public function __construct()
     {
-        $this->breeders = new ArrayCollection();
 		$this->rats = new ArrayCollection();		
 	}
 	
