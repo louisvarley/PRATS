@@ -101,8 +101,8 @@ class Rat extends \App\Controllers\ManagerController
 
 		$rat->setStatus(Entities::getEnum('RatStatus', $data['rat']['status']));	
 		$rat->setGender(Entities::getEnum('Genders', $data['rat']['gender']));
+		$rat->setOwner($owner);
 		
-
 		$rat->setLitter($litter);
 		$rat->setBirthDate(date_create_from_format('d/m/Y', $data['rat']['birthDate']));
 
