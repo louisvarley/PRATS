@@ -5,7 +5,7 @@
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
 	{% include '/Buttons/add-button.html' with {'model': controller} %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Code", "Name", "Owner", "Litter Code", "Gender", "Status", "Affiliation", "Options"]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Code", "Name", "Owner", "Litter Code", "Gender", "Status", "Aff", "Origin / Lives", "Options"]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
@@ -17,6 +17,7 @@
 			<td data-label="Gender"><span class="badge badge-rat {{ entity.gender.name | lower | replace({' ': ''}) }}">{{ entity.gender.name }}</span></td>	
 			<td data-label="Status"><span class="badge badge-rat {{ entity.status.name | lower | replace({' ': ''}) }}">{{ entity.status.name }}</span></td>	
 			<td data-label="Affiliation"><span class="badge" style="background-color:{{ entity.litter.breeder.affiliation.color }}">{{ entity.litter.breeder.affiliation.code }}</span> </td>
+			<td><img class="flag-sm" src="{{ entity.country.flag }}"> <img class="flag-sm" src="{{ entity.owner.country.flag }}"></td>
 			<td data-label="Options">
 				<div class="dropdown">
 				  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

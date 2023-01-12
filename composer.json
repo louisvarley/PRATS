@@ -10,7 +10,8 @@
         "konekt/pdf-invoice": "^1.9",
         "phpmailer/phpmailer": "^6.5",
         "ifsnop/mysqldump-php": "^2.9",
-        "sameer-shelavale/php-countries-array": "^1.0"
+        "sameer-shelavale/php-countries-array": "^1.0",
+        "xtomdex/country-flags": "*"
     },
     "autoload": {
         "psr-4": {

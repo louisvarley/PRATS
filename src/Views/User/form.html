@@ -73,7 +73,18 @@
 						'description': 'Last Name',
 						'required': 'required',
 						'value': user.lastName
-					}%}											
+					}%}			
+
+
+					{% include "Forms/Elements/text.html" with {
+						'label' : 'First Name',
+						'id': 'firstName', 
+						'name': "#{controller}[firstName]", 
+						'description': 'First Name',
+						'required': 'required',
+						'value': user.country.flag
+					}%}	
+					
 				{% endblock %}		
 			{% endembed %}							
 

@@ -3,6 +3,15 @@ namespace App\Enums;
 
 enum Countries: string
 {
+	
+	function flag(){
+
+		if($this->value){
+			return "/static/img/flags/$this->value.png";
+		}
+	
+	}	
+	
 	case None													  = '';
     case United_Kingdom											  = 'GB';	
     case Afghanistan                                              = 'AF';
@@ -253,5 +262,6 @@ enum Countries: string
     case Yemen                                                    = 'YE';
     case Zambia                                                   = 'ZM';
     case Zimbabwe                                                 = 'ZW';
+	
 	
 }
