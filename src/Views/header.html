@@ -43,6 +43,9 @@
 	
 	<!-- Select2 -->
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	
+	<!-- Treemaker -->
+	<script src="https://unpkg.com/gojs/release/go.js"></script>
 
 	<!-- Moment JS -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
@@ -73,5 +76,24 @@
 		{% endfor %}
 	});
 	</script>
+	
+	<style>
+	
+	.chart { height: 100%; width: 100%; margin: 5px; margin: 15px auto; border: 3px solid #DDD; border-radius: 3px; }
+
+.evolution-tree {
+    padding: 2px;
+    width: 40px; height: 40px;
+    border-radius: 3px;
+    font-size: 10px;
+}
+
+.evolution-tree .node-name { text-align: center; position: absolute; width: 88px; left: -50%; }
+.evolution-tree img {  margin-right:  10px; float: none !important; }
+
+.evolution-tree.the-parent { border-radius: 50%; background-color: #000; width: 3px; height: 3px; }
+.evolution-tree.the-parent .node-name { width: auto; margin-top: -7px; text-indent: 12px; font-weight: bold; }
+
+</style>
 
 </head>

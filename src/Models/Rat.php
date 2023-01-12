@@ -183,8 +183,6 @@ class Rat
     public function getCountry()
     {
 		
-		
-
 		if($this->getLitter()){
 			return $this->getLitter()->getBreeder()->getCountry();
 		}else{
@@ -239,7 +237,32 @@ class Rat
 		}else{
 			return $this->sire;
 		}
-    }		
+    }	
+
+	public function getLitters(){
+		
+		return Entities::findBy("Litter", [($this->getGender()->value == 'M' ? 'sire' : 'dam') => $this->getId()]);
+		
+	}
+	
+	public function getChildren(){
+		
+		
+		$children = new ArrayCollection();
+		
+		foreach($this->getLitters() as $litter){
+			
+			
+			foreach($litter->getRats() as $rat){
+				
+				$children[] = $rat;
+			}
+			
+		}
+		
+		return $children;
+		
+	}
 		
 	public function resetCode(){
 

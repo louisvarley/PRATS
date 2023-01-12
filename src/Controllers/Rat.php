@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \App\View;
+use \App\Classes;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use \App\Services\EntityService as Entities;
 use \App\Services\EmailService as Emailer;
@@ -144,6 +145,109 @@ class Rat extends \App\Controllers\ManagerController
 		);
 
 	}	
-
 	
+	public function getTreeWithChildren($id, $familyTree){
+		
+		$rat = Entities::findEntity("rat", $id);
+		
+		
+		if(!isset($familyTree[$rat->getId()])){
+		
+		/* Add this rat */
+			$familyTree[$rat->getId()] = new \App\Classes\FamilyNode($rat->getName(), $rat->getGender()->value);
+		
+		}
+
+		/* Add any Mates */
+	
+		foreach($rat->getLitters() as $litter){
+			
+			if($rat->getGender()->value == "M"){
+		
+				$familyTree[$litter->getDam()->getId()] = new \App\Classes\FamilyNode($litter->getDam()->getName(), $litter->getDam()->getGender()->value);
+				$familyTree[$rat->getId()]->mate = ($litter->getDam()->getId());
+				$familyTree[$litter->getDam()->getId()]->mate = ($rat->getId());
+			}
+			
+			if($rat->getGender()->value == "F"){		
+
+				$familyTree[$litter->getSire()->getId()] = new \App\Classes\FamilyNode($litter->getSire()->getName(), $litter->getSire()->getGender()->value);
+				$familyTree[$rat->getId()]->mate = ($litter->getSire()->getId());
+				$familyTree[$litter->getSire()->getId()]->mate = ($rat->getId());
+			}
+			
+			/* Add Children */
+			
+			foreach($litter->getRats() as $childRat){
+				
+				$familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
+				$familyTree[$childRat->getId()]->father = ($litter->getSire()->getId());
+				$familyTree[$childRat->getId()]->mother = ($litter->getDam()->getId());	
+				
+				
+				if($childRat->getLitters()){
+					
+					$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
+				};
+				
+			}
+			
+		}		
+
+		
+		return $familyTree;
+		
+	}
+	
+	public function treeAction(){
+		
+		$rat = Entities::findEntity($this->route_params['controller'], $this->route_params['id']);
+
+		$familyTree = [];
+
+		$familyTree = $this->getTreeWithChildren($this->route_params['id'], $familyTree, );
+		
+		$treeJson = "setupDiagram(myDiagram, [";
+		
+		foreach($familyTree as $key => $node){
+			
+			$treeJson .= "\r\n";
+			$code = $node->getGender() == 'M' ? 'ux' : 'vir';
+			//$treeJson .= '{ key: ' . $key . ', n: "' . $node->getName() . '", s: "' . $node->getGender() .' ", m: ' . $node->getMother() . ' , f: ' . $node->getFather() . ', ' . $code . ': ' . $node->getMate() . ', a: ["C", "F", "K"] },';
+		
+			$treeJson .= "
+			{ 
+			key:$key,
+			n: \"$node->name\", 
+			s: \"$node->gender\", 
+			";	
+			if($node->mate){
+			$treeJson .= "
+			$code:$node->mate,		
+			";
+			}
+			if($node->mother){
+			$treeJson .= "			
+			m:$node->mother, 
+			";
+			}		
+			if($node->father){			
+			$treeJson .= "			
+			f:$node->father, 
+			";
+			}		
+			$treeJson .= "			
+			},
+			";
+
+		}
+		
+		$treeJson .= "\r\n";
+		$treeJson .= '],';
+		$treeJson .= $rat->getId();
+		$treeJson .= ');';		
+		$this->render("Rat/tree.html", array("rat" => $rat, "treeJson" => htmlspecialchars_decode($treeJson)));
+			
+	}
+		
 }
