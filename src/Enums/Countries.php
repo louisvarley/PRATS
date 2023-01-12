@@ -7,7 +7,7 @@ enum Countries: string
 	function flag(){
 
 		if($this->value){
-			return "/static/img/flags/$this->value.png";
+			return "/static/img/flags/" . strtolower($this->value) . ".png";
 		}
 	
 	}	
