@@ -48,7 +48,7 @@ class Register extends \App\Controller
 				//Entities::flush();
 				
 				/* Log the User In */
-				Authentication::login($user);
+				//Authentication::login($user);
 				
 				Toast::throwSuccess("Welcome", "Hi $user->getFirstName() welcome to PRATS");
 
