@@ -44,8 +44,8 @@ class Register extends \App\Controller
 				/* Set Users Role to USER */
 				$user->setUserRole(Entities::findEntity("UserRole", _USER_ROLES['USER']['id']));
 				
-				Entities::persist($user);
-				Entities::flush();
+				//Entities::persist($user);
+				//Entities::flush();
 				
 				/* Log the User In */
 				Authentication::login($user);
