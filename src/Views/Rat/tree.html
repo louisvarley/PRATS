@@ -22,11 +22,8 @@
       myDiagram =
         $(go.Diagram, "myDiagramDiv",
           {
-            initialAutoScale: go.Diagram.Uniform,
-			initialDocumentSpot: go.Spot.Top,
-            initialViewportSpot: go.Spot.Top,
+            
 			initialLayoutCompleted: function(e){
-			
 				e.diagram.nodes.each(function(n) { 
 					n.movable = false;
 				});
@@ -132,6 +129,7 @@
 
     // create and initialize the Diagram.model given an array of node data representing people
     function setupDiagram(diagram, array, focusId) {
+	
       diagram.model =
         new go.GraphLinksModel(
           { // declare support for link label nodes
@@ -154,17 +152,14 @@
 
       const node = diagram.findNodeForKey(focusId);
       if (node !== null) {
-        diagram.select(node);
-		diagram.zoomToRect(node.actualBounds);
-		
+		 diagram.centerRect(node.actualBounds);
+         diagram.select(node);
+		 diagram.zoomToRect(node.actualBounds);
+		 diagram.scale = 1.4071004226562505;
       }
     }
 
-  
-
     window.addEventListener('DOMContentLoaded', init);
-
-
 
 </script>
 

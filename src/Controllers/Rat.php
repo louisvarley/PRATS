@@ -149,9 +149,10 @@ class Rat extends \App\Controllers\ManagerController
 	/* Really not efficent way to do this, lots of jumping around */
 	public function getTreeWithChildren($id, $familyTree){
 		
+		/* Get the Rat */
 		$rat = Entities::findEntity("rat", $id);
 		
-		
+		/* Is In Tree Already? */
 		if(!isset($familyTree[$rat->getId()])){
 		
 		/* Add this rat */
@@ -162,51 +163,57 @@ class Rat extends \App\Controllers\ManagerController
 		}
 		
 		/* If this rat has any litters */
-		
 		if($rat->getLitters()){
 	
+			/* Loop Litters */
 			foreach($rat->getLitters() as $litter){
 				
+				/* Is our rat a Buck */
 				if($rat->getGender()->value == "M"){
 			
-					$familyTree[$litter->getDam()->getId()] = new \App\Classes\FamilyNode($litter->getDam()->getName(), $litter->getDam()->getGender()->value);
+					/* Add This Bucks Mate */
+					if(!isset($familyTree[$litter->getDam()->getId()])) $familyTree[$litter->getDam()->getId()] = new \App\Classes\FamilyNode($litter->getDam()->getName(), $litter->getDam()->getGender()->value);
+					
+					/* Her Info */
 					$familyTree[$rat->getId()]->mate = ($litter->getDam()->getId());
 					$familyTree[$litter->getDam()->getId()]->mate = ($rat->getId());
 					$familyTree[$litter->getDam()->getId()]->status = ($litter->getDam()->getStatus()->value);
 					$familyTree[$litter->getDam()->getId()]->image = ($litter->getDam()->getProfileImage());
 				}
 				
+				/* Is our rat a Doe */
 				if($rat->getGender()->value == "F"){		
 
-					$familyTree[$litter->getSire()->getId()] = new \App\Classes\FamilyNode($litter->getSire()->getName(), $litter->getSire()->getGender()->value);
+					/* Add This Doe's Mate */
+					if(!isset($familyTree[$litter->getSire()->getId()])) $familyTree[$litter->getSire()->getId()] = new \App\Classes\FamilyNode($litter->getSire()->getName(), $litter->getSire()->getGender()->value);
+					
+					/* His Info */
 					$familyTree[$rat->getId()]->mate = ($litter->getSire()->getId());
 					$familyTree[$litter->getSire()->getId()]->mate = ($rat->getId());
 					$familyTree[$litter->getSire()->getId()]->status = ($litter->getSire()->getStatus()->value);
 					$familyTree[$litter->getSire()->getId()]->image = ($litter->getSire()->getProfileImage());
 				}
 				
-				/* Add Children */
-				
+				/* Now Add Children From This Litter */
 				foreach($litter->getRats() as $childRat){
 					
-					$familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
+					
+					if(!isset($familyTree[$childRat->getId()])) $familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
 					$familyTree[$childRat->getId()]->father = ($litter->getSire()->getId());
 					$familyTree[$childRat->getId()]->mother = ($litter->getDam()->getId());	
 					$familyTree[$childRat->getId()]->status = ($childRat->getStatus()->value);
 					$familyTree[$childRat->getId()]->image = ($childRat->getProfileImage());
 					
-					if($childRat->getLitters()){
-						
+					/* If child went on to have a litter, run loop again for them first */
+					if($childRat->getLitters())					
 						$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
-					};
-					
+								
 				}
 				
 			}	
 		
+		/* If not then we have to calculate everything manually */
 		}else{
-			
-			/* if not then we have to calculate everything manually */
 			
 			if($rat->getGender()->value == "M"){
 				$rats = Entities::findBy("Rat", ['sire' => $rat->getId()]);
@@ -216,7 +223,7 @@ class Rat extends \App\Controllers\ManagerController
 						
 			foreach($rats as $childRat){
 				
-				$familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
+				if(!isset($familyTree[$childRat->getId()])) $familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
 				
 				$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
 				$familyTree[$childRat->getId()]->father = ($childRat->getSire()->getId());

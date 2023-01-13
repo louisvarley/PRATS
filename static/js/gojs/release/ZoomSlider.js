@@ -433,6 +433,7 @@ ZoomSlider.prototype.scaleToValue = function() {
   var A = this._initialScale;
   var B = diagram.commandHandler.zoomFactor;
   var y1 = diagram.scale;
+  
   slider.value = Math.round(Math.log(y1/A) / Math.log(B)).toString();
 }
 
@@ -448,6 +449,8 @@ ZoomSlider.prototype.valueToScale = function() {
   var A = this._initialScale;
   var B = diagram.commandHandler.zoomFactor;
   diagram.scale = A * Math.pow(B, x);
+
+  
 }
 
 /**
