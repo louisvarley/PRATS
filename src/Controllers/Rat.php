@@ -146,6 +146,7 @@ class Rat extends \App\Controllers\ManagerController
 
 	}	
 	
+	/* Really not efficent way to do this, lots of jumping around */
 	public function getTreeWithChildren($id, $familyTree){
 		
 		$rat = Entities::findEntity("rat", $id);
@@ -155,46 +156,98 @@ class Rat extends \App\Controllers\ManagerController
 		
 		/* Add this rat */
 			$familyTree[$rat->getId()] = new \App\Classes\FamilyNode($rat->getName(), $rat->getGender()->value);
+			$familyTree[$rat->getId()]->image = ($rat->getProfileImage());
+			$familyTree[$rat->getId()]->status = ($rat->getStatus()->value);			
 		
 		}
-
-		/* Add any Mates */
+		
+		/* If this rat has any litters */
+		
+		if($rat->getLitters()){
 	
-		foreach($rat->getLitters() as $litter){
+			foreach($rat->getLitters() as $litter){
+				
+				if($rat->getGender()->value == "M"){
+			
+					$familyTree[$litter->getDam()->getId()] = new \App\Classes\FamilyNode($litter->getDam()->getName(), $litter->getDam()->getGender()->value);
+					$familyTree[$rat->getId()]->mate = ($litter->getDam()->getId());
+					$familyTree[$litter->getDam()->getId()]->mate = ($rat->getId());
+					$familyTree[$litter->getDam()->getId()]->status = ($litter->getDam()->getStatus()->value);
+					$familyTree[$litter->getDam()->getId()]->image = ($litter->getDam()->getProfileImage());
+				}
+				
+				if($rat->getGender()->value == "F"){		
+
+					$familyTree[$litter->getSire()->getId()] = new \App\Classes\FamilyNode($litter->getSire()->getName(), $litter->getSire()->getGender()->value);
+					$familyTree[$rat->getId()]->mate = ($litter->getSire()->getId());
+					$familyTree[$litter->getSire()->getId()]->mate = ($rat->getId());
+					$familyTree[$litter->getSire()->getId()]->status = ($litter->getSire()->getStatus()->value);
+					$familyTree[$litter->getSire()->getId()]->image = ($litter->getSire()->getProfileImage());
+				}
+				
+				/* Add Children */
+				
+				foreach($litter->getRats() as $childRat){
+					
+					$familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
+					$familyTree[$childRat->getId()]->father = ($litter->getSire()->getId());
+					$familyTree[$childRat->getId()]->mother = ($litter->getDam()->getId());	
+					$familyTree[$childRat->getId()]->status = ($childRat->getStatus()->value);
+					$familyTree[$childRat->getId()]->image = ($childRat->getProfileImage());
+					
+					if($childRat->getLitters()){
+						
+						$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
+					};
+					
+				}
+				
+			}	
+		
+		}else{
+			
+			/* if not then we have to calculate everything manually */
 			
 			if($rat->getGender()->value == "M"){
-		
-				$familyTree[$litter->getDam()->getId()] = new \App\Classes\FamilyNode($litter->getDam()->getName(), $litter->getDam()->getGender()->value);
-				$familyTree[$rat->getId()]->mate = ($litter->getDam()->getId());
-				$familyTree[$litter->getDam()->getId()]->mate = ($rat->getId());
+				$rats = Entities::findBy("Rat", ['sire' => $rat->getId()]);
+			}else{
+				$rats = Entities::findBy("Rat", ['dam' => $rat->getId()]);		
 			}
-			
-			if($rat->getGender()->value == "F"){		
-
-				$familyTree[$litter->getSire()->getId()] = new \App\Classes\FamilyNode($litter->getSire()->getName(), $litter->getSire()->getGender()->value);
-				$familyTree[$rat->getId()]->mate = ($litter->getSire()->getId());
-				$familyTree[$litter->getSire()->getId()]->mate = ($rat->getId());
-			}
-			
-			/* Add Children */
-			
-			foreach($litter->getRats() as $childRat){
+						
+			foreach($rats as $childRat){
 				
 				$familyTree[$childRat->getId()] = new \App\Classes\FamilyNode($childRat->getName(), $childRat->getGender()->value);
-				$familyTree[$childRat->getId()]->father = ($litter->getSire()->getId());
-				$familyTree[$childRat->getId()]->mother = ($litter->getDam()->getId());	
 				
+				$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
+				$familyTree[$childRat->getId()]->father = ($childRat->getSire()->getId());
+				$familyTree[$childRat->getId()]->mother = ($childRat->getDam()->getId());	
+				$familyTree[$childRat->getId()]->image = $childRat->getProfileImage();
+				$familyTree[$childRat->getId()]->status = $childRat->getStatus()->value;
 				
-				if($childRat->getLitters()){
+				if($rat->getGender()->value == "M"){
 					
-					$familyTree = $this->getTreeWithChildren($childRat->getId(), $familyTree);
-				};
+					if(!isset($familyTree[$childRat->getDam()->getId()])){
+						$familyTree[$childRat->getDam()->getId()] = new \App\Classes\FamilyNode($childRat->getDam()->getName(), $childRat->getDam()->getGender()->value);
+					}
+					$familyTree[$rat->getId()]->mate = $childRat->getDam()->getId();
+					$familyTree[$childRat->getDam()->getId()]->mate = $rat->getId();
+					$familyTree[$childRat->getDam()->getId()]->status = $childRat->getDam()->getStatus()->value;	
+					$familyTree[$childRat->getDam()->getId()]->image = $childRat->getDam()->getProfileImage();					
+					
+				}else{
+					if(!isset($familyTree[$childRat->getSire()->getId()])){
+						$familyTree[$childRat->getSire()->getId()] = new \App\Classes\FamilyNode($childRat->getSire()->getName(), $childRat->getSire()->getGender()->value);
+					}
+					$familyTree[$rat->getId()]->mate = $childRat->getSire()->getId();
+					$familyTree[$childRat->getSire()->getId()]->mate = $rat->getId();	
+					$familyTree[$childRat->getSire()->getId()]->status = $childRat->getSire()->getStatus()->value;
+					$familyTree[$childRat->getSire()->getId()]->image = $childRat->getSire()->getProfileImage();
+				}				
 				
 			}
 			
-		}		
+		}
 
-		
 		return $familyTree;
 		
 	}
@@ -202,10 +255,56 @@ class Rat extends \App\Controllers\ManagerController
 	public function treeAction(){
 		
 		$rat = Entities::findEntity($this->route_params['controller'], $this->route_params['id']);
-
+		
 		$familyTree = [];
+		
+		/* follow back the fathers family */
 
-		$familyTree = $this->getTreeWithChildren($this->route_params['id'], $familyTree, );
+		$x = $rat->getSire();
+		
+		if($x){
+		
+			do {			
+				
+				$father = $x;
+				$x = $father->getSire();
+				
+
+			} while ($x);
+		
+		}else{
+			
+			$father = $rat;
+		}
+	
+		
+		$familyTree = $this->getTreeWithChildren($father->getId(), $familyTree);
+
+
+
+		$x = $rat->getDam();
+				
+		if($x){
+		
+			do {			
+				
+				$mother = $x;
+				$x = $mother->getDam();
+				
+
+			} while ($x);
+		
+		}else{
+			
+			$mother = $rat;
+		}
+	
+		
+		$familyTree = $this->getTreeWithChildren($mother->getId(), $familyTree);
+	
+
+
+		//$familyTree = $this->getTreeWithChildren($this->route_params['id'], $familyTree, );
 		
 		$treeJson = "setupDiagram(myDiagram, [";
 		
@@ -213,13 +312,14 @@ class Rat extends \App\Controllers\ManagerController
 			
 			$treeJson .= "\r\n";
 			$code = $node->getGender() == 'M' ? 'ux' : 'vir';
-			//$treeJson .= '{ key: ' . $key . ', n: "' . $node->getName() . '", s: "' . $node->getGender() .' ", m: ' . $node->getMother() . ' , f: ' . $node->getFather() . ', ' . $code . ': ' . $node->getMate() . ', a: ["C", "F", "K"] },';
 		
 			$treeJson .= "
 			{ 
 			key:$key,
 			n: \"$node->name\", 
 			s: \"$node->gender\", 
+			i: \"$node->image\",
+			x: \"$node->status\",			
 			";	
 			if($node->mate){
 			$treeJson .= "

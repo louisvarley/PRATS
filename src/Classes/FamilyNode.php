@@ -10,6 +10,8 @@ class FamilyNode
 	public $mother;
 	public $father;
 	public $mate;
+	public $image;
+	public $status;
 
     function __construct($name, $gender) {
         $this->name     = $name;
@@ -28,12 +30,24 @@ class FamilyNode
 		$this->mate = $mate;
 	}
 	
+	function setImage($image){
+		$this->image = $image;
+	}
+	
+	function setStatus($status){
+		$this->status = $status;
+	}
+	
 	function getFather(){
 		return $this->father;
 	}
 	
 	function getMother(){
 		return $this->mother;
+	}
+	
+	function getStatus(){
+		return $this->status;
 	}
 	
 	function getGender(){
@@ -47,5 +61,8 @@ class FamilyNode
 	function getName(){
 		return $this->name;
 	}
-
+	
+	function getImage(){
+		return $this->image;
+	}
 }

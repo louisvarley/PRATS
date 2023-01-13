@@ -156,7 +156,7 @@ class Rat
 		if($this->getImage() == null){
 			return WWW_IMG . '/default.png';
 		}else{
-			return $this->getImage()->getThumbnailUrl();
+			return 'https://local-rats.nprs.org.uk/'. $this->getImage()->getThumbnailUrl();
 		}
 
 	}	
