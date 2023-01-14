@@ -14,7 +14,7 @@
 			<td>{{ entity.firstName }}</td>	
 			<td>{{ entity.lastName }}</td>				
 			<td>{{ entity.email }}</td>		
-			<td>{{ entity.userRoleString }}</td>					
+			<td>{{ entity.userRole.name }}</td>					
 			<td>
 			{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
 			{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
