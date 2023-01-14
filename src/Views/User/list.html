@@ -5,11 +5,14 @@
 {% block page_subtitle %}{{ description }}{% endblock %}
 {% block body %}
 	{% include '/Buttons/add-button.html' with {'model': controller} %}
-	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","Email Address","Role",""]	} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["","","First Name", "Last Name", "Email Address","Role",""]	} %}
 		{% block table_body %}
 			{% for entity in entities %}
 			<tr>
 			<td><img class="rounded-circle me-2" src="{{ entity.getProfileImage }}" width="32px" height="32px"></td>
+			<td><img class="flag-sm" src="{{ entity.country.flag }}"></td>
+			<td>{{ entity.firstName }}</td>	
+			<td>{{ entity.lastName }}</td>				
 			<td>{{ entity.email }}</td>		
 			<td>{{ entity.userRoleString }}</td>					
 			<td>

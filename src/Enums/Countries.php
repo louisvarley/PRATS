@@ -9,7 +9,7 @@ enum Countries: string
 		if($this->value){
 			return "/static/img/flags/" . strtolower($this->value) . ".png";
 		}else{			
-			return "/static/img/flags/none.png";
+			return "/static/img/flags/xx.png";
 		}
 	
 	}	

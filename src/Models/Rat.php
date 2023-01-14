@@ -189,6 +189,30 @@ class Rat
 			return $this->country;
 		}
     }	
+	
+	public function getOrigin(){
+
+		if($this->getLitter()){
+			return $this->getLitter()->getBreeder()->getCountry();
+		}elseif($this->country){
+			return $this->country;
+		}else{
+			return Entities::getEnum('Countries', 'xx');
+		}
+		
+	}
+	
+	public function getResidence(){
+
+		if($this->getOwner()){
+			return $this->getOwner()->getCountry();
+		}else{
+			return $this->getOrigin();
+		}
+		
+	}
+	
+	
 
     public function getBirthDate()
     {        
