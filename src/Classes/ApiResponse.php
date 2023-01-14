@@ -10,6 +10,9 @@ namespace App\Classes;
 class ApiResponse
 {
 
+	public $code;
+	public $response;
+
 	public function __construct($responseCode, $code, $response){
 
 		http_response_code($responseCode);
