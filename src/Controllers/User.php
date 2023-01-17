@@ -71,10 +71,9 @@ class User extends \App\Controllers\ManagerController
 			
 		}
 
-		if(isset($data['user']['newPassword'])){
-		
-			$newPassword = randomPassword();	
-			$user->setPassword($newPassword);
+		if(isset($data['user']['password_change'])){
+
+			$user->setPassword($data['user']['password_change']);
 			$user->generateApiKey();
 		
 		}
