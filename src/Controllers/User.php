@@ -70,9 +70,7 @@ class User extends \App\Controllers\ManagerController
 			$user->setPassword($data['user']['password']);
 			
 		}
-		
-		/* If As Admin
-		
+
 		if(isset($data['user']['newPassword'])){
 		
 			$newPassword = randomPassword();	
@@ -81,8 +79,6 @@ class User extends \App\Controllers\ManagerController
 		
 		}
 		
-		*/
-
 		Entities::persist($user);
 		Entities::flush();
 		
