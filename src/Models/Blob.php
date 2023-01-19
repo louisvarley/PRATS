@@ -4,6 +4,7 @@ namespace App\Models;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 use \Core\Services\EntityService as Entities;
+use Intervention\Image\ImageManager;
 
 /**
  * @ORM\Entity
@@ -21,6 +22,13 @@ class Blob
 	/** @ORM\Column(type="blob", name="data") **/
     protected $data;	
 
+	protected $manager;
+
+	public function __construct(){
+		
+		$this->manager = new ImageManager(['driver' => 'gd']);
+
+	}
 
     public function getId()
     {
@@ -29,25 +37,39 @@ class Blob
 
     public function getData()
     {
-        return $this->data;
-    }  
-
-    public function setData($data)
-    {
-        return $this->data = $data;
-    }  
-
-	public function getBase64(){
-
 		if(is_resource($this->data)){
-			rewind($this->data);			
-			return stream_get_contents($this->data);			
+			return stream_get_contents($this->data);
+		}else{
+			return $this->data;
 		}
-		
-		return $this->data;
+					
+    }  
 
+    public function setData($file)
+    {
+		$this->manager = new ImageManager(['driver' => 'gd']);
+		
+        $img = $this->manager->make($file);
+		$this->data = (string) $img->encode('jpg');		
+    }  
+	
+	/* Resizes and saves back */
+	public function setResize($width, $height){
+			
+		$dataResized =  $this->getResized($width, $height);	
+		$this->data = $dataResized;
 	}
 
+	/* Resizes and Returns */
+	public function getResized($width, $height){
+	
+		$this->manager = new ImageManager(['driver' => 'gd']);
+	
+		$img = $this->manager->make($this->getData());
+		$img->resize($width, $height);
+		return (string) $img->encode('jpg');
+	}
+	
 	public function getUrl(){
 		return "/blob/" . $this->getId() . ".jpg";
 	}
@@ -60,25 +82,5 @@ class Blob
 		return "/blob/small/" . $this->getId() . ".jpg";
 	}	
 	
-	public function rotate(){
-		
-
-		$imageBase64 = $this->getBase64();
-
-		$res = imagecreatefromstring(base64_decode($imageBase64));
-
-		if ($res === false) exit;
-		$rotated = imagerotate($res, -90, 0);
-	
-		ob_start(); 
-			imagejpeg($rotated); 
-			$imageBase64 = base64_encode(ob_get_contents()); 
-		ob_end_clean(); 	
-		
-		$this->setData($imageBase64);
-		Entities::persist($this);
-		Entities::flush();
-
-	}
 
 }

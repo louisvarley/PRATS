@@ -31,6 +31,7 @@
 						{% include "Forms/Elements/text-password.html" with {
 							'label' : 'Password',
 							'id': 'password', 
+							'strength': 'true',
 							'name': "#{controller}[password]", 
 							'description': 'Change your password',
 						}%}		
@@ -145,7 +146,8 @@
 
 					{% include "Forms/Elements/text-password.html" with {
 						'label' : 'Password Change',
-						'id': 'password-change', 
+						'id': 'password', 
+						'strength': 'true',
 						'name': "#{controller}[password_change]", 
 						'description': 'Force Set Password of this user',
 					}%}						

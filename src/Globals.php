@@ -129,8 +129,8 @@ Properties::add('SMTP_HOST','');
 /* Global Options */
 
 define("_IMAGE_SIZES",[
-	"THUMBNAIL" => ["width" => 300, "height" => 300],
+	"THUMBNAIL" => ["width" => 150, "height" => 150],
 	"SMALL" => ["width" => 300, "height" => 300],
-	"MEDIUM" => ["width" => 300, "height" => 300],
-	"LARGE" => ["width" => 300, "height" => 300],	
+	"MEDIUM" => ["width" => 500, "height" => 500],
+	"LARGE" => ["width" => 900, "height" => 900],	
 ]);

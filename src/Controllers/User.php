@@ -71,7 +71,7 @@ class User extends \App\Controllers\ManagerController
 			
 		}
 
-		if(isset($data['user']['password_change'])){
+		if(isset($data['user']['password_change']) && strlen($data['user']['password_change']) > 0){
 
 			$user->setPassword($data['user']['password_change']);
 			$user->generateApiKey();

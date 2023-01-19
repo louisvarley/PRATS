@@ -39,9 +39,12 @@ rs.init("form_setup",function(){
 		autoclose: true,
 	});
 	
-	
+	/* Password Strength */
+	jQuery('.password-meter').pwstrength({
+		
+		'colorClasses': ["success", "success", "success", "warning", "warning", "success"]
+	});
 
-	
 	/* Max Length */
 	jQuery(document).ready(function(){
 				
