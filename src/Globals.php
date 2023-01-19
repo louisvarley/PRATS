@@ -104,7 +104,9 @@ Plugins::load();
 Entities::load();
 
 /* Create Proxies and Database Schema if not set */
-Entities::generateSchema();
+
+
+//Entities::generateSchema();
 Entities::generateProxies();
 Entities::initialUserCheck();
 
