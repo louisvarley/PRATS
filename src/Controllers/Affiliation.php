@@ -36,10 +36,10 @@ class Affiliation extends \App\Controllers\ManagerController
 		$affiliation->setName($data['affiliation']['name']);
 		$affiliation->setCode($data['affiliation']['code']);		
 
-		if(!empty($data['user']['affiliation']['logo'])){
+		if(!empty($data['affiliation']['logo']['id'])){
 			
 			$image = Entities::findEntity("blob", $data['affiliation']['logo']['id']);
-			$affiliation->setImage($image);
+			$affiliation->setLogo($image);
 		}
 
 		Entities::persist($affiliation);
@@ -55,10 +55,10 @@ class Affiliation extends \App\Controllers\ManagerController
 		$affiliation->setName($data['affiliation']['name']);
 		$affiliation->setCode($data['affiliation']['code']);	
 		
-		if(!empty($data['user']['affiliation']['logo'])){
+		if(!empty($data['affiliation']['logo']['id'])){
 			
 			$image = Entities::findEntity("blob", $data['affiliation']['logo']['id']);
-			$affiliation->setImage($image);
+			$affiliation->setLogo($image);
 		}
 		
 		Entities::persist($affiliation);

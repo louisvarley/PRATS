@@ -96,7 +96,7 @@ class Affiliation
 		 $this->logo = $logo;
 	}
 
-	public function getLogo(){
+	public function getProfileLogo(){
 
 		if($this->logo == null){
 			return WWW_IMG . '/default.png';
@@ -105,5 +105,10 @@ class Affiliation
 		}
 
 	}	
+
+	public function getLogo()
+	{
+		return $this->logo;
+	}
 
 }

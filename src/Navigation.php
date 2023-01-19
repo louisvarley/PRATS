@@ -21,7 +21,7 @@ $this->page_data['nav'] = [
 			['type' => 'item', 'title' => 'Invite', 'link' => '/user/invite'],				
 			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],			
 			['type' => 'divider'],				
-			['type' => 'item', 'title' => 'Update', 'link' => '/update'],
+			['type' => 'item', 'title' => 'Run Cron', 'link' => '/cron'],
 			['type' => 'item', 'title' => 'Settings', 'link' => '/settings/edit'],	
 			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],					
 		]],					
