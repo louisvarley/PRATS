@@ -27,6 +27,7 @@ class EmailService
 		$mail->SMTPSecure = 'tls';   
 		$mail->From = Properties::getProperty("SMTP_FROM")->getValue();
 		$mail->FromName = Properties::getProperty("SMTP_FROM_NAME")->getValue();
+		$mail->AddEmbeddedImage(DIR_STATIC . "/img/email-header.png", "logo", "logo.png");
 		$mail->AddAddress($to); 
 		$mail->MsgHTML($sbody);
 		$mail->isHTML(true);
