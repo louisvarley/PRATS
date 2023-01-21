@@ -1,3 +1,37 @@
+<!--Start Side Sticky Menu-->
+<nav class="ss-menu ">
+<div class="nav-item nav-icon active">
+    <a href="/">
+	  <img style="margin: 10px; width:30px; height:30px" class="mobile-logo" src="/static/img/mobile-logo.png">
+    </a>
+  </div>
+   <ul>
+	{% for id,item in nav %}
+      <li><a href="#1"><i class="{{item.icon}}"></i> {{item.title}}</a>
+			{% if( item.subitems ) %}
+					<ul class="ss-sub-menu">
+				{% for subitem in item.subitems %}
+					{% if( subitem.type == "item" ) %}
+						<li>
+							
+							<a href="{{subitem.link}}" class="rounded link-light">{{subitem.title}}</a>
+						</li>
+					{% endif %}	
+
+					{% if( subitem.type == "divider" ) %}
+						<div class="dropdown-divider"></div>	
+					{% endif %}				
+				{% endfor %}
+				</ul>
+			{% endif %}	
+	   </li>
+	{% endfor %}	
+
+   </ul>
+</nav>
+<!--End Side Sticky Menu-->
+
+<!--
 <nav id="sidebar" class="navbar navbar-expand-lg navbar-dark bg-dark bg-secondary">
 
   <div class="nav-item nav-icon active">
@@ -69,3 +103,4 @@
     </div>
   </div>
 </nav>
+-->
