@@ -3,53 +3,6 @@
 background-color:#6667ab !important;
 }
 
-.ss-menu{
-
-	.ss-sub-menu{
-		display:none;
-		transition: .3s all;
-		-webkit-transition: .3s all;
-		-moz-transition: .3s all;
-
-		i{
-
-			color:#fff;
-		}
-	}
-
-.ss-sub-menu ul li a {
-		text-indent: 10px;
-	
-		color:#fff;
-	}
-
-	.ss-sub-menu ul li a:hover {
-		text-indent: 10px;
-	
-		color:#fff;
-	}
-
-
-	.active{
-
-		.ss-sub-menu{
-
-			display:block !important;
-			transition: .3s all;
-			-webkit-transition: .3s all;
-			-moz-transition: .3s all;
-
-			.active{
-
-				text-indent: 150px;
-			}
-		}
-	}
-
-}
-
-
-
 .ss-menu {
 
 	position: fixed;
@@ -60,7 +13,7 @@ background-color:#6667ab !important;
 	height: 100%;
 	/* for zombiles browsers*/
 	height: 100vh;
-font-weight:600;
+	font-weight:600;
 }
 
 .ss-menu.open {
@@ -75,10 +28,6 @@ font-weight:600;
 	left: 0;
 }
 
-.ss-menu ul{
-	margin-left: 0px;
-	padding-left: 0px;
-}
 
 /* ssMenu Default Theme */
 
@@ -94,14 +43,8 @@ font-weight:600;
 	color: rgba(255, 255, 255, 0.55);
 }
 
-.ss-menu li li:hover {
-
-	//font-weight:900;
-	
-}
-
 .ss-menu ul li:hover {
-	//font-weight:900;
+	background: rgba(0, 0, 0, 0.3);
 }
 
 .ss-menu.default ul li .fa {
@@ -110,7 +53,7 @@ font-weight:600;
 
 .ss-menu ul li {
 	white-space: nowrap;
-	border-radius: 0 30px 30px 0;
+	border-radius: 14px 14px 14px 14px;
 	margin: 0 10px 0 0;
 	overflow: hidden;
 }
@@ -121,7 +64,7 @@ font-weight:600;
 	color: rgba(255, 255, 255, 0.85);
 	text-decoration: none;
 	-webkit-tap-highlight-color: transparent;
-	padding: 15px 10px;
+	padding: 10px 10px;
 	display: block;
 	border-bottom: 1px dotted rgba(255, 255, 255, 0.05);
 	font-size: 14px;
@@ -143,6 +86,21 @@ font-weight:600;
 	color: rgba(255, 255, 255, 0.8);
 }
 
+.ss-menu:hover ul{
+	margin-left:10px;
+	transition: .3s all;
+	-webkit-transition: .3s all;
+	-moz-transition: .3s all;
+}
+
+.ss-menu ul{
+	padding-left:0px;
+	margin-left: 0px;
+	transition: .3s all;
+	-webkit-transition: .3s all;
+	-moz-transition: .3s all;
+}
+
 .ss-main {
 	margin-left: 50px;
 }
@@ -161,6 +119,7 @@ font-weight:600;
 	-moz-transition: .3s all;
 }
 
+
 /* ssMenu Badge Design */
 
 .ss-badge {
@@ -175,5 +134,14 @@ font-weight:600;
 	position: absolute;
 }
 
+/* Ensures that the Profile Drop down works as expected */
+.ss-menu:hover{
+	.profile, .profile .dropdown-menu{
+		overflow: visible !important;
+	}
+}
 
 
+.menu-bars{
+	display:none;
+}

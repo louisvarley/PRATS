@@ -26,7 +26,7 @@
 
 			var ssMenu = $(".ss-menu");
 
-			var Triggers = $(ssMenu).find("li");
+			var Triggers = $(".ss-menu");
 
 
 			//Applying customizations 

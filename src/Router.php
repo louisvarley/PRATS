@@ -109,28 +109,20 @@ class Router
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
-			
+		
+			$this->params['controller'] = $this->depluralise($this->params['controller']);	
+
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
-
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
-
                 $action = $this->params['action'];
                 $action = $this->convertToCamelCase($action);
-
-				/* This causes any controllers with action in it to flag, which is wrong
-                if (preg_match('/action$/i', $action) == 0) {
-                    $controller_object->$action();
-                } else {
-                    throw new \Exception("Method $action in controller $controller cannot be called directly - remove the Action suffix to call this method");
-                }
-				*/
-
 				$controller_object->$action();
             } else {
+
                 throw new \Exception("Controller class $controller not found");
             }
         } else {
@@ -150,6 +142,23 @@ class Router
     {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
+
+    /**
+     * Convert the string to a non plural version,
+     * e.g. animals to animal 
+     *
+     * @param string $string The string to convert
+     *
+     * @return string
+     */
+	protected function depluralise($string){
+
+		$string = preg_replace("/s\b/", "", $string);
+		$string = preg_replace("/es\b/", "", $string);
+
+		return $string;
+	}
+
 
     /**
      * Convert the string with hyphens to camelCase,

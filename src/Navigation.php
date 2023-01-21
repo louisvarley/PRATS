@@ -3,20 +3,20 @@
 use \App\Services\FilterService as Filter;
 
 $this->page_data['nav'] = [
-		'rats' => ['title' => 'Rats', 'link' => '#', 'icon' => 'fa fa-paw', 'subitems' => [
+		'rats' => ['title' => 'Rats', 'link' => '/rats', 'icon' => 'fa fa-paw', 'subitems' => [
 			['type' => 'item', 'title' => 'New Rat', 'link' => '/rat/new'],
 			['type' => 'item', 'title' => 'All Rats', 'link' => '/rat/list?orderby=id&&order=desc'],	
 			['type' => 'divider'],	
 			['type' => 'item', 'title' => 'My Rats', 'link' => '/rat/list?orderby=id&&order=desc&search=louis'],			
 		]],
-		'litters' => ['title' => 'Litters', 'link' => '#', 'icon' => 'fa fa-baby-carriage', 'subitems' => [
+		'litters' => ['title' => 'Litters', 'link' => '/litters', 'icon' => 'fa fa-baby-carriage', 'subitems' => [
 			['type' => 'item', 'title' => 'New Litter', 'link' => '/litter/new'],
 			['type' => 'item', 'title' => 'All Litters', 'link' => '/litter/list?orderby=id&order=desc'],	
 			['type' => 'divider'],				
 			['type' => 'item', 'title' => 'My Litters', 'link' => '/litter/list?orderby=id&order=desc&search=%22for%20sale%22'],
 			
 		]],			
-		'configuration' => ['title' => 'Configuration', 'icon' => 'fa fa-cog', 'link' => '#', 'subitems' => [
+		'configuration' => ['title' => 'Configuration', 'icon' => 'fa fa-cog', 'link' => '/settings', 'subitems' => [
 			['type' => 'item', 'title' => 'Users', 'link' => '/user/list'],	
 			['type' => 'item', 'title' => 'Invite', 'link' => '/user/invite'],				
 			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],			

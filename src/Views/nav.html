@@ -1,31 +1,35 @@
 <!--Start Side Sticky Menu-->
 <nav class="ss-menu ">
 <div class="nav-item nav-icon active">
-    <a href="/">
-	  <img style="margin: 10px; width:30px; height:30px" class="mobile-logo" src="/static/img/mobile-logo.png">
-    </a>
+	<div class="logo">
+		<a href="/">
+		  <img style="margin: 10px; width:30px; height:30px" class="mobile-logo" src="/static/img/mobile-logo.png">
+		</a>
+	</div>
+	<div class="menu-bars">
+		<i class="fa-solid fa-bars"></i>
+	</div>
   </div>
    <ul>
-	{% for id,item in nav %}
-      <li><a href="#1"><i class="{{item.icon}}"></i> {{item.title}}</a>
-			{% if( item.subitems ) %}
-					<ul class="ss-sub-menu">
-				{% for subitem in item.subitems %}
-					{% if( subitem.type == "item" ) %}
-						<li>
-							
-							<a href="{{subitem.link}}" class="rounded link-light">{{subitem.title}}</a>
-						</li>
-					{% endif %}	
 
-					{% if( subitem.type == "divider" ) %}
-						<div class="dropdown-divider"></div>	
-					{% endif %}				
-				{% endfor %}
-				</ul>
-			{% endif %}	
-	   </li>
+	<li class="profile">
+		<div class="dropdown">
+		  <a href="#" class="nav-link d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			<img src="{{ session.user.getProfileImage }}" alt="" class="rounded-circle me-2" width="32" height="32">
+			<strong>{{ session.user.firstName }}   {{ session.user.lastName }}</strong>
+		  </a>
+		  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="">
+			<li><a class="dropdown-item" href="/user/edit/{{ session.user.id }}">Profile</a></li>
+			<li><hr class="dropdown-divider"></li>
+			<li><a class="dropdown-item" href="/logout">Sign out</a></li>
+		  </ul>
+		</div>
+	</li>
+
+	{% for id,item in nav %}
+      <li><a href="{{item.link}}"><i class="{{item.icon}}"></i> {{item.title}}</a></li>
 	{% endfor %}	
+
 
    </ul>
 </nav>

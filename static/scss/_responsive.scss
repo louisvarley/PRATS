@@ -46,8 +46,32 @@
 	
 	@include responsive-tables();
 	
-	.navbar {
-		padding-left: 10px;
+	.content{margin-top:40px;}
+
+	.ss-menu {
+		height: 50px;
+		width: 100%;
+		overflow:hidden;
+
+
+		img{
+			display:none;
+		}
+
+		.menu-bars{
+			display:block;
+	
+			i{
+				color: #fff;
+				font-size: 25px;
+				padding: 10px;
+			}
+		}
+
+	}
+
+	.ss-menu:hover{
+		height: 100%;
 	}
 	
 	footer{

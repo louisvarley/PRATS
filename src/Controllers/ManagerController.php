@@ -144,5 +144,24 @@ class ManagerController extends \App\Controller
 		$this->render($this->route_params['controller'] . '/list.html', array("entities" => Entities::findAll($this->route_params['controller'], $orderBy, $order)));
 
 	}	
+
+	public function indexMenu(){
+		return [];
+	}
+
+    /**
+     * When the index action is called
+     *
+     * @return void
+     */
+	public function indexAction(){
+
+		$orderBy = isset($_GET['orderby']) ? $_GET['orderby'] : "id";
+		$order = isset($_GET['orderby']) ? $_GET['order'] : "desc";		
+		
+		$this->render($this->route_params['controller'] . '/index.html', array("items" => $this->indexMenu()));
+
+	}	
+	
 		
 }
