@@ -11,12 +11,12 @@ rs.toast = function (title, text, type = "primary") {
 
 	var numToasts = $('.toast').length
 	
-
     var toastHTML = ' <div class="toast toast-' + type + '"><strong>' + title + '</strong><br />' + text + '</div>';
 	var toast = jQuery(toastHTML)
 	
     jQuery(toast).hide();
 	jQuery(toast).css("margin-top",numToasts * 100);
+	jQuery(toast).css("z-index",9999999);
     jQuery('#main').append(toast)
     jQuery(toast).show().css("opacity","1");
 	window.scrollTo({top: 0, behavior: 'smooth'});

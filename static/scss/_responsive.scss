@@ -46,7 +46,9 @@
 	
 	@include responsive-tables();
 	
-	.content{margin-top:40px;}
+	.content{
+		margin-top:70px;
+	}
 
 	.ss-menu {
 		height: 50px;

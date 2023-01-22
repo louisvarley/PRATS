@@ -45,5 +45,17 @@ class Settings extends \App\Controller
 		}
 
 	}
+
+    /**
+     * When the index action is called
+     *
+     * @return void
+     */
+	public function indexAction(){
+
+
+		$this->render($this->route_params['controller'] . '/index.html');
+
+	}	
 		
 }

@@ -3,31 +3,14 @@
 use \App\Services\FilterService as Filter;
 
 $this->page_data['nav'] = [
-		'rats' => ['title' => 'Rats', 'link' => '/rats/list', 'icon' => 'fa fa-paw', 'subitems' => [
-			['type' => 'item', 'title' => 'New Rat', 'link' => '/rat/new'],
-			['type' => 'item', 'title' => 'All Rats', 'link' => '/rat/list?orderby=id&&order=desc'],	
-			['type' => 'divider'],	
-			['type' => 'item', 'title' => 'My Rats', 'link' => '/rat/list?orderby=id&&order=desc&search=louis'],			
-		]],
-		'litters' => ['title' => 'Litters', 'link' => '/litters/list', 'icon' => 'fa fa-baby-carriage', 'subitems' => [
-			['type' => 'item', 'title' => 'New Litter', 'link' => '/litter/new'],
-			['type' => 'item', 'title' => 'All Litters', 'link' => '/litter/list?orderby=id&order=desc'],	
-			['type' => 'divider'],				
-			['type' => 'item', 'title' => 'My Litters', 'link' => '/litter/list?orderby=id&order=desc&search=%22for%20sale%22'],
-			
-		]],			
-		'configuration' => ['title' => 'Configuration', 'icon' => 'fa fa-cog', 'link' => '/settings', 'subitems' => [
-			['type' => 'item', 'title' => 'Users', 'link' => '/user/list'],	
-			['type' => 'item', 'title' => 'Invite', 'link' => '/user/invite'],				
-			['type' => 'item', 'title' => 'Affiliations', 'link' => '/affiliation/list'],			
-			['type' => 'divider'],				
-			['type' => 'item', 'title' => 'Run Cron', 'link' => '/cron'],
-			['type' => 'item', 'title' => 'Settings', 'link' => '/settings/edit'],	
-			['type' => 'item', 'title' => 'Properties', 'link' => '/property/list'],					
-		]],					
-		'help' => ['title' => 'Help', 'link' => '#', 'icon' => 'fa fa-question-circle', 'subitems' => [
-			['type' => 'item', 'title' => 'Wiki', 'link' => 'https://github.com/louisvarley/PRATS/wiki'],			
-		]],	
+
+		'my-rats' => ['title' => 'My Rats', 'link' => '/rats', 'icon' => 'fa fa-hand-holding-heart'],
+		'rats' => ['title' => 'Rats', 'link' => '/rats', 'icon' => 'fa fa-paw'],
+		'litters' => ['title' => 'Litters', 'link' => '/litters', 'icon' => 'fa fa-baby-carriage'],		
+		'applications' => ['title' => 'Applications', 'link' => '/applications', 'icon' => 'fa fa-file-signature'],		
+		'people' => ['title' => 'People', 'link' => '/users/list', 'icon' => 'fa fa-users'],		
+		'configuration' => ['title' => 'Configuration', 'icon' => 'fa fa-cog', 'link' => '/settings'],					
+		'help' => ['title' => 'Help', 'link' => 'https://www.youtube.com/watch?v=77K8er9_yjo', 'icon' => 'fa fa-question-circle'],	
 
 	];
 	

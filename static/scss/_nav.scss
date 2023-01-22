@@ -9,11 +9,24 @@ background-color:#6667ab !important;
 	z-index: 999;
 	top: 0;
 	left: 0;
-	width: 50px;
+	width: 54px;
 	height: 100%;
 	/* for zombiles browsers*/
 	height: 100vh;
 	font-weight:600;
+
+	ul{
+		list-style-type: none;
+	}
+
+	.logo img{
+
+		margin: 10px; 
+		width:30px; 
+		height:30px
+	}
+
+
 }
 
 .ss-menu.open {
@@ -113,12 +126,20 @@ background-color:#6667ab !important;
 .ss-menu ul li,
 .ss-menu ul li a,
 .ss-menu ul li:hover,
+.ss-menu .profile,
+.ss-menu .profile a,
 .ss-menu ul li a:hover {
 	transition: .3s all;
 	-webkit-transition: .3s all;
 	-moz-transition: .3s all;
 }
 
+.profile a{
+
+	transition: .3s all;
+	-webkit-transition: .3s all;
+	-moz-transition: .3s all;
+}
 
 /* ssMenu Badge Design */
 
@@ -138,7 +159,18 @@ background-color:#6667ab !important;
 .ss-menu:hover{
 	.profile, .profile .dropdown-menu{
 		overflow: visible !important;
+		transition: .3s all;
+		-webkit-transition: .3s all;
+		-moz-transition: .3s all;
 	}
+
+	.profile a{
+
+		transition: .3s all;
+		-webkit-transition: .3s all;
+		-moz-transition: .3s all;
+	}
+
 }
 
 

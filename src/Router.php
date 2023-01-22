@@ -95,6 +95,22 @@ class Router
         return $this->params;
     }
 
+	public function controllerConvert($controller){
+
+		$controller = $this->convertToStudlyCaps($controller);
+        $controller = $this->getNamespace() . $controller;
+		return $controller;
+
+	}
+
+	public function controllerExists($controller){
+
+		if (class_exists($this->controllerConvert($controller))) {
+			return true;
+		}
+
+	}
+
     /**
      * Dispatch the route, creating the controller object and running the
      * action method
@@ -109,13 +125,31 @@ class Router
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
+
+			/* What does this do? well 
+			it takes a given controller, and tests weather removing the plural or not, results in a matching class. So in thoery
+			/page
+			/pages
+
+			will both match a controller called page 
+
+			but 
+
+			/settings
+			/setting
+
+			will only match controller called settings
+
+			*/
+			if($this->controllerExists($this->params['controller'])){
+				 $controller = $this->controllerConvert($this->params['controller']);
+
+			}elseif($this->controllerExists($this->depluralise($this->params['controller']))){
+				$this->params['controller'] = $this->depluralise($this->params['controller']);
+				$controller = $this->controllerConvert($this->params['controller']);
+			}
 		
-			$this->params['controller'] = $this->depluralise($this->params['controller']);	
-
-            $controller = $this->params['controller'];
-            $controller = $this->convertToStudlyCaps($controller);
-            $controller = $this->getNamespace() . $controller;
-
+			
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
                 $action = $this->params['action'];
@@ -154,7 +188,6 @@ class Router
 	protected function depluralise($string){
 
 		$string = preg_replace("/s\b/", "", $string);
-		$string = preg_replace("/es\b/", "", $string);
 
 		return $string;
 	}
