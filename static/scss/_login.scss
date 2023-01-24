@@ -1,4 +1,90 @@
 
+.auth-page{
+
+
+	.side-col{
+
+		height: 100%;
+		padding: 5rem;
+	}
+
+
+	.w-full{
+		width:100%;
+	}
+
+	.logo{
+		img{
+			width: 14em;
+		}
+	}
+
+	.sub-logo{
+
+		width:9em;
+	}
+
+	.mobile-logo{
+
+		display:none;
+
+		img{
+			width: 200px;
+		}
+
+	}
+
+	.statement-header{
+
+		font-family: 'Indie Flower', cursive;	
+		font-weight: 200;
+		font-size: 1.7em;
+	}
+
+	.supported-by{
+		font-family: 'Indie Flower', cursive;
+	}
+
+
+	/* Extra small devices (phones, 600px and down) */
+	@media only screen and (max-width: 600px) {
+
+		.mobile-logo{
+			display:block !important;
+		}
+
+		.content{
+
+			margin-top: 10px !important;
+		}
+
+	}
+
+	@media (min-width: 992px){
+		.min-h-lg-screen {
+			min-height: 100vh !important;
+		}
+	}
+	
+	@media (min-width: 992px){
+		.py-lg-16 {
+			padding-top: 4rem !important;
+			padding-bottom: 4rem !important;
+		}
+	}
+
+	@media (min-width: 992px){
+		.px-lg-20 {
+			padding-right: 5rem !important;
+			padding-left: 5rem !important;
+		}
+	}
+
+}
+
+
+
+/*
 .login, .register, .forgot-password, .reset-password { 
 
 
@@ -12,6 +98,9 @@
 			width:100%;
 		}
 	
+
+
+
 	
 	}
 
@@ -104,4 +193,4 @@
 			
 }
 
-
+*/

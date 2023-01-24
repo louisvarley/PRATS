@@ -4,61 +4,30 @@
 
 {% block body %}
 
-<section class="vh-100">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-primary text-white" style="border-radius: 1rem;">
-          <div class="card-body p-5 text-center">
 
-            <div>
-				<div class="row justify-content-center login-logo">
-					<img src="/static/img/logo.png">
+	<form action="" method="POST">
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+				<div class="input-group">
+              <input type="password" class="form-control form-control-muted password-meter" id="password" autocomplete="current-password" name="reset-password[password]">
+			</div>
+			</div>
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Confirm </label>
+<div class="input-group">
+              <input type="password" class="form-control form-control-muted" id="password-confirm" autocomplete="current-password" name="reset-password[password_confirm]">
 				</div>
-              <h2 class="text-white-100 fw-bold mb-2 text-uppercase">Change Password!</h2>
-              <p class="text-white-100 mb-5">Please enter your new password</p>
+</div>			
+			
+		  <br />	
+			
+	<button type="submit" class="btn btn-primary w-full">
+						Reset
+					  </button>
 
-			<form action="" method="POST">
-					   
-					{% include "Forms/Elements/text-password.html" with {
-					'label' : 'Password',
-					'id': 'password', 
-					'strength': 'true',
-					'name': "#{controller}[password]", 
-					'description': 'Change your password',
-				}%}		
-
-				{% include "Forms/Elements/text-password.html" with {
-					'label' : 'Password Confirm',
-					'id': 'password-confirm', 
-					'name': "#{controller}[password_confirm]", 
-					'description': 'Confirm your password',
-				}%}				
-						
-					  <br />	
-						
-					  <button class="btn btn-outline-light btn-lg px-5" type="submit">Reset</button>
-
-				</form>
-
-				<div class="row justify-content-center sub-logo">
-					<img src="/static/img/sub-logo.png">
-				</div>
-
-            </div>
-
-            <div>
-              <p class="mb-0">Already have an account? <a href="/login" class="text-white-50 fw-bold">Login</a>
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+	</form>
 
 
 {% endblock %}
