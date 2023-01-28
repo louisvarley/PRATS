@@ -1,0 +1,48 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: '3.1'
+services:
+    mysql:
+        container_name: prats-db
+        image: 'mysql:8.0'
+        volumes:
+            - '.:/app'
+        environment:
+            - MYSQL_ROOT_PASSWORD=prats
+            - MYSQL_DATABASE=prats
+            - MYSQL_USER=prats
+            - MYSQL_PASSWORD=prats
+        ports:
+            - '14002:3306'
+
+    webserver:
+        container_name: prats-web    
+        image: 'nginx:alpine'
+        volumes:
+            - '.:/app'
+            - './docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+            - proxies:/app/src/Proxies            
+        ports:
+            - '14000:80'
+
+    php-fpm:
+        container_name: prats-php-fpm    
+        build: .   
+        user: "${UID}:${GID}"
+        volumes:
+            - '.:/app'
+            - proxies:/app/src/Proxies 
+            - './docker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+
+
+    composer:
+        container_name: prats-composer    
+        image: composer/composer
+        command: install
+        volumes: 
+            - '.:/app'
+
+
+volumes:
+  proxies: {}

@@ -1,0 +1,10 @@
+vendor
+dumps
+composer.lock
+sample_data.php
+src/proxies
+src/Proxies
+src/cache
+.idea
+.vs
+*.sql
