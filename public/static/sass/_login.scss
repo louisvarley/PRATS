@@ -1,0 +1,196 @@
+
+.auth-page{
+
+
+	.side-col{
+
+		height: 100%;
+		padding: 5rem;
+	}
+
+
+	.w-full{
+		width:100%;
+	}
+
+	.logo{
+		img{
+			width: 14em;
+		}
+	}
+
+	.sub-logo{
+
+		width:9em;
+	}
+
+	.mobile-logo{
+
+		display:none;
+
+		img{
+			width: 200px;
+		}
+
+	}
+
+	.statement-header{
+
+		font-family: 'Montserrat', cursive;	
+		font-weight: 200;
+		font-size: 1.7em;
+	}
+
+	.supported-by{
+		font-family: 'Indie Flower', cursive;
+	}
+
+
+	/* Extra small devices (phones, 600px and down) */
+	@media only screen and (max-width: 600px) {
+
+		.mobile-logo{
+			display:block !important;
+		}
+
+		.content{
+
+			margin-top: 10px !important;
+		}
+
+	}
+
+	@media (min-width: 992px){
+		.min-h-lg-screen {
+			min-height: 100vh !important;
+		}
+	}
+	
+	@media (min-width: 992px){
+		.py-lg-16 {
+			padding-top: 4rem !important;
+			padding-bottom: 4rem !important;
+		}
+	}
+
+	@media (min-width: 992px){
+		.px-lg-20 {
+			padding-right: 5rem !important;
+			padding-left: 5rem !important;
+		}
+	}
+
+}
+
+
+
+/*
+.login, .register, .forgot-password, .reset-password { 
+
+
+	form{
+	
+		label{
+			width:100%;
+		}
+		
+		div{
+			width:100%;
+		}
+	
+
+
+
+	
+	}
+
+
+	top: -20px;
+	position: relative;	
+
+	.bg-image-vertical {
+		position: relative;
+		overflow: hidden;
+		background-repeat: no-repeat;
+		background-position: right center;
+		background-size: auto 100%;
+	}
+
+	@media (min-width: 1025px) {
+		.h-custom-2 {
+			height: 100%;
+		}
+	}
+
+	.login-logo{
+		img{
+			max-width:200px;
+		}
+
+	}
+	
+	h2{
+		margin-top:20px; 
+		font-size: 42px;
+		font-family: 'Caveat', cursive;	
+	
+	}
+	
+
+	#rs-meter-wrapper {
+	  width: 70px;
+	  height: 40px;
+	  background-color: #fff;
+	}	
+	
+	.sub-logo{
+	
+		img{
+			max-width:200px;
+		}	
+	
+		margin-top:40px;
+		margin-bottom:30px;
+	}
+	
+	.card{
+		margin-bottom:20px;
+	}
+	
+	.row {
+		margin-right: 0px;
+		margin-left: 0px;
+	}	
+	
+	@media (max-width: 767px) {
+
+		h2{
+		display:none;
+		}
+
+		.col-12{
+		padding:0px !important;
+		}
+
+		.card{
+		border-radius:0px !important;
+		}
+
+		.card-body{
+		
+		padding:5px !important;
+		}
+		.content{
+		margin: 0px;
+		}
+		
+		.container{
+			padding: 0px !important;
+		}
+		
+	}
+	
+			
+}
+
+*/

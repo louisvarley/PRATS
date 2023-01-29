@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+			
+			{% if( property.id ) %}
+
+				{% include "Forms/Elements/hidden.html" with {
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'readonly': 'readonly',
+					'value': property.id
+				}%}
+				
+			{% endif %}
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Key',
+				'id': 'key', 
+				'name': "#{controller}[key]", 
+				'description': 'Property Key',
+				'value': property.key
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Value',
+				'id': 'value', 
+				'name': "#{controller}[value]", 
+				'description': 'Property Value',
+				'value': property.value
+			}%}				
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

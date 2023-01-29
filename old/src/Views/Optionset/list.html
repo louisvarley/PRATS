@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+	{% include '/Buttons/add-button.html' with {'model': controller} %}
+	{% embed "Tables/table-base.html" with {'table_id': controller, 'headers': ["Key",  "Name", "#", "Options"]	} %}
+		{% block table_body %}
+			{% for entity in entities %}
+			<tr>
+			<td data-label="Key">{{ entity.key }}</td>
+			<td data-label="Name">{{ entity.name }}</td>	
+			<td data-label="Count">{{ entity.options | length }}</td>		
+			<td data-label="Options">
+				<div class="dropdown">
+				  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="fas fa-cogs"></i>
+				  </button>
+				  <ul class="dropdown-menu">
+						{% include '/Buttons/edit-button.html' with {'model': controller, 'id': entity.id} %}
+						{% include '/Buttons/delete-button.html' with {'model': controller, 'id': entity.id} %}
+				  </ul>
+				</div>					
+			</div>
+			</td>					
+			</tr>
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

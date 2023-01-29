@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Affiliation{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{% if( id ) %}Editing{% else %}New{% endif %} {{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "Forms/Elements/image-uploader.html" with {
+				'id': 'user_images',
+				'name': "#{controller}[logo]", 
+				'default': properties.DEFAULT_AFFILIATE_LOGO,
+				'image': affiliation.logo,
+				'label': 'Affiliation Logo',
+				'description': 'Affiliation Logo'
+			}%}		
+
+			<hr class="my-4">			
+
+			{% include "Forms/Elements/text-colorpicker.html" with {
+				'label' : 'Branding Color',
+				'id': 'color', 
+				'name': "#{controller}[color]", 
+				'description': 'Affiliation Branding Color used on documents, etc',
+				'required': 'required',
+				'value': affiliation.color
+			}%}		
+							
+			{% include "Forms/Elements/text.html" with {
+				'label' : ' Name',
+				'id': 'name', 
+				'name': "#{controller}[name]", 
+				'description': 'Name',
+				'required': 'required',
+				'value': affiliation.name
+			}%}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : ' Code',
+				'id': 'code', 
+				'name': "#{controller}[code]", 
+				'description': 'Code',
+				'required': 'required',
+				'value': affiliation.code
+			}%}	
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block page_subtitle %}{{ description }}{% endblock %}
+{% block body %}
+
+<div class="container px-4 py-5" id="icon-grid">
+    <h2 class="pb-2 border-bottom">Settings</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-users"></i>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4"><a href="/users/list">Manage Users</a></h3>
+          <p>Manage the users currently setup on PRATS, manage their roles and details</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-child-reaching"></i>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4"><a href="/users/invite">Invite User</a></h3>
+          <p>Invite a new User to Join PRATS and setup an account.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-rectangle-list"></i>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4"><a href="/settings/edit">Configuration</a></h3>
+          <p>Manage PRATS configurations and settings.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-cog"></i>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4"><a href="/properties">Properties</a></h3>
+          <p>Edit the properties, all saved variables used by PRATS.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4"><a href="/cron">Cron</a></h3>
+          <p>Manually run CRON.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <i class="fa-solid fa-database"></i>
+        <div>
+			<h3 class="fw-bold mb-0 fs-4"><a href="/properties">Backup</a></h3>
+          <p>Download a Database Backup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Optionsets{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+			
+			{% include '/Modals/optionset-modal.html' %}	
+			
+			{% if( optionset.id ) %}
+
+				{% include "Forms/Elements/hidden.html" with {
+					'id': 'id', 
+					'name': "#{controller}[id]", 
+					'readonly': 'readonly',
+					'value': optionset.id
+				}%}
+				
+			{% endif %}
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Key',
+				'id': 'key', 
+				'name': "#{controller}[key]", 
+				'description': 'Key for this Optionset',
+				'value': optionset.key
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Name',
+				'id': 'name', 
+				'name': "#{controller}[name]", 
+				'description': 'A Name for this Optionset',
+				'value': optionset.name
+			}%}	
+			
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'Options',
+				'subtitle': 'A list of the options currently available for this Optionset', 
+			}%}		
+			
+			<a class="btn btn-primary btn-datatable-new" href="/option/new?optionset_id={{id}}">New Option</a>
+
+			{% embed "Tables/table-base.html" with {'controller': 'option','table_id': controller, 'headers': ["Text", "Value", "Delete"]	} %}
+				{% block table_body %}
+					{% for option in options %}  
+					<tr>
+						<td data-label="Breeder">
+						{{option.text}}
+						</td>
+						<td data-label="Code">
+
+						{{option.value}}		
+						</td>		
+						<td data-label="Options">
+							{% include '/Buttons/delete-button.html' with {'model': controller, 'id': option.id} %}	
+							{% include '/Buttons/edit-button.html' with {'model': controller, 'id': option.id} %}							
+						</td>					
+					</tr>
+					{% endfor %}
+				{% endblock %}
+			{% endembed %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base-public.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+
+	<form action="" method="POST">
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+				<div class="input-group">
+              <input type="password" class="form-control form-control-muted password-meter" id="password" autocomplete="current-password" name="reset-password[password]">
+			</div>
+			</div>
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Confirm </label>
+<div class="input-group">
+              <input type="password" class="form-control form-control-muted" id="password-confirm" autocomplete="current-password" name="reset-password[password_confirm]">
+				</div>
+</div>			
+			
+		  <br />	
+			
+	<button type="submit" class="btn btn-primary w-full">
+						Reset
+					  </button>
+
+	</form>
+
+
+{% endblock %}

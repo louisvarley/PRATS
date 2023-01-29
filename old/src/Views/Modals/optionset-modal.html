@@ -1,0 +1,64 @@
+
+<div class="modal" id="modal-option-new" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title">New Option</h5>
+		<button type="button" class="btn-close" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body">
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Text',
+				'id': 'text', 
+				'name': "text", 
+				'description': 'Option Value',
+				'value': text
+			}%}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Value',
+				'id': 'value', 
+				'name': "value", 
+				'description': 'Option Value',
+				'value': value
+			}%}				
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+
+<div class="modal" id="modal-option-edit" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title">Edit Option</h5>
+		<button type="button" class="btn-close" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body">
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Text',
+				'id': 'text', 
+				'name': "text", 
+				'description': 'Option Value',
+			}%}	
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Value',
+				'id': 'value', 
+				'name': "value", 
+				'description': 'Option Value',
+			}%}				
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+	  </div>
+	</div>
+  </div>
+</div>

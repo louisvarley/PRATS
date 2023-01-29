@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_title %}
+			{{ title }}
+		{% endblock %}
+
+		{% block form_subtitle %}
+			{{ description }}
+		{% endblock %}
+		
+		{% block form_body %}
+
+			{% include "Forms/Elements/header-small.html" with {
+				'title' : 'SMTP Email Settings',
+				'subtitle': 'Settings used for sending emails', 
+			}%}			
+				
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Host',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_HOST]", 
+				'description': 'Hostname of SMTP Server',
+				'value': settings.SMTP_HOST
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Username',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_USERNAME]", 
+				'description': 'Username',
+				'value': settings.SMTP_USERNAME
+			}%}		
+
+			{% include "Forms/Elements/text-password.html" with {
+				'label' : 'Password',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_PASSWORD]", 
+				'description': 'Password',
+				'value': settings.SMTP_PASSWORD
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'From',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_FROM]", 
+				'description': 'Email Address to send from',
+				'value': settings.SMTP_FROM
+			}%}						
+
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'From',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_FROM_NAME]", 
+				'description': 'From Name to send from',
+				'value': settings.SMTP_FROM_NAME
+			}%}				
+		
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Port',
+				'id': 'host', 
+				'name': "#{controller}[SMTP_PORT]", 
+				'description': 'SMTP Port',
+				'value': settings.SMTP_PORT
+			}%}					
+		
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

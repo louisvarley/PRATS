@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+	{% embed "Forms/form-base.html" with {'form_id': controller} %}
+
+		{% block form_body %}
+
+				
+
+			{% include "Forms/Elements/text-email.html" with {
+				'label' : 'Email Address',
+				'id': 'email', 
+				'name': "#{controller}[email]", 
+				'description': 'User Email',
+				'required': 'required',
+				'value': user.email
+			}%}		
+				
+			
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'First Name',
+				'id': 'firstName', 
+				'name': "#{controller}[firstName]", 
+				'description': 'First Name',
+				'required': 'required',
+				'value': user.firstName
+			}%}	
+		
+			{% include "Forms/Elements/text.html" with {
+				'label' : 'Last Name',
+				'id': 'firstName', 
+				'name': "#{controller}[lastName]", 
+				'description': 'Last Name',
+				'required': 'required',
+				'value': user.lastName
+			}%}					
+
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

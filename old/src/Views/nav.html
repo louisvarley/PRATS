@@ -1,0 +1,110 @@
+<!--Start Side Sticky Menu-->
+<nav class="ss-menu ">
+<div class="nav-item nav-icon active">
+	<div class="logo">
+		<a href="/">
+		  <img class="mobile-logo" src="/static/img/icon.png">
+		</a>
+	</div>
+	<div class="menu-bars">
+		<i class="fa-solid fa-bars"></i>
+	</div>
+  </div>
+   <ul>
+
+	<li class="profile">
+		<div class="dropdown">
+		  <a href="#" class="nav-link d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			<img src="{{ session.user.getProfileImage }}" alt="" class="rounded-circle me-2" width="32" height="32">
+			<strong>{{ session.user.firstName }}   {{ session.user.lastName }}</strong>
+		  </a>
+		  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="">
+			<li><a class="dropdown-item" href="/user/edit/{{ session.user.id }}">Profile</a></li>
+			<li><hr class="dropdown-divider"></li>
+			<li><a class="dropdown-item" href="/logout">Sign out</a></li>
+		  </ul>
+		</div>
+	</li>
+
+	{% for id,item in nav %}
+      <li><a href="{{item.link}}"><i class="{{item.icon}}"></i> {{item.title}}</a></li>
+	{% endfor %}	
+
+
+   </ul>
+</nav>
+<!--End Side Sticky Menu-->
+
+<!--
+<nav id="sidebar" class="navbar navbar-expand-lg navbar-dark bg-dark bg-secondary">
+
+  <div class="nav-item nav-icon active">
+    <a href="/">
+      <img class="logo" src="/static/img/logo.png">
+	  <img class="mobile-logo" src="/static/img/mobile-logo.png">
+    </a>
+  </div>
+	
+	
+  <hr>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+	
+     <ul class="nav nav-pills flex-column mb-auto">
+		
+		  <li>
+
+		<div class="col-auto col-md-3 col-xl-0 px-sm-0 px-0">
+			<div class=" dropdown">
+			  <a href="#" class="nav-link d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				<img src="{{ session.user.getProfileImage }}" alt="" class="rounded-circle me-2" width="32" height="32">
+				<strong>{{ session.user.firstName }}   {{ session.user.lastName }}</strong>
+			  </a>
+			  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="">
+				<li><a class="dropdown-item" href="/user/edit/{{ session.user.id }}">Profile</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><a class="dropdown-item" href="/logout">Sign out</a></li>
+			  </ul>
+			</div>
+		</div>		  
+		  </li>		
+		<hr>
+		  {% for id,item in nav %}
+		  <li class="nav-item dropdown">
+			<button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#menu-{{ id }}" aria-expanded="true">
+			  {{ item.title }} 
+			</button>			
+
+			<div class="collapse" id="menu-{{ id }}" style="">
+				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">				
+					{% for subitem in item.subitems %}
+						{% if( subitem.type == "item" ) %}
+							<li><a href="{{subitem.link}}" class="rounded link-light">{{subitem.title}}</a></li>
+						{% endif %}	
+
+						{% if( subitem.type == "divider" ) %}
+							<div class="dropdown-divider"></div>	
+						{% endif %}				
+					{% endfor %}
+				</ul>
+			</div>
+				
+		  </li>
+		  {% endfor %}	
+		  
+
+		  
+		  
+		</ul>
+
+
+	
+	  
+    </div>
+  </div>
+</nav>
+-->

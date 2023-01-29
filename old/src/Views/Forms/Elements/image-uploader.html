@@ -1,0 +1,25 @@
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+
+
+
+<div id="{{ id }}" class="form-images">
+	<div class="form-images-preview" style="width:100%; margin-bottom:20px;">
+
+			<div class="form-image form-image-{{ image.id }}">
+				<div class="preview-image small preview-image-{{ image.id }}">
+					<a target="_blank" href="{{ image.url }}">
+						
+						<img src="{% if( image ) %}{{ image.getSmallUrl }}{% else %}{{ default }}{% endif %}">
+					</a>
+				</div>
+			</div>
+			<input class="image-upload" name="image" type="file" accept="image/*" capture="camera">
+			<input class="image-id" name="{{name}}[id]" value="{{ image.id }}" type="hidden">
+	</div>
+</div>
+
+
+
+{% endblock %}
+{% endembed %}

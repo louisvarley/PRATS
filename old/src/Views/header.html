@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>	
+    <title>PRATS | {% block title %}{% endblock %}</title>
+
+	<script>
+	var controller = "{{ controller }}"
+	var action = "{{ action }}"
+	var id = "{{ id }}"	
+	</script>
+
+	<!-- Local Style Sheets -->
+
+	<link rel="stylesheet" href="/static/css/colorpicker/jquery.minicolors.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+
+	<!-- Other Style Sheets and Fonts -->
+	<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet" />	
+	
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+		
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet"> 
+		
+	<!-- Datatables -->
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">	
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+	<!-- Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	
+	<!-- SS Menu -->
+	<script src="/static/js/jquery.ss.menu.js"></script>
+	<!-- Chart JS -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<!-- Select2 -->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	
+	<!-- GoJS -->
+	<script src="/static/js/gojs/release/go.js"></script>
+	<script src="/static/js/gojs/release/ZoomSlider.js"></script>	
+
+	<!-- Moment JS -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	
+	<!-- Datatables -->
+	<script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>		
+	<script src="//cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	
+	<!-- jQuery Plugins -->
+	<script src="/static/js/jquery.ajax.fileupload.js"></script>
+	<script src="/static/js/jquery.toolbar.min.js"></script>	
+	<script src="/static/js/jquery.minicolors.min.js"></script>
+	<script src="/static/js/jquery.password.strength.min.js"></script>
+	
+	<!-- Local Libs -->
+	<script src="/static/js/rs.base.js"></script>	
+	<script src="/static/js/rs.forms.js"></script>	
+	<script src="/static/js/rs.toasts.js"></script>	
+	<script src="/static/js/rs.datatables.js"></script>	
+	<script src="/static/js/rs.ajax.js"></script>	
+	<script src="/static/js/rs.familytree.js"></script>		
+	<script src="/static/js/rs.logic.js"></script>			
+		
+	
+	<!-- Toasts -->
+	<script>
+	$( document ).ready(function() {
+		{% for toast in session.toasts %}rs.throw{{toast.type|capitalize}}("{{toast.title}}","{{toast.text}}");
+		{% endfor %}
+	});
+	</script>
+	
+	<style>
+	
+	.chart { height: 100%; width: 100%; margin: 5px; margin: 15px auto; border: 3px solid #DDD; border-radius: 3px; }
+
+.evolution-tree {
+    padding: 2px;
+    width: 40px; height: 40px;
+    border-radius: 3px;
+    font-size: 10px;
+}
+
+.evolution-tree .node-name { text-align: center; position: absolute; width: 88px; left: -50%; }
+.evolution-tree img {  margin-right:  10px; float: none !important; }
+
+.evolution-tree.the-parent { border-radius: 50%; background-color: #000; width: 3px; height: 3px; }
+.evolution-tree.the-parent .node-name { width: auto; margin-top: -7px; text-indent: 12px; font-weight: bold; }
+
+</style>
+
+</head>

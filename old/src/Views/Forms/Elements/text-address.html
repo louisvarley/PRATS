@@ -1,0 +1,63 @@
+<div class="row {{classes}}">
+	
+<label for="title" class="col-lg-4 col-form-label">{{ label }} {% if required %}*{% endif %}</label>
+
+<div class="col-lg-8 col-s-12">
+ <div class="">
+	<small class="form-text text-muted">
+		Address Line 1
+	</small>	
+    <input value="{{addressLine1}}" name="{{ name }}[addressLine1]" {{ required }} autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} type="text" class="form-control" id="inputAddress">
+  </div>
+  
+  <div class=" mt-4">
+	<small class="form-text text-muted">
+		Address Line 2
+	</small>
+    <input value="{{addressLine2}}" name="{{ name }}[addressLine2]" autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} type="text" class="form-control" id="inputAddress2">
+  </div>
+  
+  <div class="form-row">
+    <div class=" col-md-6 mt-4">
+	<small class="form-text text-muted">
+		Town / City
+	</small>
+      <input value="{{town}}" name="{{ name }}[town]" {{ required }} autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} type="text" class="form-control" id="inputCity">	  
+    </div>
+    <div class=" col-md-4 mt-4">
+	  <small class="form-text text-muted">
+		County / State
+	  </small>	
+      <input value="{{county}}" name="{{ name }}[county]" {{ required }} autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} type="text" class="form-control" id="inputCity">
+    </div>
+    <div class=" col-md-4 mt-4">
+	  <small class="form-text text-muted">
+		Postal Code
+	  </small>	
+      <input value="{{postcode}}" name="{{ name }}[postcode]" {{ required }} autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}readonly{% endif %} type="text" class="form-control" id="inputZip">
+    </div>
+
+    <div class=" col-md-4 mt-4">
+	  <small class="form-text text-muted">
+		Country
+	  </small>
+		<select name="{{ name }}[country]" {{ required }} autocomplete="off" class="form-control select2" {% if disabled %}disabled="disabled"{% endif %} {% if readonly %}disabled="disabled"{% endif %} {% if readonly %}readonly="readonly"{% endif %} id="country" class="form-control {% if readonly %}readonly{% endif %}">
+		{% for code, key in countries %}  
+			<option {% if code == country %}selected{% endif %} value="{{code}}">{{key|enum_name}}</option>
+		{% endfor %}  		
+					   
+		</select>	  
+    </div>	
+	
+	<br />
+	
+  </div>
+		
+</div>
+
+
+	<small class="form-text text-muted">
+		{{ description }}
+	</small>
+
+</div>

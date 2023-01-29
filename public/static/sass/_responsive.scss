@@ -1,0 +1,115 @@
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+	@include responsive-tables();
+
+	.login{
+		margin-top:10px;
+		
+		.row{
+			padding:0px !important;
+		}
+
+	}
+	
+	.navbar {
+		padding-left: 10px;
+	}
+
+	table{
+	
+		.share {
+			padding: 0px 0px 0px 40px;
+		}
+		
+		.progress{
+			background-color: transparent;
+		}
+	
+	}
+	
+	
+	footer{
+	display:none;
+	}
+	
+	
+	
+	
+	
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 800px) {
+	
+	@include responsive-tables();
+	
+	.main-private .content{
+		margin-top:70px;
+	}
+
+	.ss-menu {
+		height: 50px;
+		width: 100%;
+		overflow:hidden;
+
+
+		img{
+			display:none;
+		}
+
+		.menu-bars{
+			display:block;
+	
+			i{
+				color: #fff;
+				font-size: 25px;
+				padding: 10px;
+			}
+		}
+
+	}
+
+	.ss-menu:hover{
+		height: 100%;
+	}
+	
+	footer{
+	display:none;
+	}	
+
+}
+
+/* Landscape Tablets devices (up to 1024px) */
+@media only screen and (max-width: 1024px) {
+	
+	@include responsive-tables();
+	
+	.navbar {
+		padding-left: 10px;
+	}
+
+}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	
+
+	.navbar {
+		padding-left: 10px;
+	}
+	
+} 
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control::before {
+    border: 0px !important;
+    box-shadow: none !important;
+    background-color: #28a745;
+	border-radius: 0.3rem !important;
+}
+
+
+

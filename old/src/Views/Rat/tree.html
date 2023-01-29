@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+	
+
+<h1>{{rat.name}} Family Tree</h1>
+
+<div class="chart" id="myDiagramDiv"></div>
+
+
+
+<script>
+
+  function init() {
+
+      // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
+      // For details, see https://gojs.net/latest/intro/buildingObjects.html
+      const $ = go.GraphObject.make;
+
+      myDiagram =
+        $(go.Diagram, "myDiagramDiv",
+          {
+            
+			initialLayoutCompleted: function(e){
+				e.diagram.nodes.each(function(n) { 
+					n.movable = false;
+				});
+
+			},			
+			"toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,			
+            "undoManager.isEnabled": true,
+            // when a node is selected, draw a big yellow circle behind it
+            nodeSelectionAdornmentTemplate:
+              $(go.Adornment, "Auto",
+                { layerName: "Grid" },  // the predefined layer that is behind everything else
+                $(go.Shape, "Circle", { fill: "#c1cee3", stroke: null }),
+                $(go.Placeholder, { margin: 2 })
+              ),
+            layout:  // use a custom layout, defined below
+              $(GenogramLayout, { direction: 90, layerSpacing: 30, columnSpacing: 10 })
+          });
+
+	  zoomSlider = new ZoomSlider(myDiagram);		  
+
+
+      // two different node templates, one for each sex,
+      // named by the category value in the node data object
+      myDiagram.nodeTemplateMap.add("M",  // male
+        $(go.Node, "Vertical",
+          { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+          new go.Binding("opacity", "hide", h => h ? 0 : 1),
+          new go.Binding("pickable", "hide", h => !h),
+          $(go.Panel, "Spot",
+            { name: "ICON", isClipping: true },
+            $(go.Shape, "Circle",
+              { width: 40, height: 40, strokeWidth: 5, fill: "white", stroke: "#0b355c", portId: "" }),
+			$(go.Picture, { margin: 0, width: 55, height: 55 },new go.Binding("source", "i")),					  
+            $(go.Panel,
+              { // for each attribute show a Shape at a particular place in the overall square
+                itemTemplate:
+                  $(go.Panel,
+                    $(go.Shape,
+                      { stroke: null, strokeWidth: 0 },
+                      new go.Binding("fill", "", "#0b355c"),
+                      new go.Binding("geometry", "", maleGeometry))
+                  ),
+                margin: 1
+              },
+              new go.Binding("itemArray", "a")
+            )
+          ),
+        $(go.TextBlock,{ textAlign: "center", maxSize: new go.Size(80, NaN), background: "rgba(255,255,255,0.5)" },new go.Binding("text", "n")),			
+        ));
+
+      myDiagram.nodeTemplateMap.add("F",  // female
+        $(go.Node, "Vertical",
+          { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+          new go.Binding("opacity", "hide", h => h ? 0 : 1),
+          new go.Binding("pickable", "hide", h => !h),
+          $(go.Panel, "Spot",
+            { name: "ICON", isClipping: true },
+            $(go.Shape, "Circle",
+              { width: 40, height: 40, strokeWidth: 5, fill: "white", stroke: "#0b355c", portId: "" }),
+			$(go.Picture, { margin: 0, width: 55, height: 55 },new go.Binding("source", "i")),				  
+            $(go.Panel,
+              { // for each attribute show a Shape at a particular place in the overall circle
+                itemTemplate:
+                  $(go.Panel,
+                    $(go.Shape,
+                      { stroke: null, strokeWidth: 0 },
+                      new go.Binding("fill", "", attrFill),
+                      new go.Binding("geometry", "", femaleGeometry))
+                  ),
+                margin: 1
+              },
+              new go.Binding("itemArray", "a")
+            )
+          ),
+          $(go.TextBlock,{ textAlign: "center", maxSize: new go.Size(80, NaN), background: "rgba(255,255,255,0.5)" },new go.Binding("text", "n")),	
+        ));
+
+
+      // the representation of each label node -- nothing shows on a Marriage Link
+      myDiagram.nodeTemplateMap.add("LinkLabel",
+        $(go.Node, { selectable: false, width: 1, height: 1, fromEndSegmentLength: 20 }));
+
+
+      myDiagram.linkTemplate =  // for parent-child relationships
+        $(go.Link,
+          {
+            routing: go.Link.Orthogonal, corner: 5,
+            layerName: "Background", selectable: false,
+          },
+          $(go.Shape, { stroke: "#424242", strokeWidth: 2 })
+        );
+
+      myDiagram.linkTemplateMap.add("Marriage",  // for marriage relationships
+        $(go.Link,
+          { selectable: false, layerName: "Background" },
+          $(go.Shape, { strokeWidth: 2.5, stroke: "#5d8cc1" /* blue */ })
+        ));
+
+
+		{{treeJson | raw}}
+
+	}
+
+    // create and initialize the Diagram.model given an array of node data representing people
+    function setupDiagram(diagram, array, focusId) {
+	
+      diagram.model =
+        new go.GraphLinksModel(
+          { // declare support for link label nodes
+            linkLabelKeysProperty: "labelKeys",
+            // this property determines which template is used
+            nodeCategoryProperty: "s",
+            // if a node data object is copied, copy its data.a Array
+            copiesArrays: true,
+            // create all of the nodes for people
+            nodeDataArray: array
+          });
+		  
+		  
+      myOverview =
+        $(go.Overview, "myOverviewDiv",  // the HTML DIV element for the Overview
+          { observed: myDiagram, contentAlignment: go.Spot.Center });   // tell it which Diagram to show and pan		  
+		  
+      setupMarriages(diagram);
+      setupParents(diagram);
+
+      const node = diagram.findNodeForKey(focusId);
+      if (node !== null) {
+		 diagram.centerRect(node.actualBounds);
+         diagram.select(node);
+		 diagram.zoomToRect(node.actualBounds);
+		 diagram.scale = 1.4071004226562505;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+
+</script>
+
+	
+{% endblock %}

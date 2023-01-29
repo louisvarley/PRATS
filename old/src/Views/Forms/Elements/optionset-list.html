@@ -1,0 +1,29 @@
+<div class="form-group row">
+	<div class="col-lg-4 col-form-label"></div>
+	<div class="col-lg-8 col-s-12">
+
+		  <button data-tooltip="Add Option" class="btn btn-sm btn-primary" type="button" id="dropdownMenuButton"  aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#modal-option-new">
+				<i class="fas fa-plus"></i>
+		  </button>
+		  
+		  <button data-tooltip="Edit Option" class="btn btn-sm btn-primary" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#modal-option-edit">
+				<i class="fas fa-edit"></i>
+		  </button>
+
+		  <button data-tooltip="Delete Option" class="btn btn-sm btn-primary" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-trash"></i>
+		  </button>  
+		  
+	</div>
+</div>  
+
+{% embed "Forms/form-element.html" with {'description': description, 'required': required, 'label': label} %}
+{% block element %}
+<select multiple placeholder="Select..." autocomplete="off" {% if disabled %}disabled="disabled"{% endif %} id="{{ id }}" name="{{ name }}" type="text" {{required}} class="form-control optionset-list select-list {{classes}}">
+{% for option in options %}  
+	<option data-id="{{option.id}}" value="{{option.value}}">{{option.text}}</option>
+{% endfor %}  
+
+</select>
+{% endblock %}
+{% endembed %}
