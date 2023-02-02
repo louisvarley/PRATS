@@ -22,7 +22,7 @@ define("DIR_PUBLIC", DIR_ROOT . '/public');
 define("DIR_STATIC", DIR_PUBLIC  . '/static');	
 define("DIR_PROXIES", DIR_APP  . '/Proxies');
 define("DIR_VENDOR", DIR_ROOT . '/vendor');
-define("DIR_ROUTES", DIR_APP . '/routes');
+define("DIR_ROUTES", DIR_APP . '/Routes');
 
 define("DIR_VIEWS", DIR_APP . '/Views');	
 define("DIR_CONTROLLERS", DIR_APP . '/Controllers');	
