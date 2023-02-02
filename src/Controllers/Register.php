@@ -34,7 +34,7 @@ class Register extends \App\Controller
 
 			if(count($users) == 0){
 
-				$user = new \App\Models\User();
+				$user = new \App\Entities\User();
 				
 				$user->setEmail($this->post['register']['email']);
 				$user->setFirstName($this->post['register']['firstName']);

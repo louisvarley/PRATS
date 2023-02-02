@@ -1,26 +1,26 @@
 <?php
 
-namespace App;
+namespace App\Services;
 
 /**
  * Router
  *
  * 
  */
-class Router
+class RouteService
 {
 
     /**
      * Associative array of routes (the routing table)
      * @var array
      */
-    protected $routes = [];
+    protected static $routes = [];
 
     /**
      * Parameters from the matched route
      * @var array
      */
-    protected $params = [];
+    protected static $params = [];
 
     /**
      * Add a route to the routing table
@@ -30,7 +30,7 @@ class Router
      *
      * @return void
      */
-    public function add($route, $params = [])
+    public static function add($route, $params = [])
     {
         // Convert the route to a regular expression: escape forward slashes
         $route = preg_replace('/\//', '\\/', $route);
@@ -44,7 +44,7 @@ class Router
         // Add start and end delimiters, and case insensitive flag
         $route = '/^' . $route . '$/i';
 
-        $this->routes[$route] = $params;
+        self::$routes[$route] = $params;
     }
 
     /**
@@ -52,9 +52,9 @@ class Router
      *
      * @return array
      */
-    public function getRoutes()
+    public static function getRoutes()
     {
-        return $this->routes;
+        return self::$routes;
     }
 
     /**
@@ -65,9 +65,9 @@ class Router
      *
      * @return boolean  true if a match found, false otherwise
      */
-    public function match($url)
+    public static function match($url)
     {
-        foreach ($this->routes as $route => $params) {
+        foreach (self::$routes as $route => $params) {
 			
             if (preg_match($route, $url, $matches)) {
                 // Get named capture group values
@@ -77,7 +77,7 @@ class Router
                     }
                 }
 
-                $this->params = $params;
+                self::$params = $params;
                 return true;
             }
         }
@@ -90,22 +90,22 @@ class Router
      *
      * @return array
      */
-    public function getParams()
+    public static function getParams()
     {
-        return $this->params;
+        return self::$params;
     }
 
-	public function controllerConvert($controller){
+	public static function controllerConvert($controller){
 
-		$controller = $this->convertToStudlyCaps($controller);
-        $controller = $this->getNamespace() . $controller;
+		$controller = self::convertToStudlyCaps($controller);
+        $controller = self::getNamespace() . $controller;
 		return $controller;
 
 	}
 
-	public function controllerExists($controller){
+	public static function controllerExists($controller){
 
-		if (class_exists($this->controllerConvert($controller))) {
+		if (class_exists(self::controllerConvert($controller))) {
 			return true;
 		}
 
@@ -119,12 +119,12 @@ class Router
      *
      * @return void
      */
-    public function dispatch($url)
+    public static function dispatch($url)
     {
 		$url = ltrim($url,"/");
-        $url = $this->removeQueryStringVariables($url);
+        $url = self::removeQueryStringVariables($url);
 
-        if ($this->match($url)) {
+        if (self::match($url)) {
 
 			/* What does this do? well 
 			it takes a given controller, and tests weather removing the plural or not, results in a matching class. So in thoery
@@ -141,19 +141,19 @@ class Router
 			will only match controller called settings
 
 			*/
-			if($this->controllerExists($this->params['controller'])){
-				 $controller = $this->controllerConvert($this->params['controller']);
+			if(self::controllerExists(self::$params['controller'])){
+				 $controller = self::controllerConvert(self::$params['controller']);
 
-			}elseif($this->controllerExists($this->depluralise($this->params['controller']))){
-				$this->params['controller'] = $this->depluralise($this->params['controller']);
-				$controller = $this->controllerConvert($this->params['controller']);
+			}elseif(self::controllerExists(self::depluralise(self::$params['controller']))){
+				self::$params['controller'] = self::depluralise(self::$params['controller']);
+				$controller = self::controllerConvert(self::$params['controller']);
 			}
 		
 			
             if (class_exists($controller)) {
-                $controller_object = new $controller($this->params);
-                $action = $this->params['action'];
-                $action = $this->convertToCamelCase($action);
+                $controller_object = new $controller(self::$params);
+                $action = self::$params['action'];
+                $action = self::convertToCamelCase($action);
 				$controller_object->$action();
             } else {
 
@@ -172,7 +172,7 @@ class Router
      *
      * @return string
      */
-    protected function convertToStudlyCaps($string)
+    protected static function convertToStudlyCaps($string)
     {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
@@ -185,7 +185,7 @@ class Router
      *
      * @return string
      */
-	protected function depluralise($string){
+	protected static function depluralise($string){
 
 		$string = preg_replace("/s\b/", "", $string);
 
@@ -201,9 +201,9 @@ class Router
      *
      * @return string
      */
-    protected function convertToCamelCase($string)
+    protected static function convertToCamelCase($string)
     {
-        return lcfirst($this->convertToStudlyCaps($string));
+        return lcfirst(self::convertToStudlyCaps($string));
     }
 
     /**
@@ -229,7 +229,7 @@ class Router
      *
      * @return string The URL with the query string variables removed
      */
-    protected function removeQueryStringVariables($url)
+    protected static function removeQueryStringVariables($url)
     {
         if ($url != '') {
             $parts = explode('&', $url, 2);
@@ -250,12 +250,12 @@ class Router
      *
      * @return string The request URL
      */
-    protected function getNamespace()
+    protected static function getNamespace()
     {
         $namespace = 'App\Controllers\\';
 
-        if (array_key_exists('namespace', $this->params)) {
-            $namespace .= $this->params['namespace'] . '\\';
+        if (array_key_exists('namespace', self::$params)) {
+            $namespace .= self::$params['namespace'] . '\\';
         }
 
         return $namespace;

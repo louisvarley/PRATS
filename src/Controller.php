@@ -6,9 +6,6 @@ use \App\Services\NotificationService as Notifications;
 use \App\Services\SessionService as Session;
 use \App\Services\FilterService as Filter;
 
-use \App\Services\OptionService as OptionService;
-use \App\Services\PropertyService as PropertyService;
-
 /**
  * Base controller
  *
@@ -182,11 +179,12 @@ abstract class Controller
 				$this->page_data, //Title and Description
 				array('me' => Authentication::me()), //Logged In User
 				$this->notifications, //Notifications
-				array('build' => _BUILD), //Build	
-				array('properties' => PropertyService::getAllProperties()), 				
-				
-				
-				empty($array) ? [] : $array) //Additional
+				array('build' => _BUILD), //Build					
+				empty($array) ? [] : $array), //Additional
+				array('env', [
+				'DEFAULT_USER_AVATAR' => $_ENV['DEFAULT_USER_AVATAR'],
+				'DEFAULT_RAT_AVATAR' => $_ENV['DEFAULT_RAT_AVATAR'],
+				])
 		);
 		
 	}

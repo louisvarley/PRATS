@@ -18,7 +18,7 @@
 			{% include "Forms/Elements/image-uploader.html" with {
 				'id': 'user_images',
 				'name': "#{controller}[image]", 
-				'default': properties.DEFAULT_USER_AVATAR,
+				'default': env.DEFAULT_USER_AVATAR,
 				'image': user.image,
 				'label': 'Optional Profile Picture',
 				'description': ''

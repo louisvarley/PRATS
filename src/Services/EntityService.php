@@ -22,25 +22,16 @@ class EntityService{
 		$evm = new \Doctrine\Common\EventManager();
 
 		/* Doctrine */
-		$paths = array(DIR_APP . "/Models");
-		
-		/* Load all Models from all plugins for schema + Proxy generation */
-		foreach(plugins::list() as $plugin){
-	
-			if(count($plugin->models) > 0){
-				$paths[] = $plugin->directory . '/Models';
-			}
-			
-		}
+		$paths = array(DIR_ENTITIES);
 		
 		/* The Connection Configuration */
 		self::$dbParams = array(
 			'driver'   => 'pdo_mysql',
-			'user'     => _DB_USER,
-			'password' => _DB_PASSWORD,
-			'dbname'   => _DB_NAME,
-			'host' 	   => _DB_HOST,
-			'port'	   => _DB_PORT,
+			'user'     => $_ENV['DB_USERNAME'],
+			'password' => $_ENV['DB_PASSWORD'],
+			'dbname'   => $_ENV['DB_NAME'],
+			'host' 	   => $_ENV['DB_HOST'],
+			'port'	   => $_ENV['DB_PORT'],
 		);
 		
 		$cacheDir = DIR_PROXIES;
@@ -67,7 +58,7 @@ class EntityService{
 	public static function findByNot( $model, array $criteria, array $orderBy = null, $limit = null, $offset = null ){
 		
 		$model = ucfirst($model);	
-		$entity = _MODELS . $model;
+		$entity = _ENTITIES . $model;
 		
         $qb = self::Manager()->createQueryBuilder();
         $expr = self::Manager()->getExpressionBuilder();
@@ -100,13 +91,13 @@ class EntityService{
 	/* Find a Single Entity by ID */
 	public static function findEntity($model, $id){
 		$model = ucfirst($model);	
-		return self::Manager()->find(_MODELS . $model, $id);	
+		return self::Manager()->find(_ENTITIES . $model, $id);	
 	}
 
 	/* Find Multiple Entities By a Matching Criteria */
 	public static function findBy($model, $criteria, $orderBy = null, $limit = null, $offset = null){
 		$model = ucfirst($model);
-		return self::Manager()->getRepository(_MODELS . $model)->findBy($criteria, $orderBy, $limit, $offset);	
+		return self::Manager()->getRepository(_ENTITIES . $model)->findBy($criteria, $orderBy, $limit, $offset);	
 	}
 
 	/* Find All Entities */
@@ -114,9 +105,9 @@ class EntityService{
 		$model = ucfirst($model);	
 		
 		if(!empty($orderBy)){
-			return self::Manager()->getRepository(_MODELS . $model)->findBy([], [$orderBy => $order]);
+			return self::Manager()->getRepository(_ENTITIES . $model)->findBy([], [$orderBy => $order]);
 		}else{
-			return self::Manager()->getRepository(_MODELS . $model)->findAll();	
+			return self::Manager()->getRepository(_ENTITIES . $model)->findAll();	
 		}
 		
 	}	
@@ -133,7 +124,7 @@ class EntityService{
 
 	/* Create a Named Query */
 	public static function createdNamedQuery($model, $namedQuery){
-		return self::Manager()->getRepository(_MODELS . $model)->createNamedQuery($namedQuery)->getResult();	
+		return self::Manager()->getRepository(_ENTITIES . $model)->createNamedQuery($namedQuery)->getResult();	
 	}
 
 	/* Gets Enum as a Key, Value Array */
@@ -156,7 +147,7 @@ class EntityService{
 	public static function createOptionSet($model, $valueField, $textField, $criteria = null){
 		
 		$qb = self::Manager()->createQueryBuilder($model);
-		$qb->from(_MODELS . $model, "u");
+		$qb->from(_ENTITIES . $model, "u");
 		$qb->addSelect("u" . '.' . $valueField . ' AS value');
 
 		if(!is_array($textField)){
@@ -221,7 +212,7 @@ class EntityService{
 		
 		$qb = self::Manager()->createQueryBuilder($model);
 		
-		$qb->delete(_MODELS . $model, "b")
+		$qb->delete(_ENTITIES . $model, "b")
           ->where('b.id > 0')
           ->getQuery()
           ->execute();
@@ -343,7 +334,7 @@ class EntityService{
 		
 		if(!self::findAll("user")){
 		
-			$user = new \App\Models\User();
+			$user = new \App\Entities\User();
 			$user->setEmail("admin@admin.com");	
 			$user->setPassword("admin");
 			$user->setFirstName('Administrator');

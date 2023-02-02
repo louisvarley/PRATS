@@ -17,7 +17,7 @@ class Blobs extends \App\Controllers\Api
 
 		try{
 
-			$image = new \App\Models\Blob();
+			$image = new \App\Entities\Blob();
 			
 			$image->setData($_FILES['image']['tmp_name']);
 			
@@ -27,12 +27,16 @@ class Blobs extends \App\Controllers\Api
 
 			Entities::flush();
 
-			return new \App\Classes\ApiResponse(200, 0, ['blobId' => $image->getId(), 'message' => 'Image Saved']);
+			return new \App\Classes\ApiResponse(200, 0, [
+				'blobId' => $image->getId(), 
+				'message' => 'Image Saved'
+			]);
 	
 		}
 		catch (Exception $e) {
-			return new \App\Classes\ApiResponse(500, 0, ['error' => $e->getMessage()]);
+			return new \App\Classes\ApiResponse(500, 0, [
+				'error' => $e->getMessage()
+			]);
 		}
 	}
-
 }

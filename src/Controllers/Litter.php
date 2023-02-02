@@ -47,7 +47,7 @@ class Litter extends \App\Controllers\ManagerController
 		
 		if(isset($data['note']) &&  $data['note'] != ""){
 
-			$note = new \App\Models\PurchaseNote();
+			$note = new \App\Entities\PurchaseNote();
 			$note->setPurchase($purchase);
 			$note->setNote($data['note']);
 			$note->setDate(new \DateTime('now'));
@@ -65,7 +65,7 @@ class Litter extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 
-		$litter = new \App\Models\litter();
+		$litter = new \App\Entities\litter();
 		
 		$dam = Entities::findEntity("rat", $data['litter']['dam']);
 		$sire = Entities::findEntity("rat", $data['litter']['sire']);

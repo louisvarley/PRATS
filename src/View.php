@@ -5,7 +5,6 @@ namespace App;
 
 use Twig\Extra\Intl\IntlExtension;
 use \App\Services\ToastService as Toast;
-use \App\Services\PluginService as Plugins;
 
 /**
  * View
@@ -51,11 +50,6 @@ class View
         static $twig = null;
 		
 		self::$templateDirs[] = DIR_VIEWS;
-		
-		/* Include all plugins as template dirs */
-		foreach(Plugins::list() as $plugin){
-			self::$templateDirs[] = $plugin->directory . '/' . 'Views';
-		}		
 		
 		/* Search every template directory for a potential location */
 		foreach(self::$templateDirs as $templateDir){

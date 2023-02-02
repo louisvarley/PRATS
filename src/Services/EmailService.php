@@ -19,14 +19,14 @@ class EmailService
 		
 		$mail=new PHPMailer();
 		$mail->IsSMTP();    
-		$mail->Port = Properties::getProperty("SMTP_PORT")->getValue();
+		$mail->Port = $_ENV['SMTP_PORT'];
 		$mail->SMTPAuth = true;               
-		$mail->Username= Properties::getProperty("SMTP_USERNAME")->getValue();
-		$mail->Password = Properties::getProperty("SMTP_PASSWORD")->getValue();
-		$mail->Host= Properties::getProperty("SMTP_HOST")->getValue();
-		$mail->SMTPSecure = 'tls';   
-		$mail->From = Properties::getProperty("SMTP_FROM")->getValue();
-		$mail->FromName = Properties::getProperty("SMTP_FROM_NAME")->getValue();
+		$mail->Username= $_ENV['SMTP_USERNAME'];
+		$mail->Password = $_ENV['SMTP_PASSWORD'];
+		$mail->Host= $_ENV['SMTP_HOST'];
+		$mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+		$mail->From = $_ENV['SMTP_FROM_EMAIL'];
+		$mail->FromName = $_ENV['SMTP_FROM_NAME'];
 		$mail->AddEmbeddedImage(DIR_STATIC . "/img/email-header.png", "logo", "logo.png");
 		$mail->AddAddress($to); 
 		$mail->MsgHTML($sbody);

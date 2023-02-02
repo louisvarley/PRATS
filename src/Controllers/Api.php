@@ -57,7 +57,7 @@ class Api extends \App\Controller
 			
 		/* Method found, but protected and no authentication or API Key */	
 		}elseif($reflection->isProtected() && (!$this->apiCheck() && !Authentication::loggedIn())){
-			$response = new \App\Classes\ApiResponse(401, 401, ['message' => "UnAuthorised or invalid API Key "]);
+			$response = new \App\Classes\ApiResponse(401, 401, ['message' => "Unauthorised or invalid API Key "]);
 			
 		/* Fine to Run */
 		}else{
@@ -74,9 +74,6 @@ class Api extends \App\Controller
 			}
 		
 			$this->after();
-		}		
-			
-
+		}				
     }
-	
 }

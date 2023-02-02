@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
-use \App\View;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+
+use \App\View;
 use \App\Services\ToastService as Toast;
 use \App\Services\EntityService as Entities;
 use \App\Services\AuthenticationService as Authentication;
@@ -49,7 +50,7 @@ class Affiliation extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 
-		$affiliation = new \App\Models\Affiliation();
+		$affiliation = new \App\Entities\Affiliation();
 
 		$affiliation->setColor($data['affiliation']['color']);
 		$affiliation->setName($data['affiliation']['name']);

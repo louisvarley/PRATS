@@ -87,7 +87,7 @@ class User extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 
-		$user = new \App\Models\User();
+		$user = new \App\Entities\User();
 		
 		$user->setUserRole(Entities::getEnum('UserRoles', $data['user']['userRole']));
 		
@@ -143,7 +143,7 @@ class User extends \App\Controllers\ManagerController
 				
 			}else{
 			
-				$user = new \App\Models\User();
+				$user = new \App\Entities\User();
 		
 				$user->setUserRole(Entities::getEnum('UserRoles', "U"));
 				

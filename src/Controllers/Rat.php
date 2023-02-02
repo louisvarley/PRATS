@@ -70,7 +70,7 @@ class Rat extends \App\Controllers\ManagerController
 		
 		if(isset($data['note']) &&  $data['note'] != ""){
 
-			$note = new \App\Models\PurchaseNote();
+			$note = new \App\Entities\PurchaseNote();
 			$note->setPurchase($purchase);
 			$note->setNote($data['note']);
 			$note->setDate(new \DateTime('now'));
@@ -87,7 +87,7 @@ class Rat extends \App\Controllers\ManagerController
 	
 	public function insertEntity($data){
 
-		$rat = new \App\Models\rat();
+		$rat = new \App\Entities\rat();
 		
 		$litter = Entities::findEntity("litter", $data['rat']['litter']);
 		$owner = Entities::findEntity("user", $data['rat']['owner']);

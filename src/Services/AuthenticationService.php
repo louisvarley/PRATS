@@ -71,7 +71,7 @@ class AuthenticationService{
 		
 		$user = Entities::findEntity("user", $userId);	
 		
-		$token = new \App\Models\UserToken();
+		$token = new \App\Entities\UserToken();
 		$token->generateToken();
 		$token->setUser($user);
 			

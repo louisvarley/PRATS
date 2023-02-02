@@ -12,7 +12,8 @@
         "ifsnop/mysqldump-php": "^2.9",
         "sameer-shelavale/php-countries-array": "^1.0",
         "xtomdex/country-flags": "*",
-        "intervention/image": "^2.7"
+        "intervention/image": "^2.7",
+        "vlucas/phpdotenv": "^5.5"
     },
     "autoload": {
         "psr-4": {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
@@ -300,7 +300,7 @@ class Rat
 			
 			$compCode = strtoupper($breedercode . $sireCode . $damCode . $genderCode);			
 
-			$nextQuery = Entities::em()->getRepository(_MODELS . 'Rat')
+			$nextQuery = Entities::em()->getRepository(_ENTITIES . 'Rat')
 				->createQueryBuilder('r')
 				->select('r.code')
 				->where('r.code like :compCode')

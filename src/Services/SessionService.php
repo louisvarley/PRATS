@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-class SessionService{
+class SessionService
+{
 	
-
 	public static function isset($key){
 		if(isset($_SESSION[$key])){
 			return true;
